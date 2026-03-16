@@ -11,6 +11,8 @@ const Register = () => {
             username: "",
             password: "",
             email: "",
+            firstName:"",
+            lastName:"",
             confirmPassword: ""
         },
     });
@@ -33,6 +35,26 @@ const Register = () => {
                     />
                     {form.formState.errors.username && (
                         <span className="text-error text-xs">{form.formState.errors.username.message}</span>
+                    )}
+
+                    {/* firstname */}
+                    <label className="label">First Name</label>
+                    <input
+                        {...form.register("firstName")}
+                        className={`input ${form.formState.errors.firstName ? "input-error" : ""}`}
+                    />
+                    {form.formState.errors.firstName && (
+                        <span className="text-error text-xs">{form.formState.errors.firstName.message}</span>
+                    )}
+
+                    {/* lastname */}
+                    <label className="label">Last Name</label>
+                    <input
+                        {...form.register("lastName")}
+                        className={`input ${form.formState.errors.lastName ? "input-error" : ""}`}
+                    />
+                    {form.formState.errors.lastName && (
+                        <span className="text-error text-xs">{form.formState.errors.lastName.message}</span>
                     )}
 
                     {/* Email */}

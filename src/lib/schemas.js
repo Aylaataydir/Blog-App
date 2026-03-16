@@ -1,6 +1,8 @@
 
 import { z } from "zod";
 
+
+
 export const registerShema = z.object({
     username: z.string().min(3, "Username must be at least 3 characters"),
     password: z
@@ -12,6 +14,14 @@ export const registerShema = z.object({
         .regex(/[A-Z]/, "Must contain an uppercase letter")
         .regex(/[@$?!%&*]+/, "Must contain a special character (@$?!%&*)"),
     email: z.email("Invalid email address"),
+    firstName: z
+        .string()
+        .min(2, "First name must be at least 3 characters")
+        .max(50, "First name must be less than 50 characters"),
+    lastName: z
+        .string()
+        .min(2, "Last name must be at least 3 characters")
+        .max(50, "Last name must be less than 50 characters"),
     confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Password don't match",
