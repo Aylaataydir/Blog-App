@@ -29,7 +29,7 @@ export const registerShema = z.object({
 })
 
 
-export const loginShema = z.object({
+export const loginSchema = z.object({
     username: z.string().min(1, "Invalid email address"),
     password: z
         .string()

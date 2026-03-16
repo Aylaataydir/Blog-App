@@ -2,8 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { registerShema } from '../lib/schemas';
+import { useNavigate } from 'react-router-dom';
+import useAuthCall from '../hooks/useAuthCall';
 
 const Register = () => {
+
+    const navigate = useNavigate()
+    const { register } = useAuthCall()
 
     const form = useForm({
         resolver: zodResolver(registerShema),
@@ -11,14 +16,16 @@ const Register = () => {
             username: "",
             password: "",
             email: "",
-            firstName:"",
-            lastName:"",
+            firstName: "",
+            lastName: "",
             confirmPassword: ""
         },
     });
 
-    const onSubmit = (data) => {
-        console.log("Form Başarıyla Gönderildi:", data);
+    const onSubmit = async(UserCredentials) => {
+        console.log("Form Başarıyla Gönderildi:", UserCredentials);
+        await register(UserCredentials)
+        navigate("/")
     };
 
     return (
@@ -59,7 +66,7 @@ const Register = () => {
 
                     {/* Email */}
                     <label className="label">E-Mail</label>
-                    <input
+                    <input 
                         {...form.register("email")}
                         className={`input ${form.formState.errors.email ? "input-error" : ""}`}
                     />
@@ -69,7 +76,7 @@ const Register = () => {
 
                     {/* password  */}
                     <label className="label">Password</label>
-                    <input
+                    <input type='password'
                         {...form.register("password")}
                         className={`input ${form.formState.errors.password ? "input-error" : ""}`}
                     />
@@ -79,7 +86,7 @@ const Register = () => {
 
                     {/* confirmPassword  */}
                     <label className="label">Confirm Password</label>
-                    <input
+                    <input type='password'
                         {...form.register("confirmPassword")}
                         className={`input ${form.formState.errors.confirmPassword ? "input-error" : ""}`}
                     />
@@ -87,7 +94,7 @@ const Register = () => {
                         <span className="text-error text-xs">{form.formState.errors.confirmPassword.message}</span>
                     )}
 
-                    <button type="submit" className="btn btn-primary mt-4">Kaydol</button>
+                    <button type="submit" className="btn btn-primary mt-4">Register</button>
                 </fieldset>
             </form>
         </div>
