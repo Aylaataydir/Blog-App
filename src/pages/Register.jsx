@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { registerShema } from '../lib/schemas';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuthCall from '../hooks/useAuthCall';
 
 const Register = () => {
@@ -18,21 +18,24 @@ const Register = () => {
             email: "",
             firstName: "",
             lastName: "",
-            confirmPassword: ""
+            confirmPassword: "",
         },
     });
 
-    const onSubmit = async(UserCredentials) => {
-        console.log("Form Başarıyla Gönderildi:", UserCredentials);
+    const { isSubmitting } = form.formState
+
+    const onSubmit = async (UserCredentials) => {
         await register(UserCredentials)
-        navigate("/")
+        console.log(UserCredentials)
+
     };
 
     return (
+
         <div className='mt-10 mx-auto w-full'>
             <form onSubmit={form.handleSubmit(onSubmit)} >
                 <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 mx-auto">
-                    <legend className="fieldset-legend">Kayıt Ol</legend>
+                    <legend className="fieldset-legend">Register</legend>
 
                     {/* Username */}
                     <label className="label">Username</label>
@@ -66,7 +69,7 @@ const Register = () => {
 
                     {/* Email */}
                     <label className="label">E-Mail</label>
-                    <input 
+                    <input
                         {...form.register("email")}
                         className={`input ${form.formState.errors.email ? "input-error" : ""}`}
                     />
@@ -94,7 +97,10 @@ const Register = () => {
                         <span className="text-error text-xs">{form.formState.errors.confirmPassword.message}</span>
                     )}
 
-                    <button type="submit" className="btn btn-primary mt-4">Register</button>
+                    <button disabled={isSubmitting} type="submit" className="btn btn-primary mt-4">{isSubmitting ? "Registering..." : "Register"}</button>
+                    <div className="mt-5" >
+                        <p className='mx-auto' >Already have an account?<Link to="/register" className='underline font-bold ms-2 '>Login</Link></p>
+                    </div>
                 </fieldset>
             </form>
         </div>

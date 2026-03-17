@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuthCall from '../hooks/useAuthCall';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -19,10 +19,11 @@ const Login = () => {
     },
   });
 
+  const { isSubmitting } = form.formState
+
   const onSubmit = async (UserCredentials) => {
-    console.log("Form Başarıyla Gönderildi:", UserCredentials);
     await login(UserCredentials)
-   
+
   };
 
 
@@ -30,7 +31,7 @@ const Login = () => {
     <div className='mt-10 mx-auto w-full'>
       <form onSubmit={form.handleSubmit(onSubmit)} >
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 mx-auto">
-          <legend className="fieldset-legend">Kayıt Ol</legend>
+          <legend className="fieldset-legend">Login</legend>
 
           {/* Username */}
           <label className="label">Username</label>
@@ -53,11 +54,22 @@ const Login = () => {
             <span className="text-error text-xs">{form.formState.errors.password.message}</span>
           )}
 
-          <button type="submit" className="btn btn-primary mt-4">Login</button>
+
+          <button disabled={isSubmitting} type="submit" className="btn btn-primary mt-4">{isSubmitting ? "Logging in..." : "Login"}</button>
+          <div className="mt-5" >
+            <p className='mx-auto' >Don't have an account?<Link to="/register" className='underline font-bold ms-2 '>Register</Link></p>
+          </div>
         </fieldset>
       </form>
+
+
     </div>
   )
 }
 
 export default Login
+
+
+ 
+
+ 
