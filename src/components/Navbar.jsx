@@ -8,7 +8,6 @@ import useAuthCall from '../hooks/useAuthCall'
 const Navbar = () => {
 
     const { currentUser } = useSelector((state) => state.auth)
-    console.log(currentUser)
     const { isPending, startTransition } = useTransition()
     const { logOut } = useAuthCall()
 
@@ -21,9 +20,14 @@ const Navbar = () => {
     }
 
     return (
-        <div className="navbar bg-base-100 shadow-sm">
-            <div className="flex-1">
+        <div className="navbar justify-between bg-base-100 shadow-sm px-5 ">
+            <div className="">
                 <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+            </div>
+            <div className='flex gap-10'>
+                <h5>HOME</h5>
+                <h5>CONTACT</h5>
+                <h5>ABOUT</h5>
             </div>
             <div className="flex gap-3 items-center">
                 {currentUser &&

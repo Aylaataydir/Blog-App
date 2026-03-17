@@ -3,6 +3,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+
 body {
     font-family: "Karla", system-ui, sans-serif;
 }

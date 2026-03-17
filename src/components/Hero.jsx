@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
     return (
@@ -12,7 +13,7 @@ const Hero = () => {
                 <h2 className="card-title">New album is released!</h2>
                 <p>Click the button to listen on Spotiwhy app.</p>
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Read More</button>
+                    <Link to="/" className="btn btn-primary">Read More</Link>
                 </div>
             </div>
         </div>
