@@ -60,28 +60,40 @@ const useBlogCall = () => {
     }
 
 
-    const updateLike = async (userId) => {
-
+    const updateLike = async (blogId) => {
         try {
-
-            const { data } = await axios.post(`${BASE_URL}blogs/${userId}/postLike`, {} , {
+            const { data } = await axios.post(`${BASE_URL}blogs/${blogId}/postLike`, {}, {
                 headers: {
                     Authorization: `Token ${token}`
                 }
             })
-            console.log(data, ":data")
-         dispatch(updateLikes({blogId:userId, userId: token}))
+
+            getDataByEndpoint("blogs")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const updateViewsById = async (blogId, blog) => {
+        try {
+            const { data } = await axios.put(`${BASE_URL}blogs/${blogId}`, { blog }, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+
+            console.log(data)
+            getDataByEndpoint("blogs")
+
+
 
         } catch (error) {
             console.log(error)
-
         }
-
     }
 
 
-
-    return { getDataByEndpoint, getBlogById, getLikesById, updateLike }
+    return { getDataByEndpoint, getBlogById, getLikesById, updateLike, updateViewsById }
 }
 
 export default useBlogCall

@@ -8,23 +8,19 @@ const BlogDetail = () => {
   const { getBlogById, getDataByEndpoint } = useBlogCall()
   const { blog, categories } = useSelector(state => state.blog)
   const { currentUser } = useSelector(state => state.auth)
+  const { updateViewsById } = useBlogCall()
 
   const { id } = useParams()
 
-  console.log(id)
-  console.log(blog)
-  console.log(categories)
-  
-
   const category = categories?.find(cat => cat._id === blog?.categoryId._id)
 
-  console.log(category?.name)
 
 
   useEffect(() => {
 
     getBlogById(id)
     getDataByEndpoint("categories");
+
 
   }, [id])
 

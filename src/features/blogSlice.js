@@ -8,7 +8,6 @@ const initialState = {
     blogs: null,
     categories: null,
     blog: null,
-    blogLikes: null,
 }
 
 export const blogSlice = createSlice({
@@ -22,20 +21,7 @@ export const blogSlice = createSlice({
         fillBlog: ((state, { payload }) => {
             state.blog = payload
         }),
-        fillBlogLikes: (state, { payload }) => {
-            state.blogLikes = payload
-        },
-        updateLikes: (state, { payload }) => {
-            const blog = state.blogs.find(b => b._id === payload.blogId)
-            if (blog) {
-                const index = blog.likes.indexOf(payload.userId)
-                if(index > -1) {
-                    blog.likes.splice(index,1)
-                } else {
-                    blog.likes.push(payload.userId)
-                }
-            }
-        }
+    
     }
 })
 

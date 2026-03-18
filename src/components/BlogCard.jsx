@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import * as motion from "motion/react-client"
 import { FcLike } from "react-icons/fc";
 import { BiSolidShareAlt } from "react-icons/bi";
@@ -10,27 +10,48 @@ import { fillEndpoints } from '../features/blogSlice';
 import { useEffect, useState } from 'react';
 import useBlogCall from '../hooks/useBlogCall';
 
+
 const BlogCard = ({ blog }) => {
 
 
     const { categories } = useSelector(state => state.blog)
     const { currentUser } = useSelector(state => state.auth)
-    const { updateLike } = useBlogCall()
-    const [isLike, setIsLike] = useState(false)
+    const { updateLike, updateViewsById } = useBlogCall()
+    const [isLike, setIsLike] = useState()
+
+    const navigate = useNavigate()
 
     const category = categories?.find(cat => cat._id === blog.categoryId)
 
-    useEffect(() => {
-        if (blog.likes && currentUser) {
-            setIsLike(blog.likes.includes(currentUser._id))
-        }
-    }, [blog.likes, currentUser])
+
 
     const toggleLike = () => {
-        if (!currentUser) return;
-        updateLike(blog._id)
-        setIsLike(prev => !prev)
+
+        if (!currentUser) {
+            navigate("/login")
+        } else {
+            updateLike(blog._id)
+        }
     }
+
+    const updateViewCount = () => {
+
+        const updatedBlog = {
+            ...blog,
+            countOfVisitors: blog.countOfVisitors + 1
+        }
+
+        updateViewsById(blog._id, updatedBlog)
+
+    }
+
+
+    useEffect(() => {
+        // if (blog.likes && currentUser) {
+        setIsLike(blog.likes.includes(currentUser?._id))
+        // }
+
+    }, [blog.likes])
 
 
 
@@ -39,7 +60,7 @@ const BlogCard = ({ blog }) => {
             <figure className='relative '>
                 <p className='absolute bg-bg-primary top-8 left-0 py-1 px-2 h-7 w-26'>May 8, 2026</p>
                 <img
-                className='rounded-lg w-80'
+                    className='rounded-lg w-80'
                     src={blog.image}
                     alt="" />
             </figure>
@@ -47,7 +68,7 @@ const BlogCard = ({ blog }) => {
                 <p className='text-xs text-bg-secondary'>{category?.name}</p>
                 <h2 className="card-title ">{blog.title}</h2>
                 <p className='text-sm line-clamp-3 leading-relaxed text-gray-700'>{blog.content}</p>
-                <div className='mt-4'> <Link to={`/home/blog/${blog._id}`} className="buttons">Read More</Link></div>
+                <div className='mt-4'> <Link to={`/home/blog/${blog._id}`} onClick={updateViewCount} className="buttons">Read More</Link></div>
                 <div className="flex mt-4 items-center justify-between gap-2">
                     <div className="avatar items-center gap-2">
                         <div className="ring-offset-base-100 w-8 rounded-full ring-1 ring-bg-btn ">
@@ -58,7 +79,7 @@ const BlogCard = ({ blog }) => {
                     </div>
                     <div className='flex gap-2 items-center'>
                         <div className='flex items-center gap-1'>
-                            <FcLike onClick={toggleLike} className={` ${isLike ? "opacity-100" : "opacity-20"} text-lg  hover:opacity-100 cursor-pointer  `} />
+                            <FcLike onClick={toggleLike} className={` ${isLike ? "opacity-100" : "opacity-20"} text-lg  cursor-pointer  `} />
                             <p className='text-xs'>{blog.likes?.length}</p>
                         </div>
 
@@ -75,7 +96,11 @@ const BlogCard = ({ blog }) => {
 
                     </motion.div> */}
                         <BiSolidShareAlt className='text-lg opacity-20 hover:opacity-100 cursor-pointer' />
-                        <FaEye className='text-lg opacity-20 hover:opacity-100 cursor-pointer' />
+                        <div className='flex items-center gap-1'>
+                            <FaEye className='text-lg opacity-20 hover:opacity-100 cursor-pointer' />
+                            <p className='text-xs'>{blog.countOfVisitors}</p>
+                        </div>
+
                         <BiSolidComment className='text-lg opacity-20 hover:opacity-100 cursor-pointer ' />
                     </div>
 
