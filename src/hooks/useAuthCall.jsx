@@ -29,6 +29,8 @@ const useAuthCall = () => {
                 description: `Welcome back ${data.user.username}`,
             });
 
+        
+
             navigate("/")
 
 

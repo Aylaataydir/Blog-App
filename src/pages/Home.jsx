@@ -6,7 +6,7 @@ import Sidebar from '../components/sidebar/sidebar'
 
 const Home = () => {
     return (
-        <div className='grid grid-cols-4 gap-3'>
+        <div className='grid grid-cols-4 gap-8 mx-10'>
             <div className='col-span-4'>
                 <Hero />
             </div>

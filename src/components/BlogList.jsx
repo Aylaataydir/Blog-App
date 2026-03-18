@@ -7,11 +7,11 @@ import BlogCard from './BlogCard'
 const BlogList = () => {
 
     const { getDataByEndpoint } = useBlogCall()
-    const { blogs, categories } = useSelector((state) => state.blog)
+    const { blogs } = useSelector((state) => state.blog)
 
     console.log(blogs)
    
-
+   
     useEffect(() => {
         getDataByEndpoint("blogs")
         getDataByEndpoint("categories")
@@ -20,7 +20,7 @@ const BlogList = () => {
 
 
     return (
-        <div className='grid grid-cols-2 gap-6'>
+        <div className='grid grid-cols-1 gap-6'>
             {blogs?.map((blog) => (
                 <BlogCard key={blog._id} blog={blog} />
             ))}

@@ -1,43 +1,67 @@
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as motion from "motion/react-client"
 import { FcLike } from "react-icons/fc";
 import { BiSolidShareAlt } from "react-icons/bi";
 import { FaEye } from "react-icons/fa";
 import { BiSolidComment } from "react-icons/bi";
+import { fillEndpoints } from '../features/blogSlice';
+import { useEffect, useState } from 'react';
+import useBlogCall from '../hooks/useBlogCall';
 
 const BlogCard = ({ blog }) => {
+
+
     const { categories } = useSelector(state => state.blog)
-    console.log(categories)
-    console.log(blog)
+    const { currentUser } = useSelector(state => state.auth)
+    const { updateLike } = useBlogCall()
+    const [isLike, setIsLike] = useState(false)
 
     const category = categories?.find(cat => cat._id === blog.categoryId)
-    console.log(category?.name)
+
+    useEffect(() => {
+        if (blog.likes && currentUser) {
+            setIsLike(blog.likes.includes(currentUser._id))
+        }
+    }, [blog.likes, currentUser])
+
+    const toggleLike = () => {
+        if (!currentUser) return;
+        updateLike(blog._id)
+        setIsLike(prev => !prev)
+    }
+
+
 
     return (
-        <div className="card bg-base-100 w-96 shadow-sm">
-            <figure className='relative'>
-                <p className='absolute bg-amber-200 top-8 left-0 py-1 px-2'>May 8, 2026</p>
+        <div className="card card-side bg-base-100 gap-5 ">
+            <figure className='relative '>
+                <p className='absolute bg-bg-primary top-8 left-0 py-1 px-2 h-7 w-26'>May 8, 2026</p>
                 <img
+                className='rounded-lg w-80'
                     src={blog.image}
                     alt="" />
             </figure>
-            <div className="card-body">
-                <p>{category?.name}</p>
-                <h2 className="card-title">{blog.title}</h2>
-                <p className='line-clamp-3'>{blog.content}</p>
-                <div className='mt-4'> <Link to="/" className="border p-1 rounded ">Read More</Link></div>
-                <div className="flex mt-6 items-center justify-between gap-2">
-                    <div className="avatar items-center gap-3">
-                        <div className="ring-offset-base-100 w-12 rounded-full ring-1 ">
+            <div className="card-body flex-1 p-3">
+                <p className='text-xs text-bg-secondary'>{category?.name}</p>
+                <h2 className="card-title ">{blog.title}</h2>
+                <p className='text-sm line-clamp-3 leading-relaxed text-gray-700'>{blog.content}</p>
+                <div className='mt-4'> <Link to={`/home/blog/${blog._id}`} className="buttons">Read More</Link></div>
+                <div className="flex mt-4 items-center justify-between gap-2">
+                    <div className="avatar items-center gap-2">
+                        <div className="ring-offset-base-100 w-8 rounded-full ring-1 ring-bg-btn ">
                             <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
                         </div>
-                        <p>name</p>
+                        <p className='text-xs'>name</p>
 
                     </div>
-                    <div className='flex gap-2'>
-                        <FcLike className='text-xl opacity-20 hover:opacity-100 cursor-pointer ' />
+                    <div className='flex gap-2 items-center'>
+                        <div className='flex items-center gap-1'>
+                            <FcLike onClick={toggleLike} className={` ${isLike ? "opacity-100" : "opacity-20"} text-lg  hover:opacity-100 cursor-pointer  `} />
+                            <p className='text-xs'>{blog.likes?.length}</p>
+                        </div>
+
 
                         {/* <motion.div
                         initial={{ opacity: 0, scale: 0 }}
@@ -50,9 +74,9 @@ const BlogCard = ({ blog }) => {
                     >
 
                     </motion.div> */}
-                        <BiSolidShareAlt className='text-xl opacity-20 hover:opacity-100 cursor-pointer' />
-                        <FaEye className='text-xl opacity-20 hover:opacity-100 cursor-pointer' />
-                        <BiSolidComment className='text-xl opacity-20 hover:opacity-100 cursor-pointer ' />
+                        <BiSolidShareAlt className='text-lg opacity-20 hover:opacity-100 cursor-pointer' />
+                        <FaEye className='text-lg opacity-20 hover:opacity-100 cursor-pointer' />
+                        <BiSolidComment className='text-lg opacity-20 hover:opacity-100 cursor-pointer ' />
                     </div>
 
                 </div>

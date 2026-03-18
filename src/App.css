@@ -1,10 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url(https://fonts.googleapis.com/css?family=Pinyon+Script:regular);
+@import url(https://fonts.googleapis.com/css?family=Birthstone+Bounce:regular,500);
+@import url(https://fonts.googleapis.com/css?family=Meow+Script:regular);
+@import url(https://fonts.googleapis.com/css?family=Mrs+Saint+Delafield:regular);
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script:regular,500,600,700);
+@import url(https://fonts.googleapis.com/css?family=Reenie+Beanie:regular);
+@import url(https://fonts.googleapis.com/css?family=La+Belle+Aurore:regular);
+@import url(https://fonts.googleapis.com/css?family=Caramel:regular);
+@import url(https://fonts.googleapis.com/css?family=Meow+Script:regular);
+
 
 @import "tailwindcss";
 @plugin "daisyui";
 
 
-body {
-    font-family: "Karla", system-ui, sans-serif;
+
+@theme {
+    --color-bg-primary: #ebeae3;
+    --color-bg-secondary: #cb997e;
+    --color-bg-light: #ffe8d6;
+    --color-bg-btn: #a6a998;
+
+
+    --font-inter: "Karla", sans-serif;
+    --font-poppins: "Poppins", sans-serif;
+    --font-pac: "Meow Script", sans-serif;
 }
 
+
+body {
+    font-family: var(--font-inter);
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1.625;
+    letter-spacing: 0.7px;
+    background-color: #F7F7F5;
+}
+
+
+/* h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-poppins);
+} */
+
+.navLink {
+    font-size: .75rem;
+    font-family: var(--font-poppins);
+    font-weight: 500;
+    color: white;
+}
+
+.buttons {
+    background-color: var(--color-bg-btn);
+    border: none;
+    border-radius: .5rem;
+    font-size: 10px;
+    font-family: var(--font-poppins);
+    font-weight: 400;
+    color: white;
+    padding: .625rem 1.5rem;
+}

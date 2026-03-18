@@ -20,18 +20,18 @@ const Navbar = () => {
     }
 
     return (
-        <div className="navbar justify-between bg-base-100 shadow-sm px-5 ">
+        <div className="navbar justify-between  shadow-sm px-5 bg-bg-btn ">
             <div className="">
-                <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+                <input type="text" placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 " />
             </div>
             <div className='flex gap-10'>
-                <h5>HOME</h5>
-                <h5>CONTACT</h5>
-                <h5>ABOUT</h5>
+                <Link className='navLink' to="/">HOME</Link>
+                <Link className='navLink' to="/contact">CONTACT</Link>
+                <Link className='navLink' to="/about">ABOUT</Link>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-2 items-center">
                 {currentUser &&
-                    <div>
+                    <div className=''>
                         <p>{currentUser.username}</p>
                     </div>}
 
