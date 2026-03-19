@@ -2,7 +2,7 @@
 import axios from 'axios'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fillBlog, fillBlogLikes, fillEndpoints, updateLikes } from '../features/blogSlice'
+import { fillBlog, fillEndpoints } from '../features/blogSlice'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -51,7 +51,7 @@ const useBlogCall = () => {
                     Authorization: `Token ${token}`
                 }
             })
-            dispatch(fillBlogLikes(data.countOfLikes))
+
 
         } catch (error) {
             console.log(error)
@@ -74,6 +74,7 @@ const useBlogCall = () => {
         }
     }
 
+
     const updateViewsById = async (blogId, blog) => {
         try {
             const { data } = await axios.put(`${BASE_URL}blogs/${blogId}`, { blog }, {
@@ -93,7 +94,44 @@ const useBlogCall = () => {
     }
 
 
-    return { getDataByEndpoint, getBlogById, getLikesById, updateLike, updateViewsById }
+    const getComments = async () => {
+
+        // try {
+
+        //     const { data } = await axios.get(`${BASE_URL}comments/`, {
+        //         headers: {
+        //             Authorization: `Token ${token}`
+        //         }
+        //     })
+        //     console.log(data.data)
+
+
+        // } catch (error) {
+        //     console.log(error)
+
+        // }
+    }
+
+    const createComment = async (comment) => {
+
+        try {
+
+            const { data } = await axios.post(`${BASE_URL}comments/`, comment, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            console.log(data)
+
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+
+
+    return { getDataByEndpoint, getBlogById, getLikesById, updateLike, updateViewsById, getComments, createComment }
 }
 
 export default useBlogCall

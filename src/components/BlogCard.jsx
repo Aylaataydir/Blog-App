@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import * as motion from "motion/react-client"
@@ -18,6 +17,8 @@ const BlogCard = ({ blog }) => {
     const { currentUser } = useSelector(state => state.auth)
     const { updateLike, updateViewsById } = useBlogCall()
     const [isLike, setIsLike] = useState()
+    const [copied, setCopied] = useState(false);
+    const blogUrl = `${window.location.origin}/home/blog/${blog._id}`
 
     const navigate = useNavigate()
 
@@ -56,7 +57,7 @@ const BlogCard = ({ blog }) => {
 
 
     return (
-        <div className="card card-side bg-base-100 gap-5 ">
+        <div className="card card-side bg-bg-body gap-5 ">
             <figure className='relative '>
                 <p className='absolute bg-bg-primary top-8 left-0 py-1 px-2 h-7 w-26'>May 8, 2026</p>
                 <img
@@ -79,33 +80,36 @@ const BlogCard = ({ blog }) => {
                     </div>
                     <div className='flex gap-2 items-center'>
                         <div className='flex items-center gap-1'>
-                            <FcLike onClick={toggleLike} className={` ${isLike ? "opacity-100" : "opacity-20"} text-lg  cursor-pointer  `} />
+                            <FcLike onClick={toggleLike} className={` ${isLike ? "opacity-100" : "opacity-20"} text-xl  cursor-pointer  `} />
                             <p className='text-xs'>{blog.likes?.length}</p>
                         </div>
 
 
-                        {/* <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            duration: 0.4,
-                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                        }}
-                        style={ball}
-                    >
-
-                    </motion.div> */}
-                        <BiSolidShareAlt className='text-lg opacity-20 hover:opacity-100 cursor-pointer' />
+                        <BiSolidShareAlt
+                            className='text-xl opacity-20 hover:opacity-100 cursor-pointer'
+                            onClick={() => {
+                                navigator.clipboard.writeText(blogUrl);
+                                setCopied(true);
+                                setTimeout(() => setCopied(false), 2000);
+                            }}
+                        />
+                        {copied && (
+                            <span className='absolute bottom-15 right-0 bg-bg-secondary/70 text-white px-2 py-1 rounded text-xs shadow-md'>Link kopyalandı!</span>
+                        )}
                         <div className='flex items-center gap-1'>
-                            <FaEye className='text-lg opacity-20 hover:opacity-100 cursor-pointer' />
+                            <FaEye className='text-xl opacity-20' />
                             <p className='text-xs'>{blog.countOfVisitors}</p>
                         </div>
-
-                        <BiSolidComment className='text-lg opacity-20 hover:opacity-100 cursor-pointer ' />
+                        <div className='relativ'>
+                            <div className='relative flex items-center'>
+                                <BiSolidComment className='text-2xl opacity-20 hover:opacity-100 cursor-pointer' />
+                                <span className='absolute -top-2 -right-1 text-white bg-bg-secondary rounded-full px-1 text-xs   shadow-md'>{blog.comments?.length}</span>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </div>
+            <
         </div>
     )
 }

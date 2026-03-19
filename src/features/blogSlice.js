@@ -8,6 +8,7 @@ const initialState = {
     blogs: null,
     categories: null,
     blog: null,
+    comments: null
 }
 
 export const blogSlice = createSlice({
@@ -26,6 +27,6 @@ export const blogSlice = createSlice({
 })
 
 
-export const { fillEndpoints, fillBlog, fillBlogLikes, updateLikes } = blogSlice.actions
+export const { fillEndpoints, fillBlog } = blogSlice.actions
 
 export default blogSlice.reducer
