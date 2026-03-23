@@ -1,27 +1,34 @@
-import { div } from 'motion/react-client'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Link, useSearchParams } from 'react-router-dom'
 
 const CategoryList = () => {
 
     const { categories } = useSelector(state => state.blog)
+    const [searchParams] = useSearchParams()
+    const activeCategory = searchParams.get('category')
 
-    console.log(categories)
     return (
-        <div className='flex flex-col gap-4 '>
+        <div className='gap-4 mb-8 '>
             <div>
                 <h3 className='bg-bg-secondary text-center py-2 font-semibold text-white '>CATEGORIES</h3>
             </div>
-            {categories?.map((cat) => (
-                <div className='relative mt-2' key={cat._id}>
-                    <img src={`/assets/${cat.name}.jpg`} alt={cat.name} className='h-12 w-full object-cover opacity-90' />
-                    <button
-                        className='cursor-pointer absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-bg-primary/90 px-9 py-1  font-bold w-30 '
+            <div className='mt-5 grid grid-cols-2 gap-2' >
+                <Link
+                    to="/home"
+                    className={`${activeCategory ? "bg-bg-primary/80" : "bg-bg-btn-2"} category-btn flex-1 rounded cursor-pointer px-9 py-2 font-bold text-center`}
+                >
+                    All Categories
+                </Link>
+                {categories?.map((cat) => (
+                    <Link key={cat._id}
+                        to={`/home?category=${cat._id}`}
+                        className={`${activeCategory === cat._id ? "bg-bg-btn-2" : "bg-bg-primary/80"} category-btn flex-1 rounded cursor-pointer px-9 py-2 font-bold text-center`}
                     >
                         {cat.name}
-                    </button>
-                </div>
-            ))}
+                    </Link>
+                ))}
+            </div>
         </div>
     )
 }

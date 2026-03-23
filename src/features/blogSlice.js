@@ -6,9 +6,12 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     loading: false,
     blogs: null,
+    paginationBlogs: null,
     categories: null,
     blog: null,
-    comments: null
+    mostLiked: null,
+    mostRead: null,
+    blogAuthor: null,
 }
 
 export const blogSlice = createSlice({
@@ -16,17 +19,52 @@ export const blogSlice = createSlice({
     initialState,
     reducers: {
         fillEndpoints: ((state, { payload }) => {
-            const { endpoint, data } = payload
-            state[endpoint] = data
+            const { stateName, data } = payload
+            state[stateName] = data
         }),
         fillBlog: ((state, { payload }) => {
             state.blog = payload
         }),
-    
+        toggleBlogLike: ((state, { payload }) => {
+
+            if (state.blog) {
+                const index = state.blog.likes.indexOf(payload)
+                if (index === -1) {
+                    state.blog.likes.push(payload)
+                } else {
+                    state.blog.likes.splice(index, 1)
+                }
+
+            }
+
+
+        }),
+        addCommentToBlog: ((state, { payload }) => {
+
+            if (state.blog) state.blog.comments.push(payload)
+
+        }),
+        deleteCommentFromBlog: ((state, { payload }) => {
+            if (state.blog) {
+                state.blog.comments = state.blog.comments.filter(c => c._id !== payload)
+            }
+        }),
+        toggleBlogListLike: ((state, { payload }) => {
+            const { blogId, userId } = payload
+            if (state.paginationBlogs) {
+                const blog = state.paginationBlogs.find(b => b._id === blogId)
+                if (blog) {
+                    const index = blog.likes.indexOf(userId)
+                    if (index === -1) blog.likes.push(userId)
+                    else blog.likes.splice(index, 1)
+                }
+            }
+        })
+
     }
 })
 
 
-export const { fillEndpoints, fillBlog } = blogSlice.actions
+export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, deleteCommentFromBlog, toggleBlogListLike } = blogSlice.actions
 
 export default blogSlice.reducer

@@ -1,21 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import * as motion from "motion/react-client"
-import { FcLike } from "react-icons/fc";
 import { BiSolidShareAlt } from "react-icons/bi";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaHeart } from "react-icons/fa";
 import { BiSolidComment } from "react-icons/bi";
-import { fillEndpoints } from '../features/blogSlice';
+import { fillEndpoints, toggleBlogListLike } from '../features/blogSlice';
 import { useEffect, useState } from 'react';
 import useBlogCall from '../hooks/useBlogCall';
+import { toast } from 'sonner';
 
 
 const BlogCard = ({ blog }) => {
 
-
-    const { categories } = useSelector(state => state.blog)
+    const dispatch = useDispatch()
+    const { categories, blogs } = useSelector(state => state.blog)
     const { currentUser } = useSelector(state => state.auth)
-    const { updateLike, updateViewsById } = useBlogCall()
+    const { updateLike, getDataByEndpoint } = useBlogCall()
     const [isLike, setIsLike] = useState()
     const [copied, setCopied] = useState(false);
     const blogUrl = `${window.location.origin}/home/blog/${blog._id}`
@@ -24,92 +24,89 @@ const BlogCard = ({ blog }) => {
 
     const category = categories?.find(cat => cat._id === blog.categoryId)
 
+    console.log(blogs)
 
-
-    const toggleLike = () => {
+    const toggleLike = async () => {
 
         if (!currentUser) {
-            navigate("/login")
+            toast.error("Please log in to like this post.")
         } else {
-            updateLike(blog._id)
+            setIsLike(prev => !prev)
+            await updateLike(blog._id)
+            dispatch(toggleBlogListLike({ blogId: blog._id, userId: currentUser._id }))
         }
     }
 
-    const updateViewCount = () => {
-
-        const updatedBlog = {
-            ...blog,
-            countOfVisitors: blog.countOfVisitors + 1
+    const clickComment = () => {
+        if (!currentUser) {
+            toast.error("Please log in to post a comment.")
+        } else {
+           navigate(`/home/blog/${blog._id}`)
         }
-
-        updateViewsById(blog._id, updatedBlog)
-
     }
 
 
     useEffect(() => {
-        // if (blog.likes && currentUser) {
-        setIsLike(blog.likes.includes(currentUser?._id))
-        // }
 
-    }, [blog.likes])
+        setIsLike(blog?.likes.includes(currentUser?._id))
+
+
+    }, [blog, currentUser])
 
 
 
     return (
-        <div className="card card-side bg-bg-body gap-5 ">
-            <figure className='relative '>
-                <p className='absolute bg-bg-primary top-8 left-0 py-1 px-2 h-7 w-26'>May 8, 2026</p>
-                <img
-                    className='rounded-lg w-80'
-                    src={blog.image}
-                    alt="" />
+        <div className="blog-card flex gap-5 p-4">
+            <figure className='relative flex-shrink-0'>
+                <p className='absolute bg-bg-primary/90 top-2 left-0 py-0.5 px-2 text-[10px] tracking-wide'>
+                    {new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })}
+                </p>
+                <img className='rounded-lg w-64 h-44 object-cover' src={blog.image} alt="" />
             </figure>
-            <div className="card-body flex-1 p-3">
-                <p className='text-xs text-bg-secondary'>{category?.name}</p>
-                <h2 className="card-title ">{blog.title}</h2>
-                <p className='text-sm line-clamp-3 leading-relaxed text-gray-700'>{blog.content}</p>
-                <div className='mt-4'> <Link to={`/home/blog/${blog._id}`} onClick={updateViewCount} className="buttons">Read More</Link></div>
-                <div className="flex mt-4 items-center justify-between gap-2">
-                    <div className="avatar items-center gap-2">
-                        <div className="ring-offset-base-100 w-8 rounded-full ring-1 ring-bg-btn ">
+            <div className="flex flex-col flex-1 py-1 justify-between">
+                <div>
+                    <p className='text-[10px] text-bg-secondary font-semibold uppercase tracking-widest mb-1'>{category?.name}</p>
+                    <h2 className="text-xl font-semibold leading-snug mb-2">{blog.title}</h2>
+                    <p className='text-xs line-clamp-3 leading-relaxed text-gray-700'>{blog.content}</p>
+                </div>
+                <div className='flex items-center justify-between mt-3'>
+                    <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full overflow-hidden ring-1 ring-bg-btn">
                             <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
                         </div>
-                        <p className='text-xs'>name</p>
-
+                        <p className='text-xs text-gray-400'>Author</p>
                     </div>
-                    <div className='flex gap-2 items-center'>
+                    <div className='flex gap-3 items-center'>
                         <div className='flex items-center gap-1'>
-                            <FcLike onClick={toggleLike} className={` ${isLike ? "opacity-100" : "opacity-20"} text-xl  cursor-pointer  `} />
-                            <p className='text-xs'>{blog.likes?.length}</p>
+                            <motion.div
+                                whileTap={{ scale: 1.4 }}
+                                whileHover={{ scale: 1.15 }}
+                                transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                                onClick={toggleLike}
+                                className='cursor-pointer'
+                            >
+                                <FaHeart className={`text-base transition-colors duration-300 ${isLike ? 'text-red-500' : 'text-gray-300 hover:text-gray-400'}`} />
+                            </motion.div>
+                            <p className='text-xs text-gray-400'>{blog.likes?.length}</p>
                         </div>
-
-
-                        <BiSolidShareAlt
-                            className='text-xl opacity-20 hover:opacity-100 cursor-pointer'
-                            onClick={() => {
-                                navigator.clipboard.writeText(blogUrl);
-                                setCopied(true);
-                                setTimeout(() => setCopied(false), 2000);
-                            }}
-                        />
-                        {copied && (
-                            <span className='absolute bottom-15 right-0 bg-bg-secondary/70 text-white px-2 py-1 rounded text-xs shadow-md'>Link kopyalandı!</span>
-                        )}
+                        <div className='flex items-center gap-1 relative'>
+                            <BiSolidShareAlt className='text-base opacity-30 hover:opacity-80 cursor-pointer transition-opacity' onClick={() => { navigator.clipboard.writeText(blogUrl); setCopied(true); setTimeout(() => setCopied(false), 2000); }} />
+                            {copied && <span className='absolute -top-7 left-0 bg-bg-secondary text-white px-2 py-0.5 rounded text-[10px] whitespace-nowrap shadow'>Copied!</span>}
+                        </div>
                         <div className='flex items-center gap-1'>
-                            <FaEye className='text-xl opacity-20' />
-                            <p className='text-xs'>{blog.countOfVisitors}</p>
+                            <FaEye className='text-base opacity-30' />
+                            <p className='text-xs text-gray-400'>{blog.countOfVisitors}</p>
                         </div>
-                        <div className='relativ'>
-                            <div className='relative flex items-center'>
-                                <BiSolidComment className='text-2xl opacity-20 hover:opacity-100 cursor-pointer' />
-                                <span className='absolute -top-2 -right-1 text-white bg-bg-secondary rounded-full px-1 text-xs   shadow-md'>{blog.comments?.length}</span>
-                            </div>
+                        <div className='relative flex items-center'>
+                            <BiSolidComment 
+                            onClick={clickComment}
+                            className='text-base opacity-30 hover:opacity-80 cursor-pointer transition-opacity' />
+                            <span className='absolute -top-2 -right-1.5 bg-bg-secondary text-white rounded-full px-1 text-[9px] leading-tight'>{blog.comments?.length}</span>
                         </div>
+                        <Link onClick={(e) => { if(!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") }}} to={`/home/blog/${blog._id}`} className="buttons ms-3">Read More</Link>
                     </div>
                 </div>
             </div>
-            <
         </div>
     )
 }

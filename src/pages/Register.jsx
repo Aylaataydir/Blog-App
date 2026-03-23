@@ -41,6 +41,7 @@ const Register = () => {
                     <label className="label">Username</label>
                     <input
                         {...form.register("username")}
+                        spellCheck={false}
                         className={`input ${form.formState.errors.username ? "input-error" : ""}`}
                     />
                     {form.formState.errors.username && (
@@ -51,6 +52,7 @@ const Register = () => {
                     <label className="label">First Name</label>
                     <input
                         {...form.register("firstName")}
+                        spellCheck={false}
                         className={`input ${form.formState.errors.firstName ? "input-error" : ""}`}
                     />
                     {form.formState.errors.firstName && (
@@ -61,6 +63,7 @@ const Register = () => {
                     <label className="label">Last Name</label>
                     <input
                         {...form.register("lastName")}
+                        spellCheck={false}
                         className={`input ${form.formState.errors.lastName ? "input-error" : ""}`}
                     />
                     {form.formState.errors.lastName && (
@@ -71,6 +74,7 @@ const Register = () => {
                     <label className="label">E-Mail</label>
                     <input
                         {...form.register("email")}
+                        spellCheck={false}
                         className={`input ${form.formState.errors.email ? "input-error" : ""}`}
                     />
                     {form.formState.errors.email && (

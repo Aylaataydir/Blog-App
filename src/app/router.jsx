@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import Contact from "../pages/Contact";
@@ -14,21 +14,23 @@ export const router = createBrowserRouter([
 
     {
         path: "/",
-        element:<MainLayout/>,
+        element: <MainLayout />,
         // errorElement: <Error />,
         children: [
-            { index: true, element: <Home /> },
+            { index: true, element: <Navigate to="/home" replace /> },
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> },
             { path: "contact", element: <Contact /> },
             { path: "about", element: <About /> },
             {
                 path: "home",
-                element: <ProtectedRouted />,
                 children: [
+                    { index: true, element: <Home /> },
                     {
-                        path: "blog/:id",
-                        element: <BlogDetail />,
+                        element: <ProtectedRouted />,
+                        children: [
+                            { path: "blog/:id", element: <BlogDetail /> },
+                        ],
                     },
                 ],
             },

@@ -17,7 +17,15 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <RouterProvider router={router} />
-        <Toaster richColors position="top-right" />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            classNames: {
+              success: 'toast-success',
+              error: 'toast-error',
+            }
+          }}
+        />
       </PersistGate>
     </Provider>
   )

@@ -1,22 +1,22 @@
 
-import { useTransition } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import useAuthCall from '../hooks/useAuthCall'
 
 
 const Navbar = () => {
 
     const { currentUser } = useSelector((state) => state.auth)
-    const { isPending, startTransition } = useTransition()
+    const [isPending, setIsPending] = useState(false)
     const { logOut } = useAuthCall()
 
 
-    const handleLogOut = async () => {
-
-        // startTransition(async() => await logOut())
+    const handleLogOut = async (e) => {
+        e.preventDefault()
+        setIsPending(true)
         await logOut()
-
+        setIsPending(false)
     }
 
     return (
@@ -25,9 +25,9 @@ const Navbar = () => {
                 <input type="text" placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 " />
             </div>
             <div className='flex gap-10'>
-                <Link className='navLink' to="/">HOME</Link>
-                <Link className='navLink' to="/contact">CONTACT</Link>
-                <Link className='navLink' to="/about">ABOUT</Link>
+                <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/home">HOME</NavLink>
+                <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/contact">CONTACT</NavLink>
+                <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/about">ABOUT</NavLink>
             </div>
             <div className="flex gap-2 items-center">
                 {currentUser &&
@@ -49,7 +49,7 @@ const Navbar = () => {
                         tabIndex="-1"
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                         {currentUser
-                            ? <li onClick={handleLogOut}><Link>{isPending ? "Loging out..." : "Log out"}</Link></li>
+                            ? <li><Link onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</Link></li>
                             : <>
                                 <li><Link to="/login">Login</Link></li>
                                 <li><Link to="/register">Register</Link></li>

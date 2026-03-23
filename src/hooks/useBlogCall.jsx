@@ -12,14 +12,19 @@ const useBlogCall = () => {
     const { token } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
-    const getDataByEndpoint = async (endpoint) => {
+
+    
+    const getDataByEndpoint = async (endpoint, customParams = {}, stateName = endpoint) => {
 
         try {
 
-            const { data } = await axios.get(`${BASE_URL}${endpoint}/`)
+            const { data } = await axios.get(`${BASE_URL}${endpoint}/`, {
+                params: customParams
+            })
 
-            dispatch(fillEndpoints({ endpoint, data: data.data }))
-            console.log(data.data)
+            dispatch(fillEndpoints({ stateName, data: data.data }))
+            console.log('Full API response:', data)
+            return data
 
         } catch (error) {
             console.log(error)
@@ -27,13 +32,13 @@ const useBlogCall = () => {
 
     }
 
-    const getBlogById = async (blogId) => {
+    const getEndpointById = async (endpoint, blogId, stateName) => {
 
         try {
 
-            const data = await axios.get(`${BASE_URL}blogs/${blogId}`)
+            const data = await axios.get(`${BASE_URL}${endpoint}/${blogId}`)
             console.log(data.data.data)
-            dispatch(fillBlog(data.data.data))
+            dispatch(fillEndpoints({ stateName, data: data.data.data }))
 
 
         } catch (error) {
@@ -68,49 +73,11 @@ const useBlogCall = () => {
                 }
             })
 
-            getDataByEndpoint("blogs")
         } catch (error) {
             console.log(error)
         }
     }
 
-
-    const updateViewsById = async (blogId, blog) => {
-        try {
-            const { data } = await axios.put(`${BASE_URL}blogs/${blogId}`, { blog }, {
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            })
-
-            console.log(data)
-            getDataByEndpoint("blogs")
-
-
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
-    const getComments = async () => {
-
-        // try {
-
-        //     const { data } = await axios.get(`${BASE_URL}comments/`, {
-        //         headers: {
-        //             Authorization: `Token ${token}`
-        //         }
-        //     })
-        //     console.log(data.data)
-
-
-        // } catch (error) {
-        //     console.log(error)
-
-        // }
-    }
 
     const createComment = async (comment) => {
 
@@ -122,6 +89,26 @@ const useBlogCall = () => {
                 }
             })
             console.log(data)
+            return data
+
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+
+    const deleteComment = async (commentId) => {
+
+
+        try {
+            const { data } = await axios.delete(`${BASE_URL}comments/${commentId}`, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            console.log(data)
+        
 
         } catch (error) {
             console.log(error)
@@ -131,7 +118,7 @@ const useBlogCall = () => {
 
 
 
-    return { getDataByEndpoint, getBlogById, getLikesById, updateLike, updateViewsById, getComments, createComment }
+    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment }
 }
 
 export default useBlogCall
