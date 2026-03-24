@@ -11,8 +11,8 @@ const DeleteModal = ({ commentId }) => {
 
     // <button className="btn" onClick={()=>document.getElementById('my_modal_5').showModal()}>open modal</button>
 
-    const handleDeleteComment = () => {
-        deleteComment(commentId)
+    const handleDeleteComment = async() => {
+        await deleteComment(commentId)
         dispatch(deleteCommentFromBlog(commentId))
     }
 

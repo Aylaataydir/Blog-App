@@ -12,6 +12,7 @@ const initialState = {
     mostLiked: null,
     mostRead: null,
     blogAuthor: null,
+    isSearching: false,
 }
 
 export const blogSlice = createSlice({
@@ -59,12 +60,15 @@ export const blogSlice = createSlice({
                     else blog.likes.splice(index, 1)
                 }
             }
+        }),
+        toggleSearching: ((state, {payload}) => {
+            state.isSearching = payload
         })
 
     }
 })
 
 
-export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, deleteCommentFromBlog, toggleBlogListLike } = blogSlice.actions
+export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, deleteCommentFromBlog, toggleBlogListLike, toggleSearching } = blogSlice.actions
 
 export default blogSlice.reducer

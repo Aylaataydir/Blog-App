@@ -1,16 +1,23 @@
 
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import useAuthCall from '../hooks/useAuthCall'
+import useBlogCall from '../hooks/useBlogCall'
+import { toggleSearching } from '../features/blogSlice'
+import { MdVerticalAlignBottom } from 'react-icons/md'
 
 
 const Navbar = () => {
 
     const { currentUser } = useSelector((state) => state.auth)
+    const { blogs } = useSelector((state) => state.blog)
     const [isPending, setIsPending] = useState(false)
     const { logOut } = useAuthCall()
+    const { getDataByEndpoint } = useBlogCall()
+    const dispatch = useDispatch()
 
+    const timerRef = useRef(null) // inputa her tiklamada databaseden veri cekmesin diye kullaniyorum.
 
     const handleLogOut = async (e) => {
         e.preventDefault()
@@ -19,10 +26,33 @@ const Navbar = () => {
         setIsPending(false)
     }
 
+    const handleSearch = (query) => {
+
+        clearTimeout(timerRef.current)
+        dispatch(toggleSearching(true))
+
+        timerRef.current = setTimeout(async () => {
+
+            if (query.trim()) {
+
+                const veri = await getDataByEndpoint("blogs", {
+                    "search[title]": query.trim(),
+                    "search[content]": query.trim(),
+                }, "blogs")
+                console.log(veri.data)
+            } else {
+                dispatch(toggleSearching(false))
+            }
+        }, 500)
+
+        console.log(blogs)
+
+    }
+
     return (
         <div className="navbar justify-between  shadow-sm px-5 bg-bg-btn ">
             <div className="">
-                <input type="text" placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 " />
+                <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 " />
             </div>
             <div className='flex gap-10'>
                 <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/home">HOME</NavLink>

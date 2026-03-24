@@ -28,14 +28,14 @@ const Hero = () => {
     return (
 
         <div className='px-20'>
-            <div className="text-center my-12 md:my-16">
+            <div className="text-center mt-12  md:mt-16 border-b-1 border-b-black/30">
                 <h1
-                    className="text-4xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold italic text-gray-700 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                    className="text-4xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold italic text-gray-800 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
                     style={{ fontFamily: 'var(--font-hero)', letterSpacing: '0.03em' }}
                 >
                     The Daily Blog
                 </h1>
-                <p className="text-xs sm:text-sm md:text-base tracking-[0.25em] text-gray-400 mt-0 mb-17 uppercase font-light" style={{ letterSpacing: '0.25em' }}>
+                <p className="text-xs sm:text-sm md:text-sm tracking-[0.25em] text-gray-400 mt-0 mb-7 uppercase font-light" style={{ letterSpacing: '0.25em' }}>
                     Travel, Health, World, Culture...
                 </p>
             </div>
@@ -57,7 +57,7 @@ const Hero = () => {
 
                 {mostRead?.slice(0, 3).map(blog => (
                     <SwiperSlide key={blog._id}>
-                        <div className="card card-side bg-bg-body gap-5 mt-4 mb-14 ">
+                        <div className="card card-side bg-bg-body gap-5 mt-16 mb-14 ">
                             <figure className='relative '>
                                 {/* <p className='absolute bg-bg-primary top-11 left-0 py-1 px-3 h-7 w-fit'>{new Date(blog.createdAt).toLocaleDateString('en-US', {
                                     month: 'long', day: '2-digit', year: 'numeric'

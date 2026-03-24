@@ -14,7 +14,6 @@ import DeleteModal from '../components/DeleteModal'
 
 
 
-
 const BlogDetail = () => {
 
   const LIMIT = 5
@@ -33,11 +32,14 @@ const BlogDetail = () => {
   const [selectedCommentId, setSelectedCommentId] = useState(null)
 
   console.log(selectedCommentId)
-  console.log(currentUser)
 
-  const displayedComments = blog?.comments ? blog.comments?.slice(0, visibleCount).reverse() : []
+  const displayedComments = blog?.comments
+    ? [...blog.comments].reverse().slice(0, visibleCount)
+    : []
 
   const category = categories?.find(cat => cat._id === blog?.categoryId?._id)
+
+
 
 
   const handleLoadMore = () => {
@@ -45,6 +47,7 @@ const BlogDetail = () => {
     if (blog) setVisibleCount(prevCount => prevCount + LIMIT);
 
   }
+
 
 
   const handleCreateComment = async (e) => {
@@ -71,7 +74,7 @@ const BlogDetail = () => {
       setIsSubmitting(false)
       toast.success("Comment sent!")
 
-    }, 1500)
+    }, 1000)
 
   }
 
@@ -107,7 +110,7 @@ const BlogDetail = () => {
 
 
   return (
-    <div className='grid grid-cols-3 gap-20 px-20 py-10'>
+    <div className='grid grid-cols-3 gap-10 px-10 py-10'>
       <div className='col-span-2 flex flex-col gap-5'>
         <div>
           <p className='text-bg-secondary text-xs font-medium tracking-widest uppercase mb-2 font-[Poppins]'>{category?.name}</p>
@@ -119,7 +122,7 @@ const BlogDetail = () => {
         <div className='flex gap-4'>
           <div className='bg-bg-primary flex items-center gap-2 justify-center flex-1 text-sm text-center py-3'>
             <FaEye className='text-xl opacity-20' />
-            <p>{blog.countOfVisitors} Views</p>
+            <p>{blog?.countOfVisitors} Views</p>
           </div>
           <div className='bg-bg-primary flex items-center gap-2 justify-center flex-1 text-sm text-center py-3'>
             <motion.div
@@ -131,7 +134,7 @@ const BlogDetail = () => {
             >
               <FaHeart className={`text-xl transition-colors duration-300 ${isLike ? 'text-red-500' : 'text-gray-300 hover:text-gray-400'}`} />
             </motion.div>
-            <p className='mt-0.5'>{`${blog.likes?.length} ${blog?.likes.length > 0 ? "Likes" : "Like"}`}</p>
+            <p className='mt-0.5'>{`${blog?.likes?.length} ${blog?.likes.length > 0 ? "Likes" : "Like"}`}</p>
           </div>
 
 
