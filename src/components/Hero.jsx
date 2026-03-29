@@ -71,7 +71,7 @@ const Hero = () => {
                                 {/* <p className='text-xs text-bg-secondary font-semibold'>{category?.name}</p> */}
                                 <h2 className="card-title text-3xl ">{blog.title}</h2>
                                 <p className='text-sm line-clamp-8 leading-relaxed text-gray-700 mt-3'>{blog.content}</p>
-                                <div className='mt-8'> <Link to={`/home/blog/${blog._id}`} onClick={() => updateViewCount(blog)} className="buttons">Read More</Link></div>
+                                <div className='mt-8'> <Link to={`/blog/${blog._id}`} onClick={() => updateViewCount(blog)} className="buttons">Read More</Link></div>
                                 <div className="flex mt-4 items-center justify-between gap-2">
                                     {/* <div className='flex items-center gap-1'>
                                         <FaEye className='text-xl opacity-20' />

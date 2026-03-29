@@ -7,6 +7,7 @@ import BlogDetail from "../pages/BlogDetail";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home";
 import ProtectedRouted from "../layout/ProtectedRouted";
+// import {NewBlog} from "../pages/NewBlog";
 
 
 
@@ -18,20 +19,17 @@ export const router = createBrowserRouter([
         // errorElement: <Error />,
         children: [
             { index: true, element: <Navigate to="/home" replace /> },
+            { path: "home", element: <Home /> },
+
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> },
             { path: "contact", element: <Contact /> },
             { path: "about", element: <About /> },
             {
-                path: "home",
+                element: <ProtectedRouted />,
                 children: [
-                    { index: true, element: <Home /> },
-                    {
-                        element: <ProtectedRouted />,
-                        children: [
-                            { path: "blog/:id", element: <BlogDetail /> },
-                        ],
-                    },
+                    { path: "blog/:id", element: <BlogDetail /> },
+                    // { path: "create-blog", element: <NewBlog /> },
                 ],
             },
         ],

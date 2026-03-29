@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useSearchParams } from 'react-router-dom'
+import { slugify } from '../../lib/slugify'
 
 const CategoryList = () => {
 
@@ -20,14 +21,17 @@ const CategoryList = () => {
                 >
                     All Categories
                 </Link>
-                {categories?.map((cat) => (
-                    <Link key={cat._id}
-                        to={`/home?category=${cat._id}`}
-                        className={`${activeCategory === cat._id ? "bg-bg-btn-2" : "bg-bg-primary/80"} category-btn flex-1 rounded cursor-pointer px-9 py-2 font-bold text-center`}
-                    >
-                        {cat.name}
-                    </Link>
-                ))}
+                {categories?.map((cat) => {
+                    const slug = slugify(cat.name)
+                    return (
+                        <Link key={cat._id}
+                            to={`/home?category=${slug}`}
+                            className={`${activeCategory === slug ? "bg-bg-btn-2" : "bg-bg-primary/80"} category-btn flex-1 rounded cursor-pointer px-9 py-2 font-bold text-center`}
+                        >
+                            {cat.name}
+                        </Link>
+                    )
+                })}
             </div>
         </div>
     )

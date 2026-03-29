@@ -77,12 +77,16 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex="-1"
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                        className="menu text-center menu-sm dropdown-content bg-bg-body rounded-box z-1 mt-1 w-42 p-2 shadow">
                         {currentUser
-                            ? <li><Link onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</Link></li>
+                            ? <>
+                                <li><Link to="create-blog" className='py-2 font-semibold text-gray-700/80 text-sm hover:bg-bg-primary'>Add New Blog</Link></li>
+                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>Settings</Link></li>
+                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</Link></li>
+                            </>
                             : <>
-                                <li><Link to="/login">Login</Link></li>
-                                <li><Link to="/register">Register</Link></li>
+                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/login">Login</Link></li>
+                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/register">Register</Link></li>
                             </>
                         }
 

@@ -6,28 +6,32 @@ import { Link, useSearchParams } from 'react-router';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Stack from '@mui/material/Stack'
+import { slugify } from '../lib/slugify';
 
 
 
 const LIMIT = 5;
 
 const BlogList = () => {
-    const { paginationBlogs, blogs } = useSelector((state) => state.blog);
+    const { paginationBlogs, blogs, categories } = useSelector((state) => state.blog);
     const { getDataByEndpoint } = useBlogCall();
     const [totalCount, setTotalCount] = useState(0); // toplam blog sayisi
 
     const [searchParams] = useSearchParams() // react router hooku. icerisinde page ve category kisimlarini barindiriyor. url de ki search kismina erisiyoruz bununla
     const page = parseInt(searchParams.get('page') || '1', 10);
     const category = searchParams.get('category')
+    const categoryId = categories.find(cat => slugify(cat.name) === category)?._id
 
     const { isSearching } = useSelector(state => state.blog)
+
+
 
     useEffect(() => {
         const skip = (page - 1) * LIMIT;
         const params = { limit: LIMIT, skip }
 
         if (category) {
-            params["filter[categoryId]"] = category; //bir objenin icerisine bu sekilde key ve value ekleyebiliyoruz.
+            params["filter[categoryId]"] = categoryId; //bir objenin icerisine bu sekilde key ve value ekleyebiliyoruz.
         }
 
         getDataByEndpoint("blogs", params, "paginationBlogs").then((data) => {
@@ -69,15 +73,20 @@ const BlogList = () => {
 
             <Pagination
                 page={page} // su an aktif olan sayfa numarasi
-                count={pageCount}
-                //toplam sayfa saysi
+                count={pageCount} //toplam sayfa saysi
 
                 renderItem={(item) => {
                     if (paginationBlogs?.length > 0) {
                         return (
                             <PaginationItem
                                 component={Link}
-                                to={`/home${item.page === 1 ? '' : `?page=${item.page}`}`}
+                                to={(() => {
+                                    const newParams = new URLSearchParams(searchParams) // url de ki parametreleri kopyaliyoruz.
+                                    if(item.page > 1 ) newParams.set("page", item.page)
+                                    else newParams.delete("page")
+                                    const query = newParams.toString() // urlde yan yana dizme islemi icin bunu yapiyoruz, yoksa obje formatinda icerik.
+                                    return `/home${query ? `?${query}` : ""}`
+                                })()}
                                 {...item}
                             />
                         )

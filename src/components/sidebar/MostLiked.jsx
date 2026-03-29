@@ -27,7 +27,7 @@ const MostLiked = () => {
         {mostLiked?.map((blog, index) => (
           <Link
             onClick={(e) => { if (!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") } }}
-            to={`/home/blog/${blog._id}`} key={blog._id}
+            to={`/blog/${blog._id}`} key={blog._id}
             className='flex items-center gap-3 relative border-b-1 border-b-gray-300/70 pb-3'>
             <p className='absolute bg-bg-primary w-6 h-6 pt-0.5 text-center rounded-full top-0'>{index + 1}</p>
             <img src={blog.image} alt="" className='rounded-full object-cover w-18 h-18' />

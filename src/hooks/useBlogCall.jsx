@@ -23,7 +23,6 @@ const useBlogCall = () => {
             })
 
             dispatch(fillEndpoints({ stateName, data: data.data }))
-            console.log('Full API response:', data)
             return data
 
         } catch (error) {

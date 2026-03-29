@@ -18,7 +18,7 @@ const BlogCard = ({ blog }) => {
     const { updateLike, getDataByEndpoint } = useBlogCall()
     const [isLike, setIsLike] = useState()
     const [copied, setCopied] = useState(false);
-    const blogUrl = `${window.location.origin}/home/blog/${blog._id}`
+    const blogUrl = `${window.location.origin}/blog/${blog._id}`
 
     const navigate = useNavigate()
 
@@ -41,7 +41,7 @@ const BlogCard = ({ blog }) => {
         if (!currentUser) {
             toast.error("Please log in to post a comment.")
         } else {
-           navigate(`/home/blog/${blog._id}`)
+           navigate(`/blog/${blog._id}`)
         }
     }
 
@@ -103,7 +103,7 @@ const BlogCard = ({ blog }) => {
                             className='text-base opacity-30 hover:opacity-80 cursor-pointer transition-opacity' />
                             <span className='absolute -top-2 -right-1.5 bg-bg-secondary text-white rounded-full px-1 text-[9px] leading-tight'>{blog.comments?.length}</span>
                         </div>
-                        <Link onClick={(e) => { if(!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") }}} to={`/home/blog/${blog._id}`} className="buttons ms-3">Read More</Link>
+                        <Link onClick={(e) => { if(!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") }}} to={`/blog/${blog._id}`} className="buttons ms-3">Read More</Link>
                     </div>
                 </div>
             </div>
