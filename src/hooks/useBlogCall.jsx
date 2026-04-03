@@ -3,6 +3,7 @@ import axios from 'axios'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fillBlog, fillEndpoints } from '../features/blogSlice'
+import { toast } from 'sonner'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -13,7 +14,7 @@ const useBlogCall = () => {
     const dispatch = useDispatch()
 
 
-    
+
     const getDataByEndpoint = async (endpoint, customParams = {}, stateName = endpoint) => {
 
         try {
@@ -107,7 +108,7 @@ const useBlogCall = () => {
                 }
             })
             console.log(data)
-        
+
 
         } catch (error) {
             console.log(error)
@@ -115,9 +116,29 @@ const useBlogCall = () => {
         }
     }
 
+    const addBlog = async (newBlog) => {
+        try {
+
+            await axios.post(`${BASE_URL}blogs/`, newBlog, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+
+            toast.success("blog eklendi")
+
+            return true
+
+        } catch (error) {
+            console.log(error)
+            toast.error("Please try again")
+            return false
+        }
+    }
 
 
-    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment }
+
+    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog }
 }
 
 export default useBlogCall

@@ -20,7 +20,7 @@ const BlogList = () => {
     const [searchParams] = useSearchParams() // react router hooku. icerisinde page ve category kisimlarini barindiriyor. url de ki search kismina erisiyoruz bununla
     const page = parseInt(searchParams.get('page') || '1', 10);
     const category = searchParams.get('category')
-    const categoryId = categories.find(cat => slugify(cat.name) === category)?._id
+    const categoryId = categories?.find(cat => slugify(cat.name) === category)?._id
 
     const { isSearching } = useSelector(state => state.blog)
 

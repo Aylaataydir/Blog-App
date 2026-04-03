@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import { persistor, store } from './app/Store'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Toaster } from 'sonner'
+import { Tiptap } from '@tiptap/react'
 
 function App() {
 

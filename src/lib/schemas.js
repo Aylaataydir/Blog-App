@@ -40,3 +40,10 @@ export const loginSchema = z.object({
         .regex(/[A-Z]/, "Must contain an uppercase letter")
         .regex(/[@$?!%&*]+/, "Must contain a special character (@$?!%&*)"),
 })
+
+export const blogSchema = z.object({
+    title: z.string().min(3, "Title must be at least 3 characters").max(150, "Title must be less than 150 characters"),
+    content: z.string().min(10, "Content must be at least 10 characters"),
+    image: z.string().url("Please enter a valid URL").min(1, "Cover image URL is required"),
+    categoryId: z.string().min(1, "Please select a category"),
+})

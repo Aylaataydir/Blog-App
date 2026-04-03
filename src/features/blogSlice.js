@@ -37,8 +37,6 @@ export const blogSlice = createSlice({
                 }
 
             }
-
-
         }),
         addCommentToBlog: ((state, { payload }) => {
 

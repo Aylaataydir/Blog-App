@@ -1,57 +1,171 @@
-// import { useEditor, EditorContent } from '@tiptap/react'
-// import StarterKit from '@tiptap/starter-kit'
+import { useState, useEffect } from 'react'
+import TiptapEditor from '../components/textEditor/TipTapEditor'
+import { LuX, LuEye } from 'react-icons/lu'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { blogSchema } from '../lib/schemas'
+import { useSelector } from 'react-redux'
+import useBlogCall from '../hooks/useBlogCall'
+import { useNavigate } from 'react-router-dom'
+
+const NewBlog = () => {
+
+  const navigate = useNavigate()
+
+  const [showPreview, setShowPreview] = useState(false)
+  const { categories } = useSelector(state => state.blog)
+  const { getDataByEndpoint, addBlog } = useBlogCall()
+  const [previewData, setPreviewData] = useState({ title: '', content: '', image: '' })
+
+  const form = useForm({
+    resolver: zodResolver(blogSchema),
+    defaultValues: {
+      categoryId: '',
+      title: '',
+      content: '',
+      image: '',
+      isPublish: true
+
+    },
+  })
 
 
-// const NewBlog = () => {
-//   const editor = useEditor({
-//     extensions: [StarterKit],
-//     content: '<p>Hello World! 🌍</p>',
-//     // Editörün içine DaisyUI "prose" sınıfını ekliyoruz ki başlıklar güzel görünsün
-//     editorProps: {
-//       attributes: {
-//         class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none min-h-[200px]',
-//       },
-//     },
-//   })
+  const { register, handleSubmit, setValue, getValues, formState: { errors, isSubmitting } } = form
 
-//   if (!editor) {
-//     return null
-//   }
+  const onSubmit = async (data) => {
+    console.log('Gönderilecek veri:', data)
+    console.log(data)
+    const res = await addBlog(data)
+    if (res) navigate("/home")
 
-//   return (
-//     <div className="border border-base-300 rounded-xl overflow-hidden bg-base-100">
-//       {/* TOOLBAR (Araç Çubuğu) - Burada DaisyUI butonlarını kullanıyoruz */}
-//       <div className="bg-base-200 p-2 flex gap-2 border-b border-base-300 flex-wrap">
-//         <button
-//           onClick={() => editor.chain().focus().toggleBold().run()}
-//           className={`btn btn-sm ${editor.isActive('bold') ? 'btn-primary' : 'btn-ghost'}`}
-//         >
-//           Bold
-//         </button>
-//         <button
-//           onClick={() => editor.chain().focus().toggleItalic().run()}
-//           className={`btn btn-sm ${editor.isActive('italic') ? 'btn-primary' : 'btn-ghost'}`}
-//         >
-//           Italic
-//         </button>
-//         <button
-//           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-//           className={`btn btn-sm ${editor.isActive('heading', { level: 2 }) ? 'btn-primary' : 'btn-ghost'}`}
-//         >
-//           H2
-//         </button>
-//         <button
-//           onClick={() => editor.chain().focus().toggleBulletList().run()}
-//           className={`btn btn-sm ${editor.isActive('bulletList') ? 'btn-primary' : 'btn-ghost'}`}
-//         >
-//           Bullet List
-//         </button>
-//       </div>
+  }
 
-//       {/* ASIL EDİTÖR ALANI */}
-//       <EditorContent editor={editor} />
-//     </div>
-//   )
-// }
+  useEffect(() => {
+    if (!categories) getDataByEndpoint('categories')
+  }, [])
 
-// export default NewBlog
+  return (
+    <div className="newblog-page">
+      <div className="newblog-container">
+        {/* Page Header */}
+        <div className="newblog-header">
+          <h1 className="newblog-title">Create New Post</h1>
+          <p className="newblog-subtitle">Share your thoughts with the world</p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="newblog-form">
+
+          {/* Category */}
+          <div className="newblog-field">
+            <label className="newblog-label">Category</label>
+            <select
+              {...register('categoryId')}
+              className={`newblog-select ${errors.categoryId ? 'newblog-input--error' : ''}`}
+            >
+              <option value="">Select a category</option>
+              {categories?.map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            {errors.categoryId && (
+              <span className="newblog-error">{errors.categoryId.message}</span>
+            )}
+          </div>
+
+          {/* Title */}
+          <div className="newblog-field">
+            <label className="newblog-label">Title</label>
+            <input
+              type="text"
+              placeholder="Blog title..."
+              {...register('title')}
+              className={`newblog-input ${errors.title ? 'newblog-input--error' : ''}`}
+            />
+            {errors.title && (
+              <span className="newblog-error">{errors.title.message}</span>
+            )}
+          </div>
+
+          {/* Cover Image URL */}
+          <div className="newblog-field">
+            <label className="newblog-label">Cover Image URL</label>
+            <input
+              type="text"
+              placeholder="https://example.com/image.jpg"
+              {...register('image')}
+              className={`newblog-input ${errors.image ? 'newblog-input--error' : ''}`}
+            />
+            {errors.image && (
+              <span className="newblog-error">{errors.image.message}</span>
+            )}
+          </div>
+
+          {/* Content */}
+          <div className="newblog-field">
+            <label className="newblog-label">Content</label>
+            <TiptapEditor onChange={(html) => setValue('content', html, { shouldValidate: true })} />
+            {errors.content && (
+              <span className="newblog-error">{errors.content.message}</span>
+            )}
+          </div>
+
+          {/* Actions */}
+          <div className="newblog-actions">
+            <button
+              type="button"
+              className="newblog-preview-btn"
+              onClick={() => {
+                setPreviewData(getValues())
+                setShowPreview(true)
+              }}
+            >
+              <LuEye size={16} />
+              Preview
+            </button>
+            <button type="submit" disabled={isSubmitting} className="newblog-publish-btn">
+              {isSubmitting ? 'Publishing...' : 'Publish Post'}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Preview Modal */}
+      {showPreview && (
+        <div className="preview-overlay" onClick={() => setShowPreview(false)}>
+          <div className="preview-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="preview-modal-header">
+              <span className="preview-modal-badge">Preview</span>
+              <button
+                className="preview-modal-close"
+                onClick={() => setShowPreview(false)}
+              >
+                <LuX size={20} />
+              </button>
+            </div>
+
+            <div className="preview-modal-body">
+              {previewData.image && (
+                <img
+                  src={previewData.image}
+                  alt="Cover"
+                  className="preview-cover"
+                />
+              )}
+              <h1 className="preview-title">
+                {previewData.title || 'Untitled Post'}
+              </h1>
+              <div
+                className="preview-content tiptap"
+                dangerouslySetInnerHTML={{ __html: previewData.content || '<p style="color:#aaa">No content yet...</p>' }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default NewBlog

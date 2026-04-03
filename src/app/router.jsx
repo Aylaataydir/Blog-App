@@ -7,6 +7,7 @@ import BlogDetail from "../pages/BlogDetail";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/Home";
 import ProtectedRouted from "../layout/ProtectedRouted";
+import NewBlog from "../pages/NewBlog";
 // import {NewBlog} from "../pages/NewBlog";
 
 
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
                 element: <ProtectedRouted />,
                 children: [
                     { path: "blog/:id", element: <BlogDetail /> },
-                    // { path: "create-blog", element: <NewBlog /> },
+                    { path: "create-blog", element: <NewBlog /> },
                 ],
             },
         ],
