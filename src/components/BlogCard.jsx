@@ -41,7 +41,7 @@ const BlogCard = ({ blog }) => {
         if (!currentUser) {
             toast.error("Please log in to post a comment.")
         } else {
-           navigate(`/blog/${blog._id}`)
+            navigate(`/blog/${blog._id}`)
         }
     }
 
@@ -67,7 +67,7 @@ const BlogCard = ({ blog }) => {
                 <div>
                     <p className='text-[10px] text-bg-secondary font-semibold uppercase tracking-widest mb-1'>{category?.name}</p>
                     <h2 className="text-xl font-semibold leading-snug mb-2">{blog.title}</h2>
-                    <p className='text-xs line-clamp-3 leading-relaxed text-gray-700'>{blog.content}</p>
+                    <div className='tiptap text-xs line-clamp-3 leading-relaxed text-gray-700' dangerouslySetInnerHTML={{ __html: blog.content }} />
                 </div>
                 <div className='flex items-center justify-between mt-3'>
                     <div className="flex items-center gap-2">
@@ -98,12 +98,12 @@ const BlogCard = ({ blog }) => {
                             <p className='text-xs text-gray-400'>{blog.countOfVisitors}</p>
                         </div>
                         <div className='relative flex items-center'>
-                            <BiSolidComment 
-                            onClick={clickComment}
-                            className='text-base opacity-30 hover:opacity-80 cursor-pointer transition-opacity' />
+                            <BiSolidComment
+                                onClick={clickComment}
+                                className='text-base opacity-30 hover:opacity-80 cursor-pointer transition-opacity' />
                             <span className='absolute -top-2 -right-1.5 bg-bg-secondary text-white rounded-full px-1 text-[9px] leading-tight'>{blog.comments?.length}</span>
                         </div>
-                        <Link onClick={(e) => { if(!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") }}} to={`/blog/${blog._id}`} className="buttons ms-3">Read More</Link>
+                        <Link onClick={(e) => { if (!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") } }} to={`/blog/${blog._id}`} className="buttons ms-3">Read More</Link>
                     </div>
                 </div>
             </div>

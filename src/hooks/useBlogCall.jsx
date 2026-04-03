@@ -117,6 +117,9 @@ const useBlogCall = () => {
     }
 
     const addBlog = async (newBlog) => {
+
+        new Promise(resolve => setTimeout(resolve, 2000))
+
         try {
 
             await axios.post(`${BASE_URL}blogs/`, newBlog, {
@@ -125,17 +128,16 @@ const useBlogCall = () => {
                 }
             })
 
-            toast.success("blog eklendi")
+            toast.success("Your blog has been published.")
 
             return true
 
         } catch (error) {
             console.log(error)
-            toast.error("Please try again")
+            toast.error("Something went wrong. Please try again.")
             return false
         }
     }
-
 
 
     return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog }

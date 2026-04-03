@@ -138,7 +138,7 @@ const BlogDetail = () => {
 
 
         </div>
-        <p className='text-sm text-justify '>{blog?.content}</p>
+        <div className='tiptap text-sm text-justify py-6' dangerouslySetInnerHTML={{ __html: blog?.content }} />
         <div className="avatar items-center gap-3">
           <div className="ring-offset-base-100 w-12 rounded-full ring-1 ">
             <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />

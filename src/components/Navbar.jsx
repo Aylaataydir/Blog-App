@@ -70,9 +70,7 @@ const Navbar = () => {
 
 
                         <div className="w-10 rounded-full">
-                            <img
-                                alt="Tailwind CSS Navbar component"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                            <img src={currentUser?.image ? currentUser.image : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
                         </div>
                     </div>
                     <ul
@@ -81,7 +79,7 @@ const Navbar = () => {
                         {currentUser
                             ? <>
                                 <li><Link to="create-blog" className='py-2 font-semibold text-gray-700/80 text-sm hover:bg-bg-primary'>Add New Blog</Link></li>
-                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>Settings</Link></li>
+                                <li><Link to="my-profile" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</Link></li>
                                 <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</Link></li>
                             </>
                             : <>
