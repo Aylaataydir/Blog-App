@@ -9,6 +9,9 @@ import Home from "../pages/Home";
 import ProtectedRouted from "../layout/ProtectedRouted";
 import NewBlog from "../pages/NewBlog";
 import MyProfile from "../pages/MyProfile";
+import MyBlogsList from "../components/myProfile/MyBlogsList";
+import MyReadingList from "../components/myProfile/MyReadingList";
+import MyFavoritesList from "../components/myProfile/MyFavoritesList";
 // import {NewBlog} from "../pages/NewBlog";
 
 
@@ -31,8 +34,15 @@ export const router = createBrowserRouter([
                 element: <ProtectedRouted />,
                 children: [
                     { path: "blog/:id", element: <BlogDetail /> },
-                    { path: "create-blog", element: <NewBlog /> },
-                    { path: "my-profile", element: <MyProfile /> },
+                    {
+                        path: "my-profile", element: <MyProfile />,
+                        children: [
+                            { path: "my-blogs", element: <MyBlogsList /> },
+                            { path: "my-favorites", element: <MyFavoritesList /> },
+                            { path: "my-reading-list", element: <MyReadingList /> },
+                            { path: "add-new-blog", element: <NewBlog /> },
+                        ]
+                    },
                 ],
             },
         ],

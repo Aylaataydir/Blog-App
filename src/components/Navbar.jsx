@@ -50,7 +50,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className="navbar justify-between  shadow-sm px-5 bg-bg-btn ">
+        <div className="navbar justify-between shadow-sm px-5 bg-bg-btn">
             <div className="">
                 <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 " />
             </div>
@@ -78,8 +78,7 @@ const Navbar = () => {
                         className="menu text-center menu-sm dropdown-content bg-bg-body rounded-box z-1 mt-1 w-42 p-2 shadow">
                         {currentUser
                             ? <>
-                                <li><Link to="create-blog" className='py-2 font-semibold text-gray-700/80 text-sm hover:bg-bg-primary'>Add New Blog</Link></li>
-                                <li><Link to="my-profile" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</Link></li>
+                                <li><Link to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</Link></li>
                                 <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</Link></li>
                             </>
                             : <>

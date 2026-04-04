@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import useBlogCall from '../hooks/useBlogCall'
-import { deleteCommentFromBlog } from '../features/blogSlice'
+import useBlogCall from '../../hooks/useBlogCall'
+import { deleteCommentFromBlog } from '../../features/blogSlice'
 
 const DeleteModal = ({ commentId }) => {
 

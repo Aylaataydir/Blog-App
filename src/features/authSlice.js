@@ -16,20 +16,23 @@ export const authSlice = createSlice({
                 const { email, username, firstName, lastName, _id } = payload.user
                 state.currentUser = { email, username, firstName, lastName, _id }
                 state.token = payload.token
-    
+
             }
             if (payload.data) {
                 const { email, username, firstName, lastName } = payload.data
                 state.currentUser = { email, username, firstName, lastName }
                 state.token = payload.token
             }
-
-
-
         },
         cleanUserData: (state, { }) => {
             state.currentUser = null;
             state.token = null
+        },
+        updateUserData: (state, { payload }) => {
+            const { username, email, image } = payload
+            state.currentUser.username = username
+            state.currentUser.email = email
+            state.currentUser.image = image
         }
 
     }
@@ -37,6 +40,6 @@ export const authSlice = createSlice({
 })
 
 
-export const { fillUserData, cleanUserData } = authSlice.actions
+export const { fillUserData, cleanUserData, updateUserData } = authSlice.actions
 
 export default authSlice.reducer

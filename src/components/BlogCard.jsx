@@ -8,6 +8,7 @@ import { fillEndpoints, toggleBlogListLike } from '../features/blogSlice';
 import { useEffect, useState } from 'react';
 import useBlogCall from '../hooks/useBlogCall';
 import { toast } from 'sonner';
+import { slugify } from '../lib/slugify';
 
 
 const BlogCard = ({ blog }) => {
@@ -44,6 +45,8 @@ const BlogCard = ({ blog }) => {
             navigate(`/blog/${blog._id}`)
         }
     }
+
+    const slug = slugify(blog.title)
 
 
     useEffect(() => {
@@ -103,7 +106,7 @@ const BlogCard = ({ blog }) => {
                                 className='text-base opacity-30 hover:opacity-80 cursor-pointer transition-opacity' />
                             <span className='absolute -top-2 -right-1.5 bg-bg-secondary text-white rounded-full px-1 text-[9px] leading-tight'>{blog.comments?.length}</span>
                         </div>
-                        <Link onClick={(e) => { if (!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") } }} to={`/blog/${blog._id}`} className="buttons ms-3">Read More</Link>
+                        <Link onClick={(e) => { if (!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") } }} to={`/blog/${slug}-${blog._id}`} className="buttons ms-3">Read More</Link>
                     </div>
                 </div>
             </div>

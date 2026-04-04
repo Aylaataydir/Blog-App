@@ -10,7 +10,7 @@ import * as motion from 'motion/react-client'
 import { addCommentToBlog, deleteCommentFromBlog, toggleBlogLike } from '../features/blogSlice'
 import { toast } from 'sonner'
 import { MdDelete, MdEdit } from "react-icons/md";
-import DeleteModal from '../components/DeleteModal'
+import DeleteModal from '../components/modals/DeleteModal'
 
 
 
@@ -18,7 +18,8 @@ const BlogDetail = () => {
 
   const LIMIT = 5
 
-  const { id } = useParams()
+  const { id: rawId } = useParams()
+  const id = rawId.slice(rawId.lastIndexOf('-') + 1)
 
   const dispatch = useDispatch()
   const { getEndpointById, getDataByEndpoint, createComment, deleteComment } = useBlogCall()
@@ -83,7 +84,6 @@ const BlogDetail = () => {
     setIsLike(prev => !prev)
     await updateLike(id)
 
-
   }
 
 
@@ -138,7 +138,7 @@ const BlogDetail = () => {
 
 
         </div>
-        <div className='tiptap text-sm text-justify py-6' dangerouslySetInnerHTML={{ __html: blog?.content }} />
+        <div className='tiptap text-sm text-justify py-6 tracking-normal' dangerouslySetInnerHTML={{ __html: blog?.content }} />
         <div className="avatar items-center gap-3">
           <div className="ring-offset-base-100 w-12 rounded-full ring-1 ">
             <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />

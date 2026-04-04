@@ -4,6 +4,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fillBlog, fillEndpoints } from '../features/blogSlice'
 import { toast } from 'sonner'
+import { updateUserData } from '../features/authSlice'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -100,7 +101,6 @@ const useBlogCall = () => {
 
     const deleteComment = async (commentId) => {
 
-
         try {
             const { data } = await axios.delete(`${BASE_URL}comments/${commentId}`, {
                 headers: {
@@ -116,9 +116,10 @@ const useBlogCall = () => {
         }
     }
 
+
     const addBlog = async (newBlog) => {
 
-        new Promise(resolve => setTimeout(resolve, 2000))
+        await new Promise(resolve => setTimeout(resolve, 1000))
 
         try {
 
@@ -140,7 +141,31 @@ const useBlogCall = () => {
     }
 
 
-    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog }
+    const updateUserCredentials = async (userId, updatedCredentials) => {
+
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        try {
+            await axios.put(`${BASE_URL}users/${userId}`, updatedCredentials, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+            dispatch(updateUserData(updatedCredentials))
+            toast.success("Your credentials updated.")
+
+            return true
+
+        } catch (error) {
+            console.log(error)
+            toast.error("Something went wrong. Please try again.")
+
+            return false
+        }
+    }
+
+
+    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog, updateUserCredentials }
 }
 
 export default useBlogCall
