@@ -10,6 +10,13 @@ const MyProfileSidebar = () => {
     const { blogs } = useSelector(state => state.blog)
 
 
+    const myBlogs = blogs?.filter(blog => blog.userId === currentUser._id)
+
+    console.log(myBlogs)
+
+    const countLikes = myBlogs.reduce((sum, blog) => sum += blog.likes.length, 0)
+    const countVisitors = myBlogs.reduce((sum, blog) => sum += blog.countOfVisitors, 0)
+
 
     const tabs = [
         { key: 'my-blogs', label: 'My Blogs', icon: <FaPen className='text-xs' /> },
@@ -38,17 +45,17 @@ const MyProfileSidebar = () => {
             <div className='grid grid-cols-3 gap-1'>
                 <div className='bg-bg-primary rounded-sm p-4 flex flex-col items-center gap-1'>
                     <FaPen className='text-bg-secondary text-sm' />
-                    <p className='font-semibold font-[Poppins] text-lg'>0</p>
+                    <p className='font-semibold font-[Poppins] text-lg'>{myBlogs.length}</p>
                     <p className='text-[10px] uppercase tracking-wider opacity-50 font-medium'>Blogs</p>
                 </div>
                 <div className='bg-bg-primary rounded-sm p-4 flex flex-col items-center gap-1'>
                     <FaHeart className='text-red-400 text-sm' />
-                    <p className='font-semibold font-[Poppins] text-lg'>0</p>
+                    <p className='font-semibold font-[Poppins] text-lg'>{countLikes}</p>
                     <p className='text-[10px] uppercase tracking-wider opacity-50 font-medium'>Likes</p>
                 </div>
                 <div className='bg-bg-primary rounded-sm p-4 flex flex-col items-center gap-1'>
                     <FaEye className='text-bg-btn text-sm' />
-                    <p className='font-semibold font-[Poppins] text-lg'>0</p>
+                    <p className='font-semibold font-[Poppins] text-lg'>{countVisitors}</p>
                     <p className='text-[10px] uppercase tracking-wider opacity-50 font-medium'>View</p>
                 </div>
             </div>
@@ -81,7 +88,7 @@ const MyProfileSidebar = () => {
                     ))}
                 </div>
             </div>
-            <UserUpdateModal currentUser={currentUser}/>
+            <UserUpdateModal currentUser={currentUser} />
         </div>
     )
 }

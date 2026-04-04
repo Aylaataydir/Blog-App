@@ -61,15 +61,15 @@ const Navbar = () => {
             </div>
             <div className="flex gap-2 items-center">
                 {currentUser &&
-                    <div className=''>
+                    <div className='text-base'>
                         <p>{currentUser.username}</p>
                     </div>}
 
                 <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className=" flex  btn btn-ghost btn-circle avatar">
+                    <div tabIndex={0} role="button" className=" flex w-11 btn btn-ghost btn-circle avatar">
 
 
-                        <div className="w-10 rounded-full">
+                        <div className=" rounded-full">
                             <img src={currentUser?.image ? currentUser.image : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
                         </div>
                     </div>
