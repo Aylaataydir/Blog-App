@@ -2,16 +2,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import * as motion from "motion/react-client"
 import { BiSolidShareAlt } from "react-icons/bi";
-import { FaEye, FaHeart } from "react-icons/fa";
+import { FaEye, FaHeart} from "react-icons/fa";
 import { BiSolidComment } from "react-icons/bi";
-import { fillEndpoints, toggleBlogListLike } from '../features/blogSlice';
+import { toggleBlogListLike } from '../features/blogSlice';
 import { useEffect, useState } from 'react';
 import useBlogCall from '../hooks/useBlogCall';
 import { toast } from 'sonner';
 import { slugify } from '../lib/slugify';
 
 
-const BlogCard = ({ blog }) => {
+
+const BlogCard = ({ blog}) => {
 
     const dispatch = useDispatch()
     const { categories, blogs } = useSelector(state => state.blog)
@@ -19,6 +20,8 @@ const BlogCard = ({ blog }) => {
     const { updateLike, getDataByEndpoint } = useBlogCall()
     const [isLike, setIsLike] = useState()
     const [copied, setCopied] = useState(false);
+    
+
     const blogUrl = `${window.location.origin}/blog/${blog._id}`
 
     const navigate = useNavigate()
@@ -60,16 +63,16 @@ const BlogCard = ({ blog }) => {
 
     return (
         <div className="blog-card flex gap-5 p-4">
-            <figure className='relative flex-shrink-0'>
+            <figure className='relative flex-shrink-0 '>
                 <p className='absolute bg-bg-primary/90 top-2 left-0 py-0.5 px-2 text-[10px] tracking-wide'>
                     {new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })}
                 </p>
-                <img className='rounded-lg w-64 h-44 object-cover' src={blog.image} alt="" />
+                <img className='rounded-lg w-66 h-48 object-cover' src={blog.image} alt="" />
             </figure>
             <div className="flex flex-col flex-1 py-1 justify-between">
                 <div>
                     <p className='text-[10px] text-bg-secondary font-semibold uppercase tracking-widest mb-1'>{category?.name}</p>
-                    <h2 className="text-xl font-semibold leading-snug mb-2">{blog.title}</h2>
+                    <h2 className="text-xl font-semibold line-clamp-2 leading-snug mb-2">{blog.title}</h2>
                     <div className='tiptap text-xs line-clamp-3 leading-relaxed text-gray-700' dangerouslySetInnerHTML={{ __html: blog.content }} />
                 </div>
                 <div className='flex items-center justify-between mt-3'>
@@ -107,7 +110,7 @@ const BlogCard = ({ blog }) => {
                             <span className='absolute -top-2 -right-1.5 bg-bg-secondary text-white rounded-full px-1 text-[9px] leading-tight'>{blog.comments?.length}</span>
                         </div>
                         <Link onClick={(e) => { if (!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") } }} to={`/blog/${slug}-${blog._id}`} className="buttons ms-3">Read More</Link>
-                    </div>
+                    </div>    
                 </div>
             </div>
         </div>

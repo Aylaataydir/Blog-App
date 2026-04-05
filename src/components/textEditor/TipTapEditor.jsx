@@ -10,6 +10,7 @@ import {
   LuList, LuListOrdered, LuQuote, LuMinus,
   LuImage, LuUndo2, LuRedo2, LuPilcrow, LuCode
 } from 'react-icons/lu'
+import { useEffect } from 'react'
 
 const ToolbarButton = ({ onClick, isActive, title, children }) => (
   <button
@@ -24,7 +25,7 @@ const ToolbarButton = ({ onClick, isActive, title, children }) => (
 
 const ToolbarDivider = () => <div className="editor-toolbar-divider" />
 
-const TiptapEditor = ({ onChange }) => {
+const TiptapEditor = ({ onChange, initialContent = "" }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -33,7 +34,7 @@ const TiptapEditor = ({ onChange }) => {
       Underline,
       Highlight.configure({ multicolor: true }),
     ],
-    content: '',
+    content: initialContent,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML())
     },
@@ -45,6 +46,15 @@ const TiptapEditor = ({ onChange }) => {
       editor.chain().focus().setImage({ src: url }).run()
     }
   }
+
+  useEffect(() => {
+    if (editor && initialContent) {
+      editor.commands.setContent(initialContent)
+    }
+  }, [editor, initialContent])
+
+
+  
 
   if (!editor) return null
 

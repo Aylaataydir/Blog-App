@@ -35,6 +35,7 @@ export const updateProfileSchema = z.object({
     image: z.string().url("Please enter a valid URL").or(z.literal("")),
 })
 
+
 export const loginSchema = z.object({
     username: z.string().min(1, "Invalid email address"),
     password: z
@@ -46,6 +47,7 @@ export const loginSchema = z.object({
         .regex(/[A-Z]/, "Must contain an uppercase letter")
         .regex(/[@$?!%&*]+/, "Must contain a special character (@$?!%&*)"),
 })
+
 
 export const blogSchema = z.object({
     title: z.string().min(3, "Title must be at least 3 characters").max(150, "Title must be less than 150 characters"),

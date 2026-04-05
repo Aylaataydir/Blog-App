@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { FaHeart, FaEye, FaPen, FaBookmark, FaStar, FaPlusCircle } from 'react-icons/fa'
 import { Link, NavLink } from 'react-router-dom'
 import UserUpdateModal from '../modals/UserUpdateModal'
+import useBlogCall from '../../hooks/useBlogCall'
 
 const MyProfileSidebar = () => {
 
     const { currentUser } = useSelector(state => state.auth)
-    const { blogs } = useSelector(state => state.blog)
+    const { userBlogs } = useSelector(state => state.blog)
+    const { getDataByEndpoint } = useBlogCall()
 
+    // const myBlogs = (blogs ?? []).filter(blog => blog.userId === currentUser?._id)
 
-    const myBlogs = blogs?.filter(blog => blog.userId === currentUser._id)
+    const countLikes = userBlogs?.reduce((sum, blog) => sum + Number(blog.likes.length), 0)
+    const countVisitors = userBlogs?.reduce((sum, blog) => sum + blog.countOfVisitors, 0)
 
-    console.log(myBlogs)
-
-    const countLikes = myBlogs.reduce((sum, blog) => sum += blog.likes.length, 0)
-    const countVisitors = myBlogs.reduce((sum, blog) => sum += blog.countOfVisitors, 0)
-
+    useEffect(() => {
+        getDataByEndpoint("blogs", { "sort[createdAt]": "desc", "filter[userId]":currentUser._id }, "userBlogs")
+    }, [])
 
     const tabs = [
         { key: 'my-blogs', label: 'My Blogs', icon: <FaPen className='text-xs' /> },
@@ -45,7 +47,7 @@ const MyProfileSidebar = () => {
             <div className='grid grid-cols-3 gap-1'>
                 <div className='bg-bg-primary rounded-sm p-4 flex flex-col items-center gap-1'>
                     <FaPen className='text-bg-secondary text-sm' />
-                    <p className='font-semibold font-[Poppins] text-lg'>{myBlogs.length}</p>
+                    <p className='font-semibold font-[Poppins] text-lg'>{userBlogs?.length ?? 0}</p>
                     <p className='text-[10px] uppercase tracking-wider opacity-50 font-medium'>Blogs</p>
                 </div>
                 <div className='bg-bg-primary rounded-sm p-4 flex flex-col items-center gap-1'>

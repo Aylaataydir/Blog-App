@@ -10,9 +10,11 @@ import { slugify } from '../lib/slugify';
 
 
 
+
 const LIMIT = 5;
 
 const BlogList = () => {
+
     const { paginationBlogs, blogs, categories } = useSelector((state) => state.blog);
     const { getDataByEndpoint } = useBlogCall();
     const [totalCount, setTotalCount] = useState(0); // toplam blog sayisi
@@ -25,10 +27,9 @@ const BlogList = () => {
     const { isSearching } = useSelector(state => state.blog)
 
 
-
     useEffect(() => {
         const skip = (page - 1) * LIMIT;
-        const params = { limit: LIMIT, skip }
+        const params = { limit: LIMIT, skip, "sort[createdAt]": "desc" }
 
         if (category) {
             params["filter[categoryId]"] = categoryId; //bir objenin icerisine bu sekilde key ve value ekleyebiliyoruz.
@@ -54,7 +55,7 @@ const BlogList = () => {
                         )}
 
                         {blogs?.map((blog) => (
-                            <BlogCard key={blog._id} blog={blog} />
+                            <BlogCard key={blog._id} blog={blog}/>
                         ))}
                     </>
                     )
@@ -82,7 +83,7 @@ const BlogList = () => {
                                 component={Link}
                                 to={(() => {
                                     const newParams = new URLSearchParams(searchParams) // url de ki parametreleri kopyaliyoruz.
-                                    if(item.page > 1 ) newParams.set("page", item.page)
+                                    if (item.page > 1) newParams.set("page", item.page)
                                     else newParams.delete("page")
                                     const query = newParams.toString() // urlde yan yana dizme islemi icin bunu yapiyoruz, yoksa obje formatinda icerik.
                                     return `/home${query ? `?${query}` : ""}`

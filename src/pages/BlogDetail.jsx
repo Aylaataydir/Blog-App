@@ -227,7 +227,7 @@ const BlogDetail = () => {
       <div className='mt-20'>
         <Sidebar />
       </div>
-      <DeleteModal commentId={selectedCommentId} />
+      <DeleteModal commentId={selectedCommentId} title="comment" />
     </div>
 
   )

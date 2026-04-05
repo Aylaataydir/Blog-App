@@ -4,53 +4,73 @@ import { LuX, LuEye } from 'react-icons/lu'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { blogSchema } from '../lib/schemas'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useBlogCall from '../hooks/useBlogCall'
 import { useNavigate } from 'react-router-dom'
+import { setEditingBlog } from '../features/blogSlice'
 
 const NewBlog = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [showPreview, setShowPreview] = useState(false)
-  const { categories } = useSelector(state => state.blog)
-  const { getDataByEndpoint, addBlog } = useBlogCall()
+  const { categories, editingBlog } = useSelector(state => state.blog)
+  const { getDataByEndpoint, addBlog, updateBlog } = useBlogCall()
   const [previewData, setPreviewData] = useState({ title: '', content: '', image: '' })
+
+  console.log(editingBlog)
 
   const form = useForm({
     resolver: zodResolver(blogSchema),
     defaultValues: {
-      categoryId: '',
-      title: '',
-      content: '',
-      image: '',
+      categoryId: editingBlog?.categoryId || "",
+      title: editingBlog?.title || "",
+      content: editingBlog?.content || "",
+      image: editingBlog?.image || "",
       isPublish: true
 
     },
   })
 
-
   const { register, handleSubmit, setValue, getValues, formState: { errors, isSubmitting } } = form
 
   const onSubmit = async (data) => {
-    console.log('Gönderilecek veri:', data)
-    console.log(data)
-    const res = await addBlog(data)
-    if (res) navigate("/home")
 
+    if (editingBlog) {
+
+      console.log(data)
+      const res = await updateBlog(editingBlog._id, data)
+      if (res) {
+        navigate("/my-profile/my-blogs")
+        dispatch(setEditingBlog(null))
+      }
+
+
+    }
+    else {
+      console.log(data)
+      const res = await addBlog(data)
+      if (res) navigate("/home")
+    }
   }
 
   useEffect(() => {
     if (!categories) getDataByEndpoint('categories')
   }, [])
 
+
+
+
   return (
     <div className="newblog-page">
       <div className="newblog-container">
         {/* Page Header */}
         <div className="newblog-header">
-          <h1 className="newblog-title">Create New Post</h1>
-          <p className="newblog-subtitle">Share your thoughts with the world</p>
+          <h1 className="newblog-title">{editingBlog ? "Edit Blog" : "Create New Post"}</h1>
+          {!editingBlog &&
+            <p className="newblog-subtitle">Share your thoughts with the world</p>
+          }
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="newblog-form">
@@ -105,7 +125,7 @@ const NewBlog = () => {
           {/* Content */}
           <div className="newblog-field">
             <label className="newblog-label">Content</label>
-            <TiptapEditor onChange={(html) => setValue('content', html, { shouldValidate: true })} />
+            <TiptapEditor initialContent={editingBlog?.content || ""} onChange={(html) => setValue('content', html, { shouldValidate: true })} />
             {errors.content && (
               <span className="newblog-error">{errors.content.message}</span>
             )}
@@ -125,7 +145,10 @@ const NewBlog = () => {
               Preview
             </button>
             <button type="submit" disabled={isSubmitting} className="newblog-publish-btn">
-              {isSubmitting ? 'Publishing...' : 'Publish Post'}
+              {editingBlog
+                ? isSubmitting ? 'Updating...' : 'Update Blog'
+                : isSubmitting ? 'Publishing...' : 'Publish Post'
+              }
             </button>
           </div>
         </form>

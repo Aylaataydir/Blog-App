@@ -11,7 +11,7 @@ const BASE_URL = import.meta.env.VITE_API_URL
 const useBlogCall = () => {
 
 
-    const { token } = useSelector(state => state.auth)
+    const { token, currentUser } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
 
@@ -30,8 +30,8 @@ const useBlogCall = () => {
         } catch (error) {
             console.log(error)
         }
-
     }
+
 
     const getEndpointById = async (endpoint, blogId, stateName) => {
 
@@ -47,6 +47,7 @@ const useBlogCall = () => {
         }
 
     }
+
 
     const getLikesById = async (userId) => {
 
@@ -66,6 +67,7 @@ const useBlogCall = () => {
     }
 
 
+
     const updateLike = async (blogId) => {
         try {
             const { data } = await axios.post(`${BASE_URL}blogs/${blogId}/postLike`, {}, {
@@ -78,6 +80,7 @@ const useBlogCall = () => {
             console.log(error)
         }
     }
+
 
 
     const createComment = async (comment) => {
@@ -99,6 +102,7 @@ const useBlogCall = () => {
     }
 
 
+
     const deleteComment = async (commentId) => {
 
         try {
@@ -115,6 +119,7 @@ const useBlogCall = () => {
 
         }
     }
+
 
 
     const addBlog = async (newBlog) => {
@@ -141,6 +146,8 @@ const useBlogCall = () => {
     }
 
 
+
+
     const updateUserCredentials = async (userId, updatedCredentials) => {
 
         await new Promise(resolve => setTimeout(resolve, 1000))
@@ -165,7 +172,58 @@ const useBlogCall = () => {
     }
 
 
-    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog, updateUserCredentials }
+
+    const updateBlog = async (blogId, updatedBlog) => {
+
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        try {
+            await axios.put(`${BASE_URL}blogs/${blogId}`, updatedBlog, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+
+            await getDataByEndpoint("blogs", { "filter[userId]": currentUser._id }, "userBlogs")
+            toast.success("Your blog updated.")
+
+            return true
+
+        } catch (error) {
+            console.log(error)
+            toast.error("Something went wrong. Please try again.")
+
+            return false
+        }
+    }
+
+
+
+
+    const deleteBlog = async (blogId) => {
+
+        try {
+            await axios.delete(`${BASE_URL}blogs/${blogId}/`, {
+                headers: {
+                    Authorization: `Token ${token}`
+                }
+            })
+
+            await getDataByEndpoint("blogs", { "filter[userId]": currentUser._id }, "userBlogs")
+            toast.success("Your blog deleted.")
+
+            return true
+
+        } catch (error) {
+            console.log(error)
+            toast.error("Something went wrong. Please try again.")
+
+            return false
+        }
+    }
+
+
+    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog, updateUserCredentials, updateBlog, deleteBlog }
 }
 
 export default useBlogCall

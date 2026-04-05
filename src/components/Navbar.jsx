@@ -6,6 +6,7 @@ import useAuthCall from '../hooks/useAuthCall'
 import useBlogCall from '../hooks/useBlogCall'
 import { toggleSearching } from '../features/blogSlice'
 import { MdVerticalAlignBottom } from 'react-icons/md'
+import logo from "../../assets/logo.png"
 
 
 const Navbar = () => {
@@ -51,8 +52,9 @@ const Navbar = () => {
 
     return (
         <div className="navbar justify-between shadow-sm px-5 bg-bg-btn">
-            <div className="">
-                <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 " />
+            <div className="flex">
+                {/* <img src={logo} alt="logo" width={60} /> */}
+                <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center " />
             </div>
             <div className='flex gap-10'>
                 <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/home">HOME</NavLink>

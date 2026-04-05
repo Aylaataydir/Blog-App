@@ -19,8 +19,8 @@ export const authSlice = createSlice({
 
             }
             if (payload.data) {
-                const { email, username, firstName, lastName } = payload.data
-                state.currentUser = { email, username, firstName, lastName }
+                const { email, username, firstName, lastName, _id } = payload.data
+                state.currentUser = { email, username, firstName, lastName, _id }
                 state.token = payload.token
             }
         },
