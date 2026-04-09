@@ -21,7 +21,13 @@ const Hero = () => {
 
 
     useEffect(() => {
-        getDataByEndpoint("blogs", { "sort[countOfVisitors]": "desc" }, "mostRead")
+
+        const data = async () => {
+            await getDataByEndpoint("blogs", { "sort[countOfVisitors]": "desc" }, "mostRead")
+        }
+
+        data()
+
     }, [])
 
 
@@ -42,7 +48,7 @@ const Hero = () => {
             <Swiper
                 spaceBetween={30}
                 effect={'fade'}
-                speed={1000}
+                speed={2500}
                 autoplay={{
                     delay: 3500,
                     disableOnInteraction: false,
@@ -55,15 +61,15 @@ const Hero = () => {
                 className="mySwiper"
             >
 
-                {mostRead?.slice(0, 3).map(blog => (
+                {mostRead?.slice(0,3).map(blog => (
                     <SwiperSlide key={blog._id}>
-                        <div className="card card-side bg-bg-body gap-5 mt-16 mb-14 ">
-                            <figure className='relative '>
+                        <div className="card card-side bg-bg-body gap-5 mt-16 mb-14 items-center ">
+                            <figure className='relative flex-1'>
                                 {/* <p className='absolute bg-bg-primary top-11 left-0 py-1 px-3 h-7 w-fit'>{new Date(blog.createdAt).toLocaleDateString('en-US', {
                                     month: 'long', day: '2-digit', year: 'numeric'
                                 })}</p> */}
                                 <img
-                                    className='rounded-lg w-100 h-80'
+                                    className='rounded-lg w-100 h-100'
                                     src={blog.image}
                                     alt="" />
                             </figure>

@@ -23,7 +23,7 @@ const useBlogCall = () => {
             const { data } = await axios.get(`${BASE_URL}${endpoint}/`, {
                 params: customParams
             })
-
+console.log(data)
             dispatch(fillEndpoints({ stateName, data: data.data }))
             return data
 

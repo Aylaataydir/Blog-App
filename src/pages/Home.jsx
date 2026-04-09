@@ -5,6 +5,7 @@ import BlogList from '../components/BlogList'
 import Sidebar from '../components/sidebar/sidebar'
 import MostRead from '../components/MostRead'
 import { useSelector } from 'react-redux'
+import Footer from '../components/Footer'
 
 
 const Home = () => {
@@ -34,6 +35,10 @@ const Home = () => {
                     <Sidebar />
                 </div>
             </div>
+            <div className='mt-3 '>
+                <Footer />
+            </div>
+
         </div>
     )
 }

@@ -17,7 +17,7 @@ const MyProfileSidebar = () => {
     const countVisitors = userBlogs?.reduce((sum, blog) => sum + blog.countOfVisitors, 0)
 
     useEffect(() => {
-        getDataByEndpoint("blogs", { "sort[createdAt]": "desc", "filter[userId]":currentUser._id }, "userBlogs")
+        getDataByEndpoint("blogs", { "sort[createdAt]": "desc", "filter[userId]": currentUser._id }, "userBlogs")
     }, [])
 
     const tabs = [
@@ -29,16 +29,20 @@ const MyProfileSidebar = () => {
     return (
         <div className='flex flex-col gap-3 sticky top-6 self-start'>
             {/* Profile Card */}
-            <div className='bg-bg-primary rounded-sm overflow-hidden'>
+            <div className='bg-bg-primary rounded-sm overflow-hidden '>
                 <div className=' border-b border-b-bg-secondary/50 h-16' />
                 <div className='flex flex-col items-center -mt-10 pb-5 px-5'>
                     <div className="avatar">
                         <div className="w-24 rounded-full ring-2 ring-bg-secondary ring-offset-2 ring-offset-bg-primary">
-                            <FaPen onClick={() => document.getElementById('my_modal_6').showModal()} className='absolute -top-2 -right-21 opacity-50 cursor-pointer ' />
+
                             <img src={currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
                         </div>
                     </div>
-                    <h3 className='font-semibold font-[Poppins] text-base mt-3'>{currentUser?.username}</h3>
+                    <div className='flex items-center relative '>
+                        <h3 className='font-semibold font-[Poppins] text-base mt-3'>{currentUser?.username}</h3>
+                        <FaPen onClick={() => document.getElementById('my_modal_6').showModal()} className='opacity-70 cursor-pointer absolute -right-5 top-3' />
+                    </div>
+
                     <p className='text-xs opacity-60'>{`${currentUser?.firstName} ${currentUser?.lastName}`}</p>
                 </div>
             </div>

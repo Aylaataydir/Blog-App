@@ -13,14 +13,14 @@ export const authSlice = createSlice({
     reducers: {
         fillUserData: (state, { payload }) => {
             if (payload.user) {
-                const { email, username, firstName, lastName, _id } = payload.user
-                state.currentUser = { email, username, firstName, lastName, _id }
+                const { email, username, firstName, lastName, _id, image } = payload.user
+                state.currentUser = { email, username, firstName, lastName, _id, image }
                 state.token = payload.token
 
             }
             if (payload.data) {
                 const { email, username, firstName, lastName, _id } = payload.data
-                state.currentUser = { email, username, firstName, lastName, _id }
+                state.currentUser = { email, username, firstName, lastName, _id}
                 state.token = payload.token
             }
         },

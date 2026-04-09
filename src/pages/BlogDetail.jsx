@@ -109,14 +109,14 @@ const BlogDetail = () => {
 
 
   return (
-    <div className='grid grid-cols-3 gap-10 px-10 py-10'>
+    <div className='grid grid-cols-3 gap-10 px-10 py-10 max-w-[1400px] mx-auto'>
       <div className='col-span-2 flex flex-col gap-5'>
         <div>
           <p className='text-bg-secondary text-xs font-medium tracking-widest uppercase mb-2 font-[Poppins]'>{category?.name}</p>
           <h2 className='text-3xl font-semibold leading-snug font-[Poppins]'>{blog?.title}</h2>
         </div>
         <div className='overflow-hidden rounded-lg'>
-          <img src={blog?.image} alt="" className='w-full object-cover' />
+          <img src={blog?.image} alt="blog-cover" className='w-full object-cover h-120' />
         </div>
         <div className='flex gap-4'>
           <div className='bg-bg-primary flex items-center gap-2 justify-center flex-1 text-sm text-center py-3'>
@@ -135,9 +135,8 @@ const BlogDetail = () => {
             </motion.div>
             <p className='mt-0.5'>{`${blog?.likes?.length} ${blog?.likes.length > 0 ? "Likes" : "Like"}`}</p>
           </div>
-
-
         </div>
+        
         <div className='tiptap text-sm text-justify py-6 tracking-normal' dangerouslySetInnerHTML={{ __html: blog?.content }} />
         <div className="avatar items-center gap-3">
           <div className="ring-offset-base-100 w-12 rounded-full ring-1 ">

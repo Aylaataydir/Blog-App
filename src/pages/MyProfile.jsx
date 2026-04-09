@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 const MyProfile = () => {
 
     return (
-        <div className='grid grid-cols-7 gap-11 px-10 py-8'>
+        <div className='grid grid-cols-7 gap-11 px-10 py-8 max-w-[1400px] mx-auto'>
             <div className='col-span-2'>
                 <MyProfileSidebar />
             </div>
