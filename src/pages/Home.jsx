@@ -14,7 +14,7 @@ const Home = () => {
 
     return (
 
-        <div className='max-w-[1440px] mx-auto'>
+        <div className='max-w-[1440px] mx-auto mt-3'>
 
             {!isSearching &&
                 <>
@@ -35,10 +35,16 @@ const Home = () => {
                     <Sidebar />
                 </div>
             </div>
-            <div className='mt-3 '>
-                <Footer />
+            <div className='my-16 '>
+                <div className="italic text-2xl md:text-4xl font-semibold text-[#7c6f57] text-center  tracking-[0.6px] leading-relaxed">
+                    <span className="text-2xl md:text-3xl text-[#b8826a] align-middle select-none">“</span>
+                    <span style={{ fontFamily: 'Caveat, cursive' }}>Your thoughts deserve to be heard.</span>
+                    <span className="text-2xl md:text-3xl text-[#b8826a] align-middle select-none"> ”</span>
+                </div>
+                <div className="text-base md:text-lg text-[#a58d6f] text-center font-normal max-w-md italic font-pinyon mx-auto">
+                    Write, share, and discover your community here.
+                </div>
             </div>
-
         </div>
     )
 }
