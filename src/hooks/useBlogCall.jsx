@@ -2,9 +2,10 @@
 import axios from 'axios'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fillBlog, fillEndpoints } from '../features/blogSlice'
+// import { fetchStart, fillBlog, fillEndpoints } from '../features/blogSlice'
 import { toast } from 'sonner'
 import { updateUserData } from '../features/authSlice'
+import { fetchStart, fillEndpoints } from '../features/blogSlice'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -17,14 +18,15 @@ const useBlogCall = () => {
 
 
     const getDataByEndpoint = async (endpoint, customParams = {}, stateName = endpoint) => {
-
+        console.log(stateName)
         try {
-
+            dispatch(fetchStart(stateName));
             const { data } = await axios.get(`${BASE_URL}${endpoint}/`, {
                 params: customParams
             })
-console.log(data)
+            console.log(data)
             dispatch(fillEndpoints({ stateName, data: data.data }))
+            console.log(stateName)
             return data
 
         } catch (error) {
@@ -33,17 +35,16 @@ console.log(data)
     }
 
 
-    const getEndpointById = async (endpoint, blogId, stateName) => {
+    const getEndpointById = async (endpoint, id, stateName) => {
 
         try {
-
-            const data = await axios.get(`${BASE_URL}${endpoint}/${blogId}`)
+            dispatch(fetchStart());
+            const data = await axios.get(`${BASE_URL}${endpoint}/${id}`)
             console.log(data.data.data)
             dispatch(fillEndpoints({ stateName, data: data.data.data }))
 
-
         } catch (error) {
-
+            console.log(error)
         }
 
     }

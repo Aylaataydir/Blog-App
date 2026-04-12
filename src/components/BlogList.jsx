@@ -61,13 +61,13 @@ const BlogList = () => {
                     )
                     :
                     (<>
-                        {paginationBlogs?.length === 0 && (
-                            <p className="text-lg text-center">No blogs found in this category..</p>
-                        )}
+                {paginationBlogs?.length === 0 && (
+                    <p className="text-lg text-center">No blogs found in this category..</p>
+                )}
 
-                        {paginationBlogs?.map((blog) => (
-                            <BlogCard key={blog._id} blog={blog} />
-                        ))}
+                {paginationBlogs?.map((blog) => (
+                    <BlogCard key={blog._id} blog={blog} />
+                ))}
                     </>
                     )}
             </div>

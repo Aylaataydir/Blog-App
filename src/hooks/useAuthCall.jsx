@@ -50,6 +50,8 @@ const useAuthCall = () => {
             const { data } = await axios.post(`${BASE_URL}users/`, credentials)
             console.log(data)
             dispatch(fillUserData(data))
+
+            
             toast.success("Register Successfull!", {
                 description: `Welcome ${data.data.username}`,
             });

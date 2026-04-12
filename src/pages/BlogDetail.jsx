@@ -11,6 +11,7 @@ import { addCommentToBlog, deleteCommentFromBlog, toggleBlogLike } from '../feat
 import { toast } from 'sonner'
 import { MdDelete, MdEdit } from "react-icons/md";
 import DeleteModal from '../components/modals/DeleteModal'
+import MostLiked from '../components/sidebar/MostLiked'
 
 
 
@@ -109,8 +110,8 @@ const BlogDetail = () => {
 
 
   return (
-    <div className='grid grid-cols-3 gap-10 px-10 py-10 max-w-[1400px] mx-auto'>
-      <div className='col-span-2 flex flex-col gap-5'>
+    <div className='grid grid-cols-4 gap-8 px-10 py-10 max-w-[1400px] mx-auto'>
+      <div className='col-span-3 flex flex-col gap-5  pe-8'>
         <div>
           <p className='text-bg-secondary text-xs font-medium tracking-widest uppercase mb-2 font-[Poppins]'>{category?.name}</p>
           <h2 className='text-3xl font-semibold leading-snug font-[Poppins]'>{blog?.title}</h2>
@@ -136,7 +137,7 @@ const BlogDetail = () => {
             <p className='mt-0.5'>{`${blog?.likes?.length} ${blog?.likes.length > 0 ? "Likes" : "Like"}`}</p>
           </div>
         </div>
-        
+
         <div className='tiptap text-sm text-justify py-6 tracking-normal' dangerouslySetInnerHTML={{ __html: blog?.content }} />
         <div className="avatar items-center gap-3">
           <div className="ring-offset-base-100 w-12 rounded-full ring-1 ">
@@ -176,7 +177,7 @@ const BlogDetail = () => {
         <div className='flex flex-col gap-3'>
           {displayedComments?.map(comment => (
             <div className='flex gap-3 group' key={comment._id}>
-              <img className="size-8 rounded-full mt-0.5 shrink-0" src="https://img.daisyui.com/images/profile/demo/1@94.webp" />
+              <img className="size-8 rounded-full mt-0.5 shrink-0" src={currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
               <div className='bg-bg-primary/60 rounded-lg px-4 py-3 flex-1'>
                 <div className='flex items-center gap-2'>
                   <span className='text-xs font-medium'>{comment.userId.username}</span>
@@ -223,8 +224,8 @@ const BlogDetail = () => {
         }
       </div>
 
-      <div className='mt-20'>
-        <Sidebar />
+      <div className='mt-32'>
+        <MostLiked />
       </div>
       <DeleteModal commentId={selectedCommentId} title="comment" />
     </div>

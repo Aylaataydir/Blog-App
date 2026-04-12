@@ -4,30 +4,44 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
+    fetchStatus: {
+        blogs: "idle",
+        // blog: "idle",
+        paginationBlogs: "idle",
+        mostLiked: "idle",
+        mostRead: "idle",
+        userBlogs: "idle",
+    },
     loading: false,
     blogs: null,
     paginationBlogs: null,
-    userBlogs:null,
+    userBlogs: null,
     categories: null,
     blog: null,
     mostLiked: null,
     mostRead: null,
     blogAuthor: null,
     isSearching: false,
-    editingBlog:null
+    editingBlog: null,
+    blogAuthor: null
 }
 
 export const blogSlice = createSlice({
     name: "blog",
     initialState,
     reducers: {
+        fetchStart: ((state, { payload }) => {
+            state.fetchStatus[payload] = "loading"
+        }),
+
         fillEndpoints: ((state, { payload }) => {
             const { stateName, data } = payload
             state[stateName] = data
+            state.fetchStatus[stateName] = "succeeded"
         }),
-        fillBlog: ((state, { payload }) => {
-            state.blog = payload
-        }),
+        // fillBlog: ((state, { payload }) => {
+        //     state.blog = payload
+        // }),
         toggleBlogLike: ((state, { payload }) => {
 
             if (state.blog) {
@@ -37,7 +51,6 @@ export const blogSlice = createSlice({
                 } else {
                     state.blog.likes.splice(index, 1)
                 }
-
             }
         }),
         addCommentToBlog: ((state, { payload }) => {
@@ -61,10 +74,10 @@ export const blogSlice = createSlice({
                 }
             }
         }),
-        toggleSearching: ((state, {payload}) => {
+        toggleSearching: ((state, { payload }) => {
             state.isSearching = payload
         }),
-        setEditingBlog: ((state, {payload}) => {
+        setEditingBlog: ((state, { payload }) => {
             state.editingBlog = payload
         })
 
@@ -72,6 +85,12 @@ export const blogSlice = createSlice({
 })
 
 
-export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, deleteCommentFromBlog, toggleBlogListLike, toggleSearching, setEditingBlog } = blogSlice.actions
+export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, deleteCommentFromBlog, toggleBlogListLike, toggleSearching, setEditingBlog, blogAuthor, fetchStatus, fetchStart } = blogSlice.actions
+
+export const mostReadStatus = (state) => state.blog.fetchStatus.mostRead
+export const mostLikedStatus = (state) => state.blog.fetchStatus.mostLiked
+export const paginationBlogsStatus = (state) => state.blog.fetchStatus.paginationBlogs
+export const userBlogs = (state) => state.blog.fetchStatus.userBlogs
+
 
 export default blogSlice.reducer
