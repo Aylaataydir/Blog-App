@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import SmallBlogCard from '../SmallBlogCard'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaPen } from 'react-icons/fa'
-import { setEditingBlog } from '../../features/blogSlice'
+import { setEditingBlog, userBlogsStatus } from '../../features/blogSlice'
 import { MdDelete } from 'react-icons/md'
 import DeleteModal from '../modals/DeleteModal'
+import SkeletonSmallCard from '../skeletons/SkeletonSmallCard'
+import { div } from 'framer-motion/client'
 
 const MyBlogsList = () => {
 
@@ -16,24 +18,36 @@ const MyBlogsList = () => {
     const { getDataByEndpoint } = useBlogCall()
     const { userBlogs } = useSelector(state => state.blog)
     const { currentUser } = useSelector(state => state.auth)
-    const [blogId , setBlogId] = useState(null)
+    const loadingStatus = useSelector(userBlogsStatus)
+    const [blogId, setBlogId] = useState(null)
 
 
     const handleEditBlog = (blog) => {
 
         dispatch(setEditingBlog(blog))
-        navigate("/my-profile/add-new-blog")
+        navigate("/my-profile/edit-blog")
 
     }
 
-   
+
 
     useEffect(() => {
         getDataByEndpoint("blogs", { "sort[createdAt]": "desc", "filter[userId]": currentUser._id }, "userBlogs")
 
     }, [])
 
+    if (loadingStatus === "idle" || loadingStatus === "loading") {
+        return (
+            <div>
+                <div className='pb-2 mb-6 border-b border-b-bg-secondary/50'>
+                    <h2 className='text-base font-semibold  font-[Poppins]'>My Blogs</h2>
+                    <p className='text-xs opacity-50 mt-1'>All blog posts you have published</p>
+                </div>
+                <SkeletonSmallCard />
+            </div>
 
+        )
+    }
 
     if (!userBlogs) {
         return (
@@ -43,7 +57,6 @@ const MyBlogsList = () => {
             </div>
         )
     }
-
 
     return (
 
@@ -62,7 +75,7 @@ const MyBlogsList = () => {
                             <button onClick={() => handleEditBlog(blog)} className='p-1.5 bg-white/90 text-gray-700 rounded-full hover:bg-blue-900 hover:text-white transition-colors cursor-pointer shadow-sm'>
                                 <FaPen size={10} />
                             </button>
-                            <button  onClick={() => { setBlogId(blog._id); document.getElementById('my_modal_5').showModal() }} className='p-1.5 bg-white/90 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-colors cursor-pointer shadow-sm'>
+                            <button onClick={() => { setBlogId(blog._id); document.getElementById('my_modal_5').showModal() }} className='p-1.5 bg-white/90 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-colors cursor-pointer shadow-sm'>
                                 <MdDelete size={14} />
                             </button>
                         </div>
@@ -71,6 +84,7 @@ const MyBlogsList = () => {
                     <p className='text-sm opacity-40 '>You haven't published any blogs yet.</p>
                 )}
             </div>
+
             <DeleteModal title="Blog" blogId={blogId} />
         </div>
     )

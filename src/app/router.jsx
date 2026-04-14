@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
         element: <MainLayout />,
         // errorElement: <Error />,
         children: [
-            { index: true, element: <Navigate to="/home" replace /> },
+            { index: true, element: <Navigate to="/home" replace /> }, // kullanici / ya gittiginde home yönlendiriliyor. replace yaziyoru cunku her geri yaptiginda bir da home a yönlen
             { path: "home", element: <Home /> },
 
             { path: "login", element: <Login /> },
@@ -41,6 +41,7 @@ export const router = createBrowserRouter([
                             { path: "my-favorites", element: <MyFavoritesList /> },
                             { path: "my-reading-list", element: <MyReadingList /> },
                             { path: "add-new-blog", element: <NewBlog /> },
+                            { path: "edit-blog", element: <NewBlog /> },
                         ]
                     },
                 ],

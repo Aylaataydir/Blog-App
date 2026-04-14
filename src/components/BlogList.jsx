@@ -7,6 +7,9 @@ import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Stack from '@mui/material/Stack'
 import { slugify } from '../lib/slugify';
+import { paginationBlogsStatus } from '../features/blogSlice';
+import { h1 } from 'framer-motion/client';
+import SkeletonBlogList from './skeletons/SkeletonBlogList';
 
 
 
@@ -18,7 +21,7 @@ const BlogList = () => {
     const { paginationBlogs, blogs, categories } = useSelector((state) => state.blog);
     const { getDataByEndpoint } = useBlogCall();
     const [totalCount, setTotalCount] = useState(0); // toplam blog sayisi
-
+    const paginationStatus = useSelector(paginationBlogsStatus)
     const [searchParams] = useSearchParams() // react router hooku. icerisinde page ve category kisimlarini barindiriyor. url de ki search kismina erisiyoruz bununla
     const page = parseInt(searchParams.get('page') || '1', 10);
     const category = searchParams.get('category')
@@ -47,29 +50,18 @@ const BlogList = () => {
 
         <Stack spacing={4} alignItems="center" className='pe-8 mb-6'>
             <div className="w-full">
-                {isSearching
-                    ?
-                    (<>
-                        {blogs?.length === 0 && (
-                            <p className="text-lg text-center">Sorry, we couldn't find any results matching your search.</p>
+                {paginationStatus === "idle" || paginationStatus === "loading"
+                    ? <SkeletonBlogList/>
+                    : <>
+                        {paginationBlogs?.length === 0 && (
+                            <p className="text-lg text-center">No blogs found in this category..</p>
                         )}
 
-                        {blogs?.map((blog) => (
-                            <BlogCard key={blog._id} blog={blog}/>
+                        {paginationBlogs?.map((blog) => (
+                            <BlogCard key={blog._id} blog={blog} />
                         ))}
                     </>
-                    )
-                    :
-                    (<>
-                {paginationBlogs?.length === 0 && (
-                    <p className="text-lg text-center">No blogs found in this category..</p>
-                )}
-
-                {paginationBlogs?.map((blog) => (
-                    <BlogCard key={blog._id} blog={blog} />
-                ))}
-                    </>
-                    )}
+                }
             </div>
 
             <Pagination

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import TiptapEditor from '../components/textEditor/TipTapEditor'
-import { LuX, LuEye } from 'react-icons/lu'
+import { LuEye } from 'react-icons/lu'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { blogSchema } from '../lib/schemas'
@@ -8,13 +8,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import useBlogCall from '../hooks/useBlogCall'
 import { useNavigate } from 'react-router-dom'
 import { setEditingBlog } from '../features/blogSlice'
+import BlogPreviewModal from '../components/modals/BlogPreviewModal'
 
 const NewBlog = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [showPreview, setShowPreview] = useState(false)
   const { categories, editingBlog } = useSelector(state => state.blog)
   const { getDataByEndpoint, addBlog, updateBlog } = useBlogCall()
   const [previewData, setPreviewData] = useState({ title: '', content: '', image: '' })
@@ -137,8 +137,8 @@ const NewBlog = () => {
               type="button"
               className="newblog-preview-btn"
               onClick={() => {
-                setPreviewData(getValues())
-                setShowPreview(true)
+                setPreviewData(getValues());
+                document.getElementById('blog-preview').showModal()
               }}
             >
               <LuEye size={16} />
@@ -154,39 +154,8 @@ const NewBlog = () => {
         </form>
       </div>
 
-      {/* Preview Modal */}
-      {showPreview && (
-        <div className="preview-overlay" onClick={() => setShowPreview(false)}>
-          <div className="preview-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="preview-modal-header">
-              <span className="preview-modal-badge">Preview</span>
-              <button
-                className="preview-modal-close"
-                onClick={() => setShowPreview(false)}
-              >
-                <LuX size={20} />
-              </button>
-            </div>
+      <BlogPreviewModal previewData={previewData} />
 
-            <div className="preview-modal-body">
-              {previewData.image && (
-                <img
-                  src={previewData.image}
-                  alt="Cover"
-                  className="preview-cover"
-                />
-              )}
-              <h1 className="preview-title">
-                {previewData.title || 'Untitled Post'}
-              </h1>
-              <div
-                className="preview-content tiptap"
-                dangerouslySetInnerHTML={{ __html: previewData.content || '<p style="color:#aaa">No content yet...</p>' }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

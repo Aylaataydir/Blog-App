@@ -13,10 +13,13 @@ import { FaEye } from "react-icons/fa";
 import { EffectFade, Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { useSelector } from 'react-redux';
 import useBlogCall from '../hooks/useBlogCall';
+import { mostReadStatus } from '../features/blogSlice';
+import SkeletonHero from './skeletons/SkeletonHero';
 
 const Hero = () => {
 
     const { mostRead } = useSelector(state => state.blog)
+    const loadingStatus = useSelector(mostReadStatus)
     const { getDataByEndpoint } = useBlogCall()
 
 
@@ -45,50 +48,55 @@ const Hero = () => {
                     Travel, Health, World, Culture...
                 </p>
             </div>
-            <Swiper
-                spaceBetween={30}
-                effect={'fade'}
-                speed={2500}
-                autoplay={{
-                    delay: 3500,
-                    disableOnInteraction: false,
-                }}
-                navigation={true}
-                pagination={{
-                    clickable: true,
-                }}
-                modules={[EffectFade, Navigation, Pagination, Autoplay]}
-                className="mySwiper"
-            >
 
-                {mostRead?.slice(0,3).map(blog => (
-                    <SwiperSlide key={blog._id}>
-                        <div className="card card-side bg-bg-body gap-5 mt-16 mb-14 items-center ">
-                            <figure className='relative flex-1'>
-                                {/* <p className='absolute bg-bg-primary top-11 left-0 py-1 px-3 h-7 w-fit'>{new Date(blog.createdAt).toLocaleDateString('en-US', {
+            {loadingStatus === "idle" || loadingStatus === "loading"
+                ? <SkeletonHero />
+                : <Swiper
+                    spaceBetween={30}
+                    effect={'fade'}
+                    speed={2500}
+                    autoplay={{
+                        delay: 3500,
+                        disableOnInteraction: false,
+                    }}
+                    navigation={true}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    modules={[EffectFade, Navigation, Pagination, Autoplay]}
+                    className="mySwiper"
+                >
+
+                    {mostRead?.slice(0, 3).map(blog => (
+                        <SwiperSlide key={blog._id}>
+                            <div className="card card-side bg-bg-body gap-5 mt-16 mb-14 items-center ">
+                                <figure className='relative flex-5'>
+                                    {/* <p className='absolute bg-bg-primary top-11 left-0 py-1 px-3 h-7 w-fit'>{new Date(blog.createdAt).toLocaleDateString('en-US', {
                                     month: 'long', day: '2-digit', year: 'numeric'
                                 })}</p> */}
-                                <img
-                                    className='rounded-lg w-100 h-100'
-                                    src={blog.image}
-                                    alt="" />
-                            </figure>
-                            <div className="flex-1 p-3 gap-4">
-                                {/* <p className='text-xs text-bg-secondary font-semibold'>{category?.name}</p> */}
-                                <h2 className="card-title text-3xl ">{blog.title}</h2>
-                                <p className='text-sm line-clamp-8 leading-relaxed text-gray-700 mt-3'>{blog.content}</p>
-                                <div className='mt-8'> <Link to={`/blog/${blog._id}`} onClick={() => updateViewCount(blog)} className="buttons">Read More</Link></div>
-                                <div className="flex mt-4 items-center justify-between gap-2">
-                                    {/* <div className='flex items-center gap-1'>
+                                    <img
+                                        className='rounded-lg w-100 h-100'
+                                        src={blog.image}
+                                        alt="" />
+                                </figure>
+                                <div className="flex-4 p-3 gap-4">
+                                    {/* <p className='text-xs text-bg-secondary font-semibold'>{category?.name}</p> */}
+                                    <h2 className="card-title text-3xl ">{blog.title}</h2>
+                                    <p className='text-sm line-clamp-8 leading-relaxed text-gray-700 mt-3'>{blog.content}</p>
+                                    <div className='mt-8'> <Link to={`/blog/${blog._id}`} onClick={() => updateViewCount(blog)} className="buttons">Read More</Link></div>
+                                    <div className="flex mt-4 items-center justify-between gap-2">
+                                        {/* <div className='flex items-center gap-1'>
                                         <FaEye className='text-xl opacity-20' />
                                         <p className='text-xs'>{blog.countOfVisitors}</p>
                                     </div> */}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            }
+
         </div>
 
     )

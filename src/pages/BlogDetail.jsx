@@ -7,11 +7,12 @@ import Sidebar from '../components/sidebar/Sidebar'
 import { FaEye } from 'react-icons/fa'
 import { FaHeart } from 'react-icons/fa'
 import * as motion from 'motion/react-client'
-import { addCommentToBlog, deleteCommentFromBlog, toggleBlogLike } from '../features/blogSlice'
+import { addCommentToBlog, blogDetailStatus, deleteCommentFromBlog, toggleBlogLike } from '../features/blogSlice'
 import { toast } from 'sonner'
 import { MdDelete, MdEdit } from "react-icons/md";
 import DeleteModal from '../components/modals/DeleteModal'
 import MostLiked from '../components/sidebar/MostLiked'
+import SkeletonBlogDetail from '../components/skeletons/SkeletonBlogDetail'
 
 
 
@@ -20,11 +21,12 @@ const BlogDetail = () => {
   const LIMIT = 5
 
   const { id: rawId } = useParams()
-  const id = rawId.slice(rawId.lastIndexOf('-') + 1)
+  const id = rawId.slice(rawId.lastIndexOf('-') + 1) // url deki - den sonraki id kismini almak icin bunu kullandim.
 
   const dispatch = useDispatch()
   const { getEndpointById, getDataByEndpoint, createComment, deleteComment } = useBlogCall()
   const { blog, categories } = useSelector(state => state.blog)
+  const loadingStatus = useSelector(blogDetailStatus)
   const { currentUser } = useSelector(state => state.auth)
   const [comment, setComment] = useState("")
   const { updateLike } = useBlogCall()
@@ -45,9 +47,7 @@ const BlogDetail = () => {
 
 
   const handleLoadMore = () => {
-
     if (blog) setVisibleCount(prevCount => prevCount + LIMIT);
-
   }
 
 
@@ -84,14 +84,12 @@ const BlogDetail = () => {
     dispatch(toggleBlogLike(currentUser._id))
     setIsLike(prev => !prev)
     await updateLike(id)
-
   }
 
 
   useEffect(() => {
     getEndpointById("blogs", id, "blog")
     getDataByEndpoint("categories");
-
   }, [id])
 
 
@@ -106,11 +104,15 @@ const BlogDetail = () => {
 
 
 
-  if (!blog) return <div>Loading...</div>
+  if (loadingStatus === "idle" || loadingStatus === "loading") {
+    return (
+      <SkeletonBlogDetail />
+    )
+  }
 
 
   return (
-    <div className='grid grid-cols-4 gap-8 px-10 py-10 max-w-[1400px] mx-auto'>
+    <div className='grid grid-cols-4 gap-8 px-10 py-10 max-w-[1400px] mx-auto min-h-screen'>
       <div className='col-span-3 flex flex-col gap-5  pe-8'>
         <div>
           <p className='text-bg-secondary text-xs font-medium tracking-widest uppercase mb-2 font-[Poppins]'>{category?.name}</p>
@@ -177,7 +179,7 @@ const BlogDetail = () => {
         <div className='flex flex-col gap-3'>
           {displayedComments?.map(comment => (
             <div className='flex gap-3 group' key={comment._id}>
-              <img className="size-8 rounded-full mt-0.5 shrink-0" src={currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+              <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover" src={currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
               <div className='bg-bg-primary/60 rounded-lg px-4 py-3 flex-1'>
                 <div className='flex items-center gap-2'>
                   <span className='text-xs font-medium'>{comment.userId.username}</span>

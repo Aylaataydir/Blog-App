@@ -6,7 +6,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     fetchStatus: {
         blogs: "idle",
-        // blog: "idle",
+        blog: "idle",
         paginationBlogs: "idle",
         mostLiked: "idle",
         mostRead: "idle",
@@ -39,9 +39,11 @@ export const blogSlice = createSlice({
             state[stateName] = data
             state.fetchStatus[stateName] = "succeeded"
         }),
-        // fillBlog: ((state, { payload }) => {
-        //     state.blog = payload
-        // }),
+
+        fillBlog: ((state, { payload }) => {
+            state.blog = payload
+        }),
+
         toggleBlogLike: ((state, { payload }) => {
 
             if (state.blog) {
@@ -90,7 +92,8 @@ export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, delete
 export const mostReadStatus = (state) => state.blog.fetchStatus.mostRead
 export const mostLikedStatus = (state) => state.blog.fetchStatus.mostLiked
 export const paginationBlogsStatus = (state) => state.blog.fetchStatus.paginationBlogs
-export const userBlogs = (state) => state.blog.fetchStatus.userBlogs
+export const userBlogsStatus = (state) => state.blog.fetchStatus.userBlogs
+export const blogDetailStatus = (state) => state.blog.fetchStatus.blog
 
 
 export default blogSlice.reducer
