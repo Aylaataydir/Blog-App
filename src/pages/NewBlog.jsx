@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+// Cloudinary upload fonksiyonu için ekleme
+
 import TiptapEditor from '../components/textEditor/TipTapEditor'
 import { LuEye } from 'react-icons/lu'
 import { useForm } from 'react-hook-form'
@@ -18,7 +20,12 @@ const NewBlog = () => {
   const { categories, editingBlog } = useSelector(state => state.blog)
   const { getDataByEndpoint, addBlog, updateBlog } = useBlogCall()
   const [previewData, setPreviewData] = useState({ title: '', content: '', image: '' })
-
+  //! claudinary
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
+  const fileInputRef = useRef(); // useRef, React’te hem DOM’a erişmek hem de render’dan bağımsız veri saklamak için kullanılır.State gibi render tetiklemez, ama değerini kaybetmez.
+  //!----
   console.log(editingBlog)
 
   const form = useForm({
@@ -34,7 +41,36 @@ const NewBlog = () => {
   })
 
   const { register, handleSubmit, setValue, getValues, formState: { errors, isSubmitting } } = form
-
+  //! cloudinary
+  // Cloudinary'e dosya yükleme fonksiyonu
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setSelectedFileName(file.name);
+    setImagePreview("");
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", import.meta.env.VITE_CLOUDINARY_BLOG_PRESET);
+    try {
+      const res = await fetch(import.meta.env.VITE_CLOUDINARY_UPLOAD_URL, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.secure_url) {
+        setValue('image', data.secure_url, { shouldValidate: true });
+        setImagePreview(data.secure_url);
+      } else {
+        alert("Image upload failed!");
+      }
+    } catch (err) {
+      alert("Image upload error!");
+    } finally {
+      setUploading(false);
+    }
+  };
+  //! ----
   const onSubmit = async (data) => {
 
     if (editingBlog) {
@@ -111,15 +147,45 @@ const NewBlog = () => {
           {/* Cover Image URL */}
           <div className="newblog-field">
             <label className="newblog-label">Cover Image URL</label>
+//!cloudinary
             <input
               type="text"
               placeholder="https://example.com/image.jpg"
               {...register('image')}
-              className={`newblog-input ${errors.image ? 'newblog-input--error' : ''}`}
+              className={`newblog-input ${errors.image ? 'newblog-input--error' : ''} mb-2`}
             />
+            <div className="flex items-center gap-3 mb-2">
+              <button
+                type="button"
+                className="px-4 py-1.5 bg-gray-100 border border-gray-300 rounded-md cursor-pointer font-medium hover:bg-gray-200 transition"
+                onClick={() => fileInputRef.current && fileInputRef.current.click()}
+              >
+                Upload File
+              </button>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <span className="text-gray-600 text-sm min-w-[120px]">
+                {uploading
+                  ? <span className="animate-pulse text-blue-500">Loading...</span>
+                  : selectedFileName
+                    ? `Selected: ${selectedFileName}`
+                    : 'Choose a file or enter a URL'}
+              </span>
+            </div>
+            {imagePreview && (
+              <div className="mb-2">
+                <img src={imagePreview} alt="Önizleme" className="max-w-[180px] max-h-[120px] rounded-md border border-gray-200 shadow-sm" />
+              </div>
+            )}
             {errors.image && (
               <span className="newblog-error">{errors.image.message}</span>
             )}
+ //!----
           </div>
 
           {/* Content */}
