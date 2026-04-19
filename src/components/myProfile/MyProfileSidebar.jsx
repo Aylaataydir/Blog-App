@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { FaHeart, FaEye, FaPen, FaBookmark, FaStar, FaPlusCircle } from 'react-icons/fa'
 import { Link, NavLink } from 'react-router-dom'
@@ -8,8 +8,10 @@ import useBlogCall from '../../hooks/useBlogCall'
 const MyProfileSidebar = () => {
 
     const { currentUser } = useSelector(state => state.auth)
+    const [imagePreview, setImagePreview] = useState("")
     const { userBlogs } = useSelector(state => state.blog)
     const { getDataByEndpoint } = useBlogCall()
+
 
     // const myBlogs = (blogs ?? []).filter(blog => blog.userId === currentUser?._id)
 
@@ -34,8 +36,7 @@ const MyProfileSidebar = () => {
                 <div className='flex flex-col items-center -mt-10 pb-5 px-5'>
                     <div className="avatar">
                         <div className="w-24 rounded-full ring-2 ring-bg-secondary ring-offset-2 ring-offset-bg-primary">
-
-                            <img src={currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+                            <img src={imagePreview ? imagePreview : currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
                         </div>
                     </div>
                     <div className='flex items-center relative '>
@@ -94,7 +95,7 @@ const MyProfileSidebar = () => {
                     ))}
                 </div>
             </div>
-            <UserUpdateModal currentUser={currentUser} />
+            <UserUpdateModal currentUser={currentUser} imagePreview={imagePreview} setImagePreview={setImagePreview} />
         </div>
     )
 }

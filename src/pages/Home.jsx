@@ -14,7 +14,7 @@ const Home = () => {
 
     return (
 
-        <div className='max-w-[1440px] mx-auto mt-3'>
+        <div className='max-w-360 mx-auto mt-3'>
 
             {!isSearching &&
                 <>
@@ -35,7 +35,7 @@ const Home = () => {
                     <Sidebar />
                 </div>
             </div>
-            <div className='my-16 '>
+            <div className='mt-20 mb-30 '>
                 <div className="italic text-2xl md:text-4xl font-semibold text-[#7c6f57] text-center  tracking-[0.6px] leading-relaxed">
                     <span className="text-2xl md:text-3xl text-[#b8826a] align-middle select-none">“</span>
                     <span style={{ fontFamily: 'Caveat, cursive' }}>Your thoughts deserve to be heard.</span>

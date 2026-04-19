@@ -112,14 +112,14 @@ const BlogDetail = () => {
 
 
   return (
-    <div className='grid grid-cols-4 gap-8 px-10 py-10 max-w-[1400px] mx-auto min-h-screen'>
-      <div className='col-span-3 flex flex-col gap-5  pe-8'>
+    <div className='grid grid-cols-4 gap-8 px-4 md:px-8 lg:px-10 py-10 max-w-360 mx-auto min-h-screen'>
+      <div className='col-span-4 lg:col-span-3 flex flex-col gap-5  lg:pe-8 mx-auto '>
         <div>
           <p className='text-bg-secondary text-xs font-medium tracking-widest uppercase mb-2 font-[Poppins]'>{category?.name}</p>
-          <h2 className='text-3xl font-semibold leading-snug font-[Poppins]'>{blog?.title}</h2>
+          <h2 className=' text-xl md:text-3xl  font-semibold  leading-snug font-[Poppins]'>{blog?.title}</h2>
         </div>
-        <div className='overflow-hidden rounded-lg'>
-          <img src={blog?.image} alt="blog-cover" className='w-full object-cover h-120' />
+        <div className='rounded-lg'>
+          <img src={blog?.image} alt="blog-cover" className='w-full object-cover h-50 md:h-120 rounded-sm' />
         </div>
         <div className='flex gap-4'>
           <div className='bg-bg-primary flex items-center gap-2 justify-center flex-1 text-sm text-center py-3'>
@@ -163,7 +163,7 @@ const BlogDetail = () => {
                     onChange={(e) => setComment(e.target.value)}
                     value={comment}
                     spellCheck={false}
-                    className='w-full rounded-lg bg-bg-primary/60 px-4 py-3 text-xs leading-relaxed outline-none placeholder:opacity-40 resize-none h-24'
+                    className='w-full rounded-lg bg-bg-primary/60 px-4 py-3 text-xs leading-relaxed outline-none placeholder:opacity-40 resize-none h-12 md:h-18 lg:h-20'
                     placeholder='Write your thoughts...'
                     required
                   ></textarea>
@@ -226,7 +226,7 @@ const BlogDetail = () => {
         }
       </div>
 
-      <div className='mt-32'>
+      <div className='mt-32 sticky top-10 self-start hidden lg:block'>
         <MostLiked />
       </div>
       <DeleteModal commentId={selectedCommentId} title="comment" />

@@ -68,7 +68,6 @@ const useBlogCall = () => {
     }
 
 
-
     const updateLike = async (blogId) => {
         try {
             const { data } = await axios.post(`${BASE_URL}blogs/${blogId}/postLike`, {}, {
@@ -81,7 +80,6 @@ const useBlogCall = () => {
             console.log(error)
         }
     }
-
 
 
     const createComment = async (comment) => {
@@ -103,7 +101,6 @@ const useBlogCall = () => {
     }
 
 
-
     const deleteComment = async (commentId) => {
 
         try {
@@ -120,7 +117,6 @@ const useBlogCall = () => {
 
         }
     }
-
 
 
     const addBlog = async (newBlog) => {
@@ -147,8 +143,6 @@ const useBlogCall = () => {
     }
 
 
-
-
     const updateUserCredentials = async (userId, updatedCredentials) => {
 
         await new Promise(resolve => setTimeout(resolve, 1000))
@@ -171,7 +165,6 @@ const useBlogCall = () => {
             return false
         }
     }
-
 
 
     const updateBlog = async (blogId, updatedBlog) => {
@@ -199,8 +192,6 @@ const useBlogCall = () => {
     }
 
 
-
-
     const deleteBlog = async (blogId) => {
 
         try {
@@ -223,8 +214,21 @@ const useBlogCall = () => {
         }
     }
 
+    const UploadCloudinary = async (formData) => {
+console.log(formData)
+        try {
 
-    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog, updateUserCredentials, updateBlog, deleteBlog }
+            const data = await axios.post(import.meta.env.VITE_CLOUDINARY_UPLOAD_URL, formData)
+            return data.data
+
+        } catch (error) {
+            console.log(error)
+            toast.error("Image upload failed, please try again.")
+        }
+    }
+
+
+    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog, updateUserCredentials, updateBlog, deleteBlog, UploadCloudinary }
 }
 
 export default useBlogCall

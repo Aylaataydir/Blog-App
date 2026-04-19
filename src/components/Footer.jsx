@@ -5,7 +5,7 @@ import { FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 const Footer = () => {
     return (
         <div >
-            <footer className="w-full bg-[#c2c5aa] border-t border-[#e0d8ce] py-3 flex flex-col items-center mt-20">
+            <footer className="w-full bg-[#c2c5aa] border-t border-[#e0d8ce] py-3 flex flex-col items-center ">
                 <div className="flex justify-between ps-5 pe-10 items-center w-full gap-2">
                     <div className="text-xs font-inter text-gray-600 tracking-wide">
                         © {new Date().getFullYear()} Blogify. All rights reserved.
