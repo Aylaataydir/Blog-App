@@ -37,7 +37,7 @@ const Hero = () => {
     return (
 
         <div className='px-20'>
-            <div className="text-center mt-12  md:mt-16 border-b-1 border-b-black/30">
+            <div className="text-center mt-12 mb-4  md:mt-16 border-b border-b-black/30">
                 <h1
                     className="text-4xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold italic text-gray-800 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
                     style={{ fontFamily: 'var(--font-hero)', letterSpacing: '0.03em' }}

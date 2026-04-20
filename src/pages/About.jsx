@@ -5,7 +5,8 @@ const About = () => {
   return (
     <div className=" px-3 md:px-16 lg:px-30 pt-12 md:pt-16 lg:pt-20 pb-24 md:pb-30 min-h-screen bg-bg-primary  ">
       <h1 className="text-center text-2xl md:text-3xl font-bold font-[Poppins] text-gray-800 mb-12 md:mb-15 lg:mb-18 tracking-tight">Welcome to <span className='text-bg-secondary font-[inter]'> The Daily Blog</span></h1>
-      <div className='flex flex-col lg:flex-row items-center max-w-300 mx-auto gap-5 md:gap-10'>
+      <div className='flex flex-col lg:flex-row items-center max-w-300 mx-auto gap-5npm run dev
+       md:gap-10'>
         <div className="flex-1  mb-6">
           <img
             className="rounded-2xl w-full  object-cover"
