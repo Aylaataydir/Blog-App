@@ -17,7 +17,7 @@ const SmallBlogCard = ({ blog }) => {
 
     return (
         <div
-        className="cursor-pointer h-[180px] flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 w-[180px] mx-auto mb-2">
+        className="cursor-pointer h-45 flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 w-45 sm:w-45 mx-auto mb-2">
             <figure className='relative'>
                 <img
                     className='w-full h-25 object-cover'

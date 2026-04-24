@@ -56,7 +56,7 @@ const Navbar = () => {
                 {/* <img src={logo} alt="logo" width={60} /> */}
                 <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center " />
             </div>
-            <div className='flex gap-10'>
+            <div className='hidden md:flex gap-10'>
                 <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/home">HOME</NavLink>
                 <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/about">ABOUT</NavLink>
                 <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/contact">CONTACT</NavLink>
@@ -77,15 +77,18 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex="-1"
-                        className="menu text-center menu-sm dropdown-content bg-bg-body rounded-box z-1 mt-1 w-42 p-2 shadow">
+                        className="menu text-center z-50 menu-sm dropdown-content bg-bg-body rounded-box  mt-1 w-45 md:w-42 p-2 shadow">
                         {currentUser
                             ? <>
+                                <li className='md:hidden'><NavLink className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/home">Home</NavLink></li>
+                                <li className='md:hidden'><NavLink className={`({ isActive }) => isActive ? 'navLink navLink--active'  : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary `} to="/about">About</NavLink></li>
+                                <li className='md:hidden'> <NavLink className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/contact">Contact</NavLink></li>
                                 <li><Link to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</Link></li>
                                 <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</Link></li>
                             </>
                             : <>
-                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/login">Login</Link></li>
-                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/register">Register</Link></li>
+                                <li><Link className='py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/login">Login</Link></li>
+                                <li><Link className='py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/register">Register</Link></li>
                             </>
                         }
 

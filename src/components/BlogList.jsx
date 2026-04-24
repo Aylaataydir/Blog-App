@@ -48,8 +48,8 @@ const BlogList = () => {
 
     return (
 
-        <Stack spacing={4} alignItems="center" className='pe-8 mb-6'>
-            <div className="w-full">
+        <Stack spacing={4} alignItems="center" className=' lg:pe-8 md:mb-6'>
+            <div className="w-full space-y-5 md:space-y-0">
                 {paginationStatus === "idle" || paginationStatus === "loading"
                     ? <SkeletonBlogList/>
                     : <>

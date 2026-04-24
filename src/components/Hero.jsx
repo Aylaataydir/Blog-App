@@ -36,10 +36,11 @@ const Hero = () => {
 
     return (
 
-        <div className='px-20'>
-            <div className="text-center mt-12 mb-4  md:mt-16 border-b border-b-black/30">
+        <div className='px-4 sm:px-5 md:px-10 lg:px-30 mx-auto'>
+            <div className="text-center mt-12 mb-4
+              md:mt-16 border-b border-b-black/30">
                 <h1
-                    className="text-4xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold italic text-gray-800 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                    className="text-4xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold italic text-gray-800 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)] "
                     style={{ fontFamily: 'var(--font-hero)', letterSpacing: '0.03em' }}
                 >
                     The Daily Blog
@@ -69,27 +70,18 @@ const Hero = () => {
 
                     {mostRead?.slice(0, 3).map(blog => (
                         <SwiperSlide key={blog._id}>
-                            <div className="card card-side bg-bg-body gap-5 mt-16 mb-14 items-center ">
-                                <figure className='relative flex-5'>
-                                    {/* <p className='absolute bg-bg-primary top-11 left-0 py-1 px-3 h-7 w-fit'>{new Date(blog.createdAt).toLocaleDateString('en-US', {
-                                    month: 'long', day: '2-digit', year: 'numeric'
-                                })}</p> */}
+                            <div className="card card-side bg-bg-body flex flex-col md:flex-row gap-3 md:gap-5 mt-8 md:mt-16 mb-8 md:mb-14 items-center mx-auto ">
+                                <figure className='md:flex-1 relative w-full md:w-100 h-56 md:h-80 lg:h-90 mb-2 md:mb-0'>
                                     <img
-                                        className='rounded-lg w-100 h-100'
+                                        className='rounded-lg w-full h-full object-cover'
                                         src={blog.image}
                                         alt="" />
                                 </figure>
-                                <div className="flex-4 p-3 gap-4">
-                                    {/* <p className='text-xs text-bg-secondary font-semibold'>{category?.name}</p> */}
-                                    <h2 className="card-title text-3xl ">{blog.title}</h2>
+                                <div className="flex-1 p-3 gap-4">
+                                    <h2 className="card-title text-3xl line-clamp-2 lg:line-clamp-3  ">{blog.title}</h2>
                                     <p className='text-sm line-clamp-8 leading-relaxed text-gray-700 mt-3'>{blog.content}</p>
                                     <div className='mt-8'> <Link to={`/blog/${blog._id}`} onClick={() => updateViewCount(blog)} className="buttons">Read More</Link></div>
-                                    <div className="flex mt-4 items-center justify-between gap-2">
-                                        {/* <div className='flex items-center gap-1'>
-                                        <FaEye className='text-xl opacity-20' />
-                                        <p className='text-xs'>{blog.countOfVisitors}</p>
-                                    </div> */}
-                                    </div>
+                                    <div className="flex mt-4 items-center justify-between gap-2"></div>
                                 </div>
                             </div>
                         </SwiperSlide>

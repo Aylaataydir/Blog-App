@@ -21,7 +21,7 @@ const MostLiked = () => {
 
   return (
 
-    <div>
+    <div className='hidden lg:block'>
       <h3 className='bg-bg-secondary text-center py-2 font-semibold text-white mb-6 '>MOST LIKED</h3>
       <div className='flex flex-col ps-2 gap-5'>
         {mostLiked?.map((blog, index) => (

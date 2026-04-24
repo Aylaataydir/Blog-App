@@ -27,11 +27,11 @@ const Home = () => {
                 </>
 
             }
-            <div className='flex gap-10 mt-18 px-5 mx-auto'>
-                <div className='flex-1 border-e border-e-gray-300/80'>
+            <div className='flex flex-col lg:flex-row lg:gap-10 mt-18 px-1 md:px-5 mx-auto'>
+                <div className='flex-1 order-2 lg:order-1 lg:border-e lg: border-e-gray-300/80'>
                     <BlogList />
                 </div>
-                <div className='' >
+                <div className='order-1 lg:order-2' >
                     <Sidebar />
                 </div>
             </div>
