@@ -74,6 +74,10 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
         setValue("image", currentUser.image || "")
         setImagePreview("")
         setSelectedFileName("")
+        
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
     }
 
 
@@ -109,7 +113,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
                         <label className="text-xs font-medium font-[Poppins] text-gray-500 tracking-wider">Profile Image</label>
                         <input
                             type="url"
-                            disabled= {true}
+                            disabled={true}
                             placeholder="https://example.com/image.jpg"
                             {...register("image")}
                             className="w-full px-3 py-2.5 text-sm rounded-md border border-bg-btn-2 bg-white outline-none focus:border-bg-secondary focus:shadow-[0_0_0_3px_rgba(203,153,126,0.12)] transition-all placeholder:text-gray-300"
@@ -152,7 +156,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
                             Cancel
                         </button>
                         <button
-                     
+
                             disabled={isSubmitting}
                             type="submit"
                             className="px-5 py-2 text-xs font-semibold font-[Poppins] text-white rounded-md bg-bg-secondary hover:bg-[#b8826a] shadow-[0_2px_8px_rgba(203,153,126,0.25)] transition-all disabled:opacity-50 cursor-pointer"

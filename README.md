@@ -1,18 +1,71 @@
-# React + Vite
+# Proje File Structure
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```
+Blog-App/
+├── eslint.config.js         
+├── index.html               
+├── package.json             
+├── README.md                
+├── vite.config.js          
+├── assets/                  
+├── public/                 
+└── src/                     
+    ├── App.css              
+    ├── App.jsx              
+    ├── main.jsx             
+    ├── app/
+    │   ├── router.jsx          
+    │   ├── ScrollToTop.jsx      
+    │   └── Store.js             
+    ├── components/              
+    │   ├── BlogCard.jsx
+    │   ├── BlogList.jsx
+    │   ├── Footer.jsx
+    │   ├── Hero.jsx
+    │   ├── MostRead.jsx
+    │   ├── Navbar.jsx
+    │   ├── SmallBlogCard.jsx
+    │   ├── modals/             
+    │   │   ├── BlogPreviewModal.jsx
+    │   │   ├── DeleteModal.jsx
+    │   │   └── UserUpdateModal.jsx
+    │   ├── myProfile/           
+    │   │   ├── MyBlogsList.jsx
+    │   │   ├── MyFavoritesList.jsx
+    │   │   ├── MyProfileSidebar.jsx
+    │   │   └── MyReadingList.jsx
+    │   ├── sidebar/             
+    │   │   ├── CategoryList.jsx
+    │   │   ├── MostLiked.jsx
+    │   │   └── Sidebar.jsx
+    │   ├── skeletons/          
+    │   │   ├── SkeletonBlogDetail.jsx
+    │   │   ├── SkeletonBlogList.jsx
+    │   │   ├── SkeletonHero.jsx
+    │   │   └── SkeletonSmallCard.jsx
+    │   └── textEditor/         
+    │       └── TipTapEditor.jsx
+    ├── features/                
+    │   ├── authSlice.js
+    │   └── blogSlice.js
+    ├── hooks/                   
+    │   ├── useAuthCall.jsx
+    │   └── useBlogCall.jsx
+    ├── layout/                  
+    │   ├── MainLayout.jsx
+    │   └── ProtectedRouted.jsx
+    ├── lib/                     
+    │   ├── schemas.js
+    │   └── slugify.js
+    └── pages/                 
+        ├── About.jsx
+        ├── BlogDetail.jsx
+        ├── Contact.jsx
+        ├── Error.jsx
+        ├── Home.jsx
+        ├── Login.jsx
+        ├── MyProfile.jsx
+        ├── NewBlog.jsx
+        └── Register.jsx
+```
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

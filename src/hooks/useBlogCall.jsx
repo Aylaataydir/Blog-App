@@ -222,7 +222,7 @@ console.log(formData)
             return data.data
 
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
             toast.error("Image upload failed, please try again.")
         }
     }

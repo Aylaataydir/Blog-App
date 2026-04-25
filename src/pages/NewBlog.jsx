@@ -48,7 +48,7 @@ const NewBlog = () => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    setSelectedFileName(file.name);
+    
     setImagePreview("");
     setUploading(true);
 
@@ -61,6 +61,7 @@ const NewBlog = () => {
     if (data?.secure_url) {
       setValue('image', data.secure_url, { shouldValidate: true });
       setImagePreview(data.secure_url);
+      setSelectedFileName(file.name);
     }
     setUploading(false);
 
@@ -71,6 +72,10 @@ const NewBlog = () => {
     setImagePreview("")
     setSelectedFileName("")
     setValue('image', '')
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   }
 
 
