@@ -8,15 +8,17 @@ import PaginationItem from '@mui/material/PaginationItem';
 import Stack from '@mui/material/Stack'
 import { slugify } from '../lib/slugify';
 import { paginationBlogsStatus } from '../features/blogSlice';
-import { h1 } from 'framer-motion/client';
+import { colgroup, h1 } from 'framer-motion/client';
 import SkeletonBlogList from './skeletons/SkeletonBlogList';
 
 
 
 
-const LIMIT = 5;
+
 
 const BlogList = () => {
+
+    const LIMIT = 5;
 
     const { paginationBlogs, blogs, categories } = useSelector((state) => state.blog);
     const { getDataByEndpoint } = useBlogCall();
@@ -29,6 +31,8 @@ const BlogList = () => {
 
     const { isSearching } = useSelector(state => state.blog)
 
+    const pageCount = totalCount ? Math.ceil(totalCount / LIMIT) : 1;
+
 
     useEffect(() => {
         const skip = (page - 1) * LIMIT;
@@ -38,20 +42,23 @@ const BlogList = () => {
             params["filter[categoryId]"] = categoryId; //bir objenin icerisine bu sekilde key ve value ekleyebiliyoruz.
         }
 
-        getDataByEndpoint("blogs", params, "paginationBlogs").then((data) => {
+        const getData = async () => {
+            const data = await getDataByEndpoint("blogs", params, "paginationBlogs")
             if (data?.details?.totalRecords) setTotalCount(data.details.totalRecords);
-        });
+        }
+
+        getData()
 
     }, [page, category])
 
-    const pageCount = totalCount ? Math.ceil(totalCount / LIMIT) : 1;
+
 
     return (
 
         <Stack spacing={4} alignItems="center" className=' lg:pe-8 md:mb-6'>
             <div className="w-full space-y-5 md:space-y-0">
                 {paginationStatus === "idle" || paginationStatus === "loading"
-                    ? <SkeletonBlogList/>
+                    ? <SkeletonBlogList />
                     : <>
                         {paginationBlogs?.length === 0 && (
                             <p className="text-lg text-center">No blogs found in this category..</p>

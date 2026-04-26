@@ -53,7 +53,6 @@ const Navbar = () => {
     return (
         <div className="navbar justify-between shadow-sm px-5 bg-bg-btn">
             <div className="flex">
-                {/* <img src={logo} alt="logo" width={60} /> */}
                 <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center " />
             </div>
             <div className='hidden md:flex gap-10'>

@@ -36,6 +36,8 @@ const Hero = () => {
 
     return (
 
+        //! title
+
         <div className='px-4 sm:px-5 md:px-10 lg:px-30 mx-auto'>
             <div className="text-center mt-12 mb-4
               md:mt-16 border-b border-b-black/30">
@@ -49,6 +51,7 @@ const Hero = () => {
                     Travel, Health, World, Culture...
                 </p>
             </div>
+
 
             {loadingStatus === "idle" || loadingStatus === "loading"
                 ? <SkeletonHero />
@@ -79,7 +82,7 @@ const Hero = () => {
                                 </figure>
                                 <div className="flex-1 p-3 gap-4">
                                     <h2 className="card-title text-3xl line-clamp-2 lg:line-clamp-3  ">{blog.title}</h2>
-                                    <p className='text-sm line-clamp-8 leading-relaxed text-gray-700 mt-3'>{blog.content}</p>
+                                    <div className='text-sm line-clamp-8 leading-relaxed text-gray-700 mt-3' dangerouslySetInnerHTML={{ __html: blog?.content }} />
                                     <div className='mt-8'> <Link to={`/blog/${blog._id}`} onClick={() => updateViewCount(blog)} className="buttons">Read More</Link></div>
                                     <div className="flex mt-4 items-center justify-between gap-2"></div>
                                 </div>
@@ -97,21 +100,3 @@ const Hero = () => {
 export default Hero
 
 
-
-{/* <div>
-            
-            <div className="card lg:card-side max-w-4xl mx-auto mt-8 bg-base-100 shadow-sm">
-                <figure className='flex-1'>
-                    <img
-                        src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
-                        alt="Album" />
-                </figure>
-                <div className="card-body flex-1">
-                    <h2 className="card-title">New album is released!</h2>
-                    <p>Click the button to listen on Spotiwhy app.</p>
-                    <div className="card-actions justify-end">
-                        <Link to="/" className="btn btn-primary">Read More</Link>
-                    </div>
-                </div>
-            </div>
-        </div> */}

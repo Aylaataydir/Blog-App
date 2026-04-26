@@ -25,6 +25,8 @@ const ToolbarButton = ({ onClick, isActive, title, children }) => (
 
 const ToolbarDivider = () => <div className="editor-toolbar-divider" />
 
+
+
 const TiptapEditor = ({ onChange, initialContent = "" }) => {
   const editor = useEditor({
     extensions: [
@@ -35,7 +37,7 @@ const TiptapEditor = ({ onChange, initialContent = "" }) => {
       Highlight.configure({ multicolor: true }),
     ],
     content: initialContent,
-    onUpdate: ({ editor }) => {
+    onUpdate: ({ editor }) => { // her degisiklikte calisir newblog da form un icerigini gunceller
       onChange(editor.getHTML())
     },
   })
@@ -184,7 +186,8 @@ const TiptapEditor = ({ onChange, initialContent = "" }) => {
         </ToolbarButton>
       </div>
 
-      {/* Editor Content */}
+  
+
       <EditorContent editor={editor} className="editor-content" />
     </div>
   )

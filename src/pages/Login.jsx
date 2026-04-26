@@ -40,8 +40,9 @@ const Login = () => {
           style={{ fontFamily: 'var(--font-poppins)' }}
         >
           <h2 className="text-2xl font-bold text-center mb-2 text-bg-secondary tracking-wide">Login</h2>
+ 
+     
 
-          {/* Username */}
           <label className="text-xs font-semibold mb-1 text-gray-700">Username</label>
           <input
             {...form.register("username")}
@@ -52,7 +53,8 @@ const Login = () => {
             <span className="text-xs text-red-500 -mt-1.5 mb-1">{form.formState.errors.username?.message}</span>
           )}
 
-          {/* Password */}
+        
+
           <label className="text-xs font-semibold mb-1 text-gray-700 mt-2">Password</label>
           <input
             type="password"

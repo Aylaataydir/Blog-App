@@ -11,11 +11,12 @@ const initialState = {
         mostLiked: "idle",
         mostRead: "idle",
         userBlogs: "idle",
+        userLikes:"idle",
     },
     loading: false,
-    blogs: null,
     paginationBlogs: null,
     userBlogs: null,
+    userLikes:null,
     categories: null,
     blog: null,
     mostLiked: null,
@@ -23,13 +24,15 @@ const initialState = {
     blogAuthor: null,
     isSearching: false,
     editingBlog: null,
-    blogAuthor: null
+    blogAuthor: null,
+     // blogs: null,
 }
 
 export const blogSlice = createSlice({
     name: "blog",
     initialState,
     reducers: {
+
         fetchStart: ((state, { payload }) => {
             state.fetchStatus[payload] = "loading"
         }),
@@ -38,10 +41,6 @@ export const blogSlice = createSlice({
             const { stateName, data } = payload
             state[stateName] = data
             state.fetchStatus[stateName] = "succeeded"
-        }),
-
-        fillBlog: ((state, { payload }) => {
-            state.blog = payload
         }),
 
         toggleBlogLike: ((state, { payload }) => {
@@ -55,16 +54,19 @@ export const blogSlice = createSlice({
                 }
             }
         }),
+
         addCommentToBlog: ((state, { payload }) => {
 
             if (state.blog) state.blog.comments.push(payload)
 
         }),
+
         deleteCommentFromBlog: ((state, { payload }) => {
             if (state.blog) {
                 state.blog.comments = state.blog.comments.filter(c => c._id !== payload)
             }
         }),
+
         toggleBlogListLike: ((state, { payload }) => {
             const { blogId, userId } = payload
             if (state.paginationBlogs) {
@@ -76,12 +78,18 @@ export const blogSlice = createSlice({
                 }
             }
         }),
+
         toggleSearching: ((state, { payload }) => {
             state.isSearching = payload
         }),
+
         setEditingBlog: ((state, { payload }) => {
             state.editingBlog = payload
-        })
+        }),
+
+          // fillBlog: ((state, { payload }) => {
+        //     state.blog = payload
+        // }),
 
     }
 })
@@ -94,6 +102,7 @@ export const mostLikedStatus = (state) => state.blog.fetchStatus.mostLiked
 export const paginationBlogsStatus = (state) => state.blog.fetchStatus.paginationBlogs
 export const userBlogsStatus = (state) => state.blog.fetchStatus.userBlogs
 export const blogDetailStatus = (state) => state.blog.fetchStatus.blog
+export const userLikesStatus = (state) => state.blog.fetchStatus.userLikes
 
 
 export default blogSlice.reducer

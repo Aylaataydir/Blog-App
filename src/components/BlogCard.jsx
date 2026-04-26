@@ -83,6 +83,9 @@ const BlogCard = ({ blog }) => {
                             </div>
                             <p className='text-xs text-gray-400'>Author</p>
                         </div>
+
+                         {/* ICONS */}
+
                         <div className='flex gap-3 items-center pe-3 md:pe-0'>
                             <div className='flex items-center gap-1'>
                                 <motion.div

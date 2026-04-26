@@ -208,6 +208,7 @@ const NewBlog = () => {
           </div>
 
           {/* Actions */}
+          
           <div className="newblog-actions">
             <button
               type="button"

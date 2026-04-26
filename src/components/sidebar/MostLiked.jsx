@@ -15,7 +15,8 @@ const MostLiked = () => {
 
   const mostLiked = blogs ? [...blogs].sort((a, b) => b.likes.length - a.likes.length).slice(0, 5) : []
 
-  useEffect(() => {
+  
+  useEffect(() => {  // backend de likes lar array seklinde tutuldugu icin, backendde bu dizinin uzunlugunu hesaplayamadigi icin sort : "desc" ile mostlikelari getiremedim. backendde degisiklik yapilmasi gerekiyor.
     getDataByEndpoint("blogs")
   }, [])
 

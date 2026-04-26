@@ -5,14 +5,15 @@ import { Outlet } from 'react-router-dom'
 const MyProfile = () => {
 
     return (
-        <div className='grid grid-cols-7 gap-11 px-10 py-8 max-w-[1400px] mx-auto'>
-            <div className='col-span-2'>
-                <MyProfileSidebar />
+        <div className="max-w-300 mx-auto  px-3 md:px-8 pt-4 pb-16  md:py-16">
+            <div className="grid grid-cols-1  md:grid-cols-7 gap-6  lg:gap-11">
+                <div className="md:col-span-2 mb-6 md:mb-0">
+                    <MyProfileSidebar />
+                </div>
+                <div className="md:col-span-5">
+                    <Outlet />
+                </div>
             </div>
-            <div className='col-span-5'>
-                <Outlet />
-            </div>
-
         </div>
     )
 }

@@ -50,8 +50,8 @@ export const loginSchema = z.object({
 
 
 export const blogSchema = z.object({
-    title: z.string().min(3, "Title must be at least 3 characters").max(150, "Title must be less than 150 characters"),
-    content: z.string().min(10, "Content must be at least 10 characters"),
+    title: z.string().min(3, "Title must be at least 3 characters").max(80, "Title must be less than 80 characters"),
+    content: z.string().min(100, "Content must be at least 100 characters"),
     image: z.string().url("Please enter a valid URL").min(1, "Cover image URL is required"),
     categoryId: z.string().min(1, "Please select a category"),
 })

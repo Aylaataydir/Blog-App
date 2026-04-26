@@ -44,7 +44,8 @@ const Register = () => {
                 >
                     <h2 className="text-2xl font-bold text-center mb-2 text-bg-secondary tracking-wide">Register</h2>
 
-                    {/* Username */}
+                     {/* Username */}
+
                     <label className="text-xs font-semibold mb-1 text-gray-700">Username</label>
                     <input
                         {...form.register("username")}
@@ -57,7 +58,8 @@ const Register = () => {
                     )}
 
 
-                    {/* First Name & Last Name yan yana */}
+                     {/* First Name & Last Name  */}
+                    
                     <div className="flex flex-col md:flex-row gap-6">
                         <div className="flex-1">
                             <label className="text-xs font-semibold mb-1 text-gray-700">First Name</label>
@@ -85,7 +87,8 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {/* Email */}
+                     {/* Email */}
+
                     <label className="text-xs font-semibold mb-1 text-gray-700">E-Mail</label>
                     <input
                         {...form.register("email")}
@@ -98,6 +101,7 @@ const Register = () => {
                     )}
 
                     {/* Password */}
+
                     <label className="text-xs font-semibold mb-1 text-gray-700">Password</label>
                     <input
                         type="password"
@@ -109,7 +113,7 @@ const Register = () => {
                         <span className="text-xs text-red-500 -mt-1.5 mb-1">{form.formState.errors.password?.message}</span>
                     )}
 
-                    {/* Confirm Password */}
+                   
                     <label className="text-xs font-semibold mb-1 text-gray-700">Confirm Password</label>
                     <input
                         type="password"

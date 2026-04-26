@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { FaHeart, FaEye, FaPen, FaBookmark, FaStar, FaPlusCircle } from 'react-icons/fa'
+import { BiSolidComment } from 'react-icons/bi'
 import { Link, NavLink } from 'react-router-dom'
 import UserUpdateModal from '../modals/UserUpdateModal'
 import useBlogCall from '../../hooks/useBlogCall'
@@ -26,6 +27,7 @@ const MyProfileSidebar = () => {
         { key: 'my-blogs', label: 'My Blogs', icon: <FaPen className='text-xs' /> },
         { key: 'my-reading-list', label: 'My Reading List', icon: <FaBookmark className='text-xs' /> },
         { key: 'my-favorites', label: 'My Favorites', icon: <FaStar className='text-xs' /> },
+        { key: 'received-comments', label: 'Received Comments', icon: <BiSolidComment className='text-xs' /> },
     ]
 
     return (
@@ -68,7 +70,8 @@ const MyProfileSidebar = () => {
             </div>
 
 
-            {/* Add New Blog CTA */}
+            {/* add new blog */}
+
             <Link
                 to="/my-profile/add-new-blog"
                 className='flex items-center justify-center gap-2 bg-bg-secondary text-white  border border-bg-secondary/30 text-xs font-semibold py-2.5 rounded-sm hover:opacity-90 transition-opacity duration-200'

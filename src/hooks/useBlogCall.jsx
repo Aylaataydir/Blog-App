@@ -2,7 +2,6 @@
 import axios from 'axios'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-// import { fetchStart, fillBlog, fillEndpoints } from '../features/blogSlice'
 import { toast } from 'sonner'
 import { updateUserData } from '../features/authSlice'
 import { fetchStart, fillEndpoints } from '../features/blogSlice'
@@ -18,7 +17,7 @@ const useBlogCall = () => {
 
 
     const getDataByEndpoint = async (endpoint, customParams = {}, stateName = endpoint) => {
-        console.log(stateName)
+        
         try {
             dispatch(fetchStart(stateName));
             const { data } = await axios.get(`${BASE_URL}${endpoint}/`, {
@@ -213,6 +212,7 @@ const useBlogCall = () => {
             return false
         }
     }
+
 
     const UploadCloudinary = async (formData) => {
 console.log(formData)

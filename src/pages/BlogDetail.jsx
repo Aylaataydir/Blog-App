@@ -103,7 +103,6 @@ const BlogDetail = () => {
 
 
 
-
   if (loadingStatus === "idle" || loadingStatus === "loading") {
     return (
       <SkeletonBlogDetail />
@@ -112,6 +111,9 @@ const BlogDetail = () => {
 
 
   return (
+
+        //! blog
+
     <div className='grid grid-cols-4 gap-8 px-4 md:px-8 lg:px-10 py-10 max-w-360 mx-auto min-h-screen'>
       <div className='col-span-4 lg:col-span-3 flex flex-col gap-5  lg:pe-8 mx-auto '>
         <div>
@@ -149,14 +151,14 @@ const BlogDetail = () => {
         </div>
 
 
-        {/* COMMENTS   */}
+        //! ADD COMMENT   
 
         <div className='pt-6 border-t border-t-gray-300/70'>
           <div className='bg-bg-primary/80 rounded-md p-3 shadow-sm'>
             <h3 className='text-base font-semibold mb-4 font-[Poppins]'>Leave a Comment</h3>
             <form onSubmit={handleCreateComment} className='flex flex-col gap-3'>
               <div className='flex gap-3'>
-                <img className="size-8 rounded-full mt-0.5 shrink-0" src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover" src={currentUser.image} />
                 <div className='flex-1 flex flex-col gap-2'>
                   <span className='text-xs font-medium'>{currentUser?.username}</span>
                   <textarea
@@ -175,11 +177,14 @@ const BlogDetail = () => {
             </form>
           </div>
         </div>
+
+          //! COMMENTS 
+
         <h3 className='text-sm font-semibold tracking-wide opacity-60 mb-4 font-[Poppins]'>Comments</h3>
         <div className='flex flex-col gap-3'>
           {displayedComments?.map(comment => (
             <div className='flex gap-3 group' key={comment._id}>
-              <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover" src={currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+              <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover" src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
               <div className='bg-bg-primary/60 rounded-lg px-4 py-3 flex-1'>
                 <div className='flex items-center gap-2'>
                   <span className='text-xs font-medium'>{comment.userId.username}</span>
@@ -226,7 +231,7 @@ const BlogDetail = () => {
         }
       </div>
 
-      <div className='mt-32 sticky top-10 self-start hidden lg:block'>
+      <div className='mt-22 sticky top-10 self-start hidden lg:block'>
         <MostLiked />
       </div>
       <DeleteModal commentId={selectedCommentId} title="comment" />
