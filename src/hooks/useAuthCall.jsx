@@ -76,7 +76,7 @@ const useAuthCall = () => {
 
             await axios.post(`${BASE_URL}auth/logout`, {}, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
 
