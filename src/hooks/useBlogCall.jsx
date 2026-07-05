@@ -17,7 +17,7 @@ const useBlogCall = () => {
 
 
     const getDataByEndpoint = async (endpoint, customParams = {}, stateName = endpoint) => {
-        
+
         try {
             dispatch(fetchStart(stateName));
             const { data } = await axios.get(`${BASE_URL}${endpoint}/`, {
@@ -74,7 +74,7 @@ const useBlogCall = () => {
                     Authorization: `Token ${token}`
                 }
             })
-
+            console.log(data)
         } catch (error) {
             console.log(error)
         }
@@ -215,7 +215,7 @@ const useBlogCall = () => {
 
 
     const UploadCloudinary = async (formData) => {
-console.log(formData)
+        console.log(formData)
         try {
 
             const data = await axios.post(import.meta.env.VITE_CLOUDINARY_UPLOAD_URL, formData)

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import useAuthCall from '../hooks/useAuthCall'
 import useBlogCall from '../hooks/useBlogCall'
-import { toggleSearching } from '../features/blogSlice'
+import { clearSearch, toggleSearching } from '../features/blogSlice'
 import { MdVerticalAlignBottom } from 'react-icons/md'
 import logo from "../../assets/logo.png"
 
@@ -12,13 +12,14 @@ import logo from "../../assets/logo.png"
 const Navbar = () => {
 
     const { currentUser } = useSelector((state) => state.auth)
-    const { blogs } = useSelector((state) => state.blog)
+    const { searchedItems } = useSelector((state) => state.blog)
     const [isPending, setIsPending] = useState(false)
     const { logOut } = useAuthCall()
     const { getDataByEndpoint } = useBlogCall()
     const dispatch = useDispatch()
 
-    const timerRef = useRef(null) // inputa her tiklamada databaseden veri cekmesin diye kullaniyorum.
+    const timerRef = useRef(null) // inputa her tiklamada databaseden veri cekmesin diye kullaniyorum. komponent render olunca sifirlanmasin diye.
+// useRef in bir amaci da enderlar arasinda veri saklamak. eger direk timerref = null deseydim her renderda sifirlanicaki. bir ise yaramiycakti. usestate kullanmadim cünkü usestate kullansaydim timer id si her degistiginde component gereksiz renderlanicakti, cünkü ui da bir degisiklik yapmiyoruz. renderlanmadan sadece benim degerimi tutmasini istedigim icin useref kullandim.
 
     const handleLogOut = async (e) => {
         e.preventDefault()
@@ -30,28 +31,26 @@ const Navbar = () => {
     const handleSearch = (query) => {
 
         clearTimeout(timerRef.current)
-        dispatch(toggleSearching(true))
 
-        timerRef.current = setTimeout(async () => {
+        timerRef.current = setTimeout(async () => {  // timeRef.current = dedikten sonra settimeout hemen calismasa bile timerref e id atiyor. zaman dolunca bu id fonksiyonu calisiyor.
 
             if (query.trim()) {
-
-                const veri = await getDataByEndpoint("blogs", {
-                    "search[title]": query.trim(),
-                    "search[content]": query.trim(),
-                }, "blogs")
-                console.log(veri.data)
+                const data = await getDataByEndpoint("blogs", {
+                    "search[content]": query.trim()
+                }, "searchedItems")
+                console.log(data.data)
             } else {
-                dispatch(toggleSearching(false))
+            dispatch(clearSearch())
             }
+
         }, 500)
 
-        console.log(blogs)
 
     }
 
     return (
         <div className="navbar justify-between shadow-sm px-5 bg-bg-btn">
+        {/* search  */}
             <div className="flex">
                 <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center " />
             </div>

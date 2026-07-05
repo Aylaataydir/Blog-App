@@ -111,9 +111,7 @@ const BlogDetail = () => {
 
 
   return (
-
-        //! blog
-
+    
     <div className='grid grid-cols-4 gap-8 px-4 md:px-8 lg:px-10 py-10 max-w-360 mx-auto min-h-screen'>
       <div className='col-span-4 lg:col-span-3 flex flex-col gap-5  lg:pe-8 mx-auto '>
         <div>
@@ -151,7 +149,7 @@ const BlogDetail = () => {
         </div>
 
 
-        //! ADD COMMENT   
+         {/* ADD COMMENT    */}
 
         <div className='pt-6 border-t border-t-gray-300/70'>
           <div className='bg-bg-primary/80 rounded-md p-3 shadow-sm'>
@@ -178,7 +176,7 @@ const BlogDetail = () => {
           </div>
         </div>
 
-          //! COMMENTS 
+           {/* COMMENTS  */}
 
         <h3 className='text-sm font-semibold tracking-wide opacity-60 mb-4 font-[Poppins]'>Comments</h3>
         <div className='flex flex-col gap-3'>

@@ -21,7 +21,7 @@ const MostRead = () => {
 
         const getData = async () => {
 
-            await getDataByEndpoint("blogs", { "sort[countOfVisitors]": "desc", "limit": 10 }, "mostRead")
+            await getDataByEndpoint("blogs", { "sort[countOfVisitors]": "desc", "limit":10 }, "mostRead")
             // await getEndpointById("users",  ,{blogAuthor} )
         }
 

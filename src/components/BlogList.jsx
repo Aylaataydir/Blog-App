@@ -29,27 +29,29 @@ const BlogList = () => {
     const category = searchParams.get('category')
     const categoryId = categories?.find(cat => slugify(cat.name) === category)?._id
 
-    const { isSearching } = useSelector(state => state.blog)
-
     const pageCount = totalCount ? Math.ceil(totalCount / LIMIT) : 1;
 
 
+
     useEffect(() => {
-        const skip = (page - 1) * LIMIT;
-        const params = { limit: LIMIT, skip, "sort[createdAt]": "desc" }
+        const params = { limit:LIMIT, page, "sort[createdAt]": "desc" };
+
+       
 
         if (category) {
-            params["filter[categoryId]"] = categoryId; //bir objenin icerisine bu sekilde key ve value ekleyebiliyoruz.
+            params["filter[categoryId]"] = categoryId;
         }
 
         const getData = async () => {
-            const data = await getDataByEndpoint("blogs", params, "paginationBlogs")
+            const data = await getDataByEndpoint("blogs", params, "paginationBlogs");
             if (data?.details?.totalRecords) setTotalCount(data.details.totalRecords);
-        }
+        };
 
-        getData()
+        getData();
 
-    }, [page, category])
+         console.log(paginationBlogs)
+
+    }, [page, category]);
 
 
 

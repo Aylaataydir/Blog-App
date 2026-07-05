@@ -27,7 +27,7 @@ const MyProfileSidebar = () => {
         { key: 'my-blogs', label: 'My Blogs', icon: <FaPen className='text-xs' /> },
         { key: 'my-reading-list', label: 'My Reading List', icon: <FaBookmark className='text-xs' /> },
         { key: 'my-favorites', label: 'My Favorites', icon: <FaStar className='text-xs' /> },
-        { key: 'received-comments', label: 'Received Comments', icon: <BiSolidComment className='text-xs' /> },
+        // { key: 'received-comments', label: 'Received Comments', icon: <BiSolidComment className='text-xs' /> },
     ]
 
     return (

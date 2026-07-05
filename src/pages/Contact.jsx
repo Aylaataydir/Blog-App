@@ -6,7 +6,7 @@ const Contact = () => {
     return (
         <div className="min-h-screen w-full flex flex-col  bg-bg-primary px-3">
             
-            //! TITEL
+            {/* TITEL */}
 
             <div className=" flex flex-col w-full mt-10 md:mt-20 lg:mt-18 lg:mb-8  items-center justify-center ">
                 <div className="font-poppins text-center md:max-w-xl lg:max-w-3xl">
@@ -24,7 +24,7 @@ const Contact = () => {
                     />
                 </div>
                 
-                //! FORM
+                 {/* FORM */}
 
                 <form className="w-full md:w-1/2 max-w-lg px-2 flex flex-col gap-8 ">
                     <div className="flex gap-4">

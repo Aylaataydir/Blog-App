@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { FaSleigh } from "react-icons/fa"
 
 
 
@@ -22,7 +23,7 @@ const initialState = {
     mostLiked: null,
     mostRead: null,
     blogAuthor: null,
-    isSearching: false,
+    searchedItems: null,
     editingBlog: null,
     blogAuthor: null,
      // blogs: null,
@@ -78,14 +79,12 @@ export const blogSlice = createSlice({
                 }
             }
         }),
-
-        toggleSearching: ((state, { payload }) => {
-            state.isSearching = payload
-        }),
-
         setEditingBlog: ((state, { payload }) => {
             state.editingBlog = payload
         }),
+        clearSearch: ((state, {payload}) => {
+            state.searchedItems = null
+        })
 
           // fillBlog: ((state, { payload }) => {
         //     state.blog = payload
@@ -95,7 +94,7 @@ export const blogSlice = createSlice({
 })
 
 
-export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, deleteCommentFromBlog, toggleBlogListLike, toggleSearching, setEditingBlog, blogAuthor, fetchStatus, fetchStart } = blogSlice.actions
+export const { fillEndpoints, fillBlog, toggleBlogLike, addCommentToBlog, deleteCommentFromBlog, toggleBlogListLike, toggleSearching, setEditingBlog, blogAuthor, fetchStatus, fetchStart, clearSearch } = blogSlice.actions
 
 export const mostReadStatus = (state) => state.blog.fetchStatus.mostRead
 export const mostLikedStatus = (state) => state.blog.fetchStatus.mostLiked
