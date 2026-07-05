@@ -63,10 +63,9 @@ html {
 
 
 h1,
-h2,
-{
-/* font-family: var(--font-poppins); */
-color: #374151;
+h2 {
+  /* font-family: var(--font-poppins); */
+  color: #374151;
 }
 
 .navLink {
