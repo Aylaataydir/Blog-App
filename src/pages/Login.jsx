@@ -15,7 +15,7 @@ const Login = () => {
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      login: "",
       password: "",
     },
   });
@@ -40,20 +40,20 @@ const Login = () => {
           style={{ fontFamily: 'var(--font-poppins)' }}
         >
           <h2 className="text-2xl font-bold text-center mb-2 text-bg-secondary tracking-wide">Login</h2>
- 
-     
+
+
 
           <label className="text-xs font-semibold mb-1 text-gray-700">Username</label>
           <input
-            {...form.register("username")}
-            className={`w-full px-3 py-2 rounded-lg border text-sm bg-white focus:outline-none focus:border-bg-secondary transition ${form.formState.errors.username ? "border-red-400" : "border-bg-btn-2"}`}
+            {...form.register("login")}
+            className={`w-full px-3 py-2 rounded-lg border text-sm bg-white focus:outline-none focus:border-bg-secondary transition ${form.formState.errors.login ? "border-red-400" : "border-bg-btn-2"}`}
             autoComplete="username"
           />
-          {form.formState.errors.username && (
-            <span className="text-xs text-red-500 -mt-1.5 mb-1">{form.formState.errors.username?.message}</span>
+          {form.formState.errors.login && (
+            <span className="text-xs text-red-500 -mt-1.5 mb-1">{form.formState.errors.login?.message}</span>
           )}
 
-        
+
 
           <label className="text-xs font-semibold mb-1 text-gray-700 mt-2">Password</label>
           <input

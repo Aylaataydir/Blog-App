@@ -37,7 +37,7 @@ export const updateProfileSchema = z.object({
 
 
 export const loginSchema = z.object({
-    username: z.string().min(1, "Invalid email address"),
+    login: z.string().min(1, "Invalid email address"),
     password: z
         .string()
         .min(1, "Required")
