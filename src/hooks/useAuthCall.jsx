@@ -29,7 +29,7 @@ const useAuthCall = () => {
                 description: `Welcome back ${data.user.username}`,
             });
 
-        
+
 
             navigate("/")
 
@@ -51,9 +51,9 @@ const useAuthCall = () => {
             console.log(data)
             dispatch(fillUserData(data))
 
-            
+
             toast.success("Register Successfull!", {
-                description: `Welcome ${data.data.username}`,
+                description: `Welcome ${data.user.username}`,
             });
 
             navigate("/")
@@ -74,8 +74,8 @@ const useAuthCall = () => {
 
         try {
 
-            await axios(`${BASE_URL}auth/logout`, {
-                header: {
+            await axios.post(`${BASE_URL}auth/logout`, {}, {
+                headers: {
                     Authorization: `Token ${token}`
                 }
             })
