@@ -47,7 +47,7 @@ const useAuthCall = () => {
         console.log(credentials)
         try {
 
-            const { data } = await axios.post(`${BASE_URL}users/`, credentials)
+            const { data } = await axios.post(`${BASE_URL}auth/register`, credentials)
             console.log(data)
             dispatch(fillUserData(data))
 
