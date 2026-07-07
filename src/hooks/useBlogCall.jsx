@@ -147,7 +147,14 @@ const useBlogCall = () => {
         await new Promise(resolve => setTimeout(resolve, 1000))
 
         try {
-            await axios.put(`${BASE_URL}users/${userId}`, updatedCredentials, {
+            // Backend'e gönderirken avatar yerine image kullan
+            const dataToSend = {
+                ...updatedCredentials,
+                avatar: updatedCredentials.avatar,
+            };
+            delete dataToSend.avatar;
+
+            await axios.put(`${BASE_URL}users/${userId}`, dataToSend, {
                 headers: {
                     Authorization: `Token ${token}`
                 }
