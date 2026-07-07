@@ -26,7 +26,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
         defaultValues: {
             username: currentUser.username,
             email: currentUser.email,
-            image: currentUser.image || "",
+            avatar: currentUser.avatar || "",
         },
     });
 
@@ -36,10 +36,12 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
 
     const onSubmit = async (data) => {
 
+        console.log(data)
+
         const updatedCredentials = {
             username: data.username,
             email: data.email,
-            image: imagePreview || data.image || "",
+            avatar: imagePreview || data.avatar || "",
         }
         const res = await updateUserCredentials(currentUser._id, updatedCredentials)
 
@@ -62,7 +64,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
         const data = await UploadCloudinary(formData)
 
         if (data?.secure_url) {
-            setValue('image', data.secure_url, { shouldValidate: true })
+            setValue('avatar', data.secure_url, { shouldValidate: true })
             setImagePreview(data.secure_url);
             setSelectedFileName(file.name)
         }
@@ -71,10 +73,10 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
 
 
     const deleteUploadedImage = () => {
-        setValue("image", currentUser.image || "")
+        setValue("avatar", "")
         setImagePreview("")
         setSelectedFileName("")
-        
+
         if (fileInputRef.current) {
             fileInputRef.current.value = "";
         }
@@ -115,7 +117,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
                             type="url"
                             disabled={true}
                             placeholder="https://example.com/image.jpg"
-                            {...register("image")}
+                            {...register("avatar")}
                             className="w-full px-3 py-2.5 text-sm rounded-md border border-bg-btn-2 bg-white outline-none focus:border-bg-secondary focus:shadow-[0_0_0_3px_rgba(203,153,126,0.12)] transition-all placeholder:text-gray-300"
                         />
                         <div>
@@ -132,7 +134,12 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
                                         {`Selected: ${selectedFileName}`}
                                         <button onClick={deleteUploadedImage} type="button" className="remove-file-btn ml-2 text-red-600 text-base cursor-pointer">×</button>
                                     </>
-                                    : 'Choose a file'}
+                                    : imagePreview || currentUser.avatar ?
+                                        <>
+                                            <span className="text-xs text-gray-500">Upload Profile Image</span>
+                                        
+                                        </>
+                                        : 'Choose a file'}
                         </div>
 
                         <input

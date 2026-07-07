@@ -31,7 +31,7 @@ const MostRead = () => {
 
 
     return (
-        <div className='py-2 px-2 sm:px-4 bg-bg-primary rounded-xl w-full'>
+        <div className='pt-2 px-2 sm:px-4 bg-bg-primary rounded-xl w-full'>
             {/* Başlık */}
             <div className='flex items-center gap-2 sm:gap-4 mb-4'>
                 <div className='flex flex-col gap-0.5'>

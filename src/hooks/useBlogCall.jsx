@@ -38,7 +38,11 @@ const useBlogCall = () => {
 
         try {
             dispatch(fetchStart());
-            const data = await axios.get(`${BASE_URL}${endpoint}/${id}`)
+            const data = await axios.get(`${BASE_URL}${endpoint}/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             console.log(data.data.data)
             dispatch(fillEndpoints({ stateName, data: data.data.data }))
 
@@ -55,7 +59,7 @@ const useBlogCall = () => {
 
             const { data } = await axios.get(`${BASE_URL}blogs/${userId}/getLike`, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
 
@@ -71,7 +75,7 @@ const useBlogCall = () => {
         try {
             const { data } = await axios.post(`${BASE_URL}blogs/${blogId}/postLike`, {}, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
             console.log(data)
@@ -87,7 +91,7 @@ const useBlogCall = () => {
 
             const { data } = await axios.post(`${BASE_URL}comments/`, comment, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
             console.log(data)
@@ -105,7 +109,7 @@ const useBlogCall = () => {
         try {
             const { data } = await axios.delete(`${BASE_URL}comments/${commentId}`, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
             console.log(data)
@@ -126,7 +130,7 @@ const useBlogCall = () => {
 
             await axios.post(`${BASE_URL}blogs/`, newBlog, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
 
@@ -147,16 +151,9 @@ const useBlogCall = () => {
         await new Promise(resolve => setTimeout(resolve, 1000))
 
         try {
-            // Backend'e gönderirken avatar yerine image kullan
-            const dataToSend = {
-                ...updatedCredentials,
-                avatar: updatedCredentials.avatar,
-            };
-            delete dataToSend.avatar;
-
-            await axios.put(`${BASE_URL}users/${userId}`, dataToSend, {
+            await axios.put(`${BASE_URL}users/${userId}`, updatedCredentials, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
             dispatch(updateUserData(updatedCredentials))
@@ -180,7 +177,7 @@ const useBlogCall = () => {
         try {
             await axios.put(`${BASE_URL}blogs/${blogId}`, updatedBlog, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
 
@@ -203,7 +200,7 @@ const useBlogCall = () => {
         try {
             await axios.delete(`${BASE_URL}blogs/${blogId}/`, {
                 headers: {
-                    Authorization: `Token ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
 

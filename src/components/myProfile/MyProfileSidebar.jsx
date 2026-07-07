@@ -38,7 +38,7 @@ const MyProfileSidebar = () => {
                 <div className='flex flex-col items-center -mt-10 pb-5 px-5'>
                     <div className="avatar">
                         <div className="w-24 rounded-full ring-2 ring-bg-secondary ring-offset-2 ring-offset-bg-primary">
-                            <img src={imagePreview ? imagePreview : currentUser?.image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+                            <img className="w-full h-full object-cover object-center" src={imagePreview ? imagePreview : currentUser?.avatar || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
                         </div>
                     </div>
                     <div className='flex items-center relative '>

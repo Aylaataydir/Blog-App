@@ -28,6 +28,7 @@
 body {
   font-family: var(--font-inter);
   min-height: 100vh;
+  max-width: 102.8571rem;
   font-size: .75rem;
   font-weight: 400;
   line-height: 1.625;

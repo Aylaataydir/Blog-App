@@ -80,6 +80,8 @@ const useAuthCall = () => {
                 }
             })
 
+            
+
             dispatch(cleanUserData())
             navigate("/")
 

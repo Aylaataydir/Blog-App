@@ -11,6 +11,8 @@ const Register = () => {
     const navigate = useNavigate()
     const { register } = useAuthCall()
 
+    console.log("API URL:", import.meta.env.VITE_API_URL);
+
     const form = useForm({
         resolver: zodResolver(registerShema),
         defaultValues: {
@@ -26,8 +28,9 @@ const Register = () => {
     const { isSubmitting } = form.formState
 
     const onSubmit = async (UserCredentials) => {
-        await register(UserCredentials)
+     const data=   await register(UserCredentials)
         console.log(UserCredentials)
+        console.log(data)
 
     };
 

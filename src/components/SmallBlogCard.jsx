@@ -24,7 +24,7 @@ const SmallBlogCard = ({ blog }) => {
                     src={blog.image}
                     alt="" />
                 <span className='absolute top-2 left-2 bg-bg-secondary/90 text-white text-[9px] font-semibold px-2 py-0.5 rounded-full tracking-wide'>
-                    {category?.name ?? 'Other'}
+                    {blog.categoryId.name ?? 'Other'}
                 </span>
             </figure>
             <div className="flex flex-1 flex-col p-3">

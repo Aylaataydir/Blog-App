@@ -20,7 +20,7 @@ const CategoryList = () => {
                             to="/home"
                             className={`${activeCategory ? "bg-bg-primary/80" : "bg-bg-btn-2"} category-btn flex-1 rounded cursor-pointer px-4 py-2 md:py-3 font-semibold text-center`}
                         >
-                            All Categories
+                            All
                         </Link></li>
                         {categories?.map((cat) => {
                             const slug = slugify(cat.name)
@@ -45,7 +45,7 @@ const CategoryList = () => {
                         to="/home"
                         className={`${activeCategory ? "bg-bg-primary/80" : "bg-bg-btn-2"} category-btn flex-1 rounded cursor-pointer px-9 py-2 font-bold text-center`}
                     >
-                        All Categories
+                        All
                     </Link>
                     {categories?.map((cat) => {
                         const slug = slugify(cat.name)

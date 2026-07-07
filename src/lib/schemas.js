@@ -32,7 +32,7 @@ export const registerShema = z.object({
 export const updateProfileSchema = z.object({
     username: z.string().min(3, "Username must be at least 3 characters"),
     email: z.email("Invalid email address"),
-    image: z.string().url("Please enter a valid URL").or(z.literal("")),
+    avatar: z.string().url("Please enter a valid URL").or(z.literal("")),
 })
 
 

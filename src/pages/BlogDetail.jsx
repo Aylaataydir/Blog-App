@@ -111,7 +111,7 @@ const BlogDetail = () => {
 
 
   return (
-    
+
     <div className='grid grid-cols-4 gap-8 px-4 md:px-8 lg:px-10 py-10 max-w-360 mx-auto min-h-screen'>
       <div className='col-span-4 lg:col-span-3 flex flex-col gap-5  lg:pe-8 mx-auto '>
         <div>
@@ -142,21 +142,21 @@ const BlogDetail = () => {
 
         <div className='tiptap text-sm text-justify py-6 tracking-normal' dangerouslySetInnerHTML={{ __html: blog?.content }} />
         <div className="avatar items-center gap-3">
-          <div className="ring-offset-base-100 w-12 rounded-full ring-1 ">
-            <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+          <div className="ring-offset-base-100 w-12 rounded-full ring-1 ring-amber-900 ">
+            <img className='w-full h-full object-cover object-center' src={blog.userId.avatar ? blog.userId.avatar : "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"} />
           </div>
-          <p>{`${currentUser.firstName} ${currentUser.lastName}`}</p>
+          <p>{currentUser.username}</p>
         </div>
 
 
-         {/* ADD COMMENT    */}
+        {/* ADD COMMENT    */}
 
         <div className='pt-6 border-t border-t-gray-300/70'>
           <div className='bg-bg-primary/80 rounded-md p-3 shadow-sm'>
             <h3 className='text-base font-semibold mb-4 font-[Poppins]'>Leave a Comment</h3>
             <form onSubmit={handleCreateComment} className='flex flex-col gap-3'>
               <div className='flex gap-3'>
-                <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover" src={currentUser.image} />
+                <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover object-center" src={currentUser.avatar} />
                 <div className='flex-1 flex flex-col gap-2'>
                   <span className='text-xs font-medium'>{currentUser?.username}</span>
                   <textarea
@@ -176,46 +176,52 @@ const BlogDetail = () => {
           </div>
         </div>
 
-           {/* COMMENTS  */}
+        {/* COMMENTS  */}
 
         <h3 className='text-sm font-semibold tracking-wide opacity-60 mb-4 font-[Poppins]'>Comments</h3>
         <div className='flex flex-col gap-3'>
-          {displayedComments?.map(comment => (
-            <div className='flex gap-3 group' key={comment._id}>
-              <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover" src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
-              <div className='bg-bg-primary/60 rounded-lg px-4 py-3 flex-1'>
-                <div className='flex items-center gap-2'>
-                  <span className='text-xs font-medium'>{comment.userId.username}</span>
-                  <span className='text-[10px] opacity-40'>
-                    {new Date(comment.createdAt).toLocaleDateString('en-GB', {
-                      day: '2-digit',
-                      month: 'long',
-                      year: 'numeric'
-                    })}
-                  </span>
+          {displayedComments && displayedComments.length > 0 ? (
+            displayedComments.map(comment => (
+              <div className='flex gap-3 group' key={comment._id}>
+                <img className="size-8 rounded-full mt-0.5 shrink-0 object-cover object-center" src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+                <div className='bg-bg-primary/60 rounded-lg px-4 py-3 flex-1'>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-xs font-medium'>{comment.userId.username}</span>
+                    <span className='text-[10px] opacity-40'>
+                      {new Date(comment.createdAt).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                      })}
+                    </span>
 
-                  {comment.userId._id === currentUser._id &&
-                    <div className='ml-auto flex items-center gap-1'>
-                      <button
+                    {comment.userId._id === currentUser._id &&
+                      <div className='ml-auto flex items-center gap-1'>
+                        <button
 
-                        className='p-1 rounded hover:bg-black/10 cursor-pointer transition-colors'>
-                        <MdEdit className='text-sm opacity-50 hover:opacity-100' />
-                      </button>
-                      <button className='p-1 rounded hover:bg-red-100 cursor-pointer transition-colors'>
-                        <MdDelete
-                          onClick={() => {
-                            setSelectedCommentId(comment._id)
-                            document.getElementById('my_modal_5').showModal()
-                          }}
-                          className='text-sm opacity-50 hover:opacity-100 hover:text-red-800' />
-                      </button>
-                    </div>
-                  }
+                          className='p-1 rounded hover:bg-black/10 cursor-pointer transition-colors'>
+                          <MdEdit className='text-sm opacity-50 hover:opacity-100' />
+                        </button>
+                        <button className='p-1 rounded hover:bg-red-100 cursor-pointer transition-colors'>
+                          <MdDelete
+                            onClick={() => {
+                              setSelectedCommentId(comment._id)
+                              document.getElementById('my_modal_5').showModal()
+                            }}
+                            className='text-sm opacity-50 hover:opacity-100 hover:text-red-800' />
+                        </button>
+                      </div>
+                    }
+                  </div>
+                  <p className='mt-1.5 text-xs leading-relaxed opacity-80'>{comment.comment}</p>
                 </div>
-                <p className='mt-1.5 text-xs leading-relaxed opacity-80'>{comment.comment}</p>
               </div>
+            ))
+          ) : (
+            <div className='text-center pb-10'>
+              <p className='text-sm text-gray-400 italic'>Be the first to comment!</p>
             </div>
-          ))}
+          )}
         </div>
         {visibleCount < blog?.comments?.length &&
           <div className="flex justify-center mt-4 mb-2">

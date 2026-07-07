@@ -71,7 +71,7 @@ const BlogCard = ({ blog }) => {
             </figure>
             <div className="flex flex-col flex-1 py-1 justify-between">
                 <div>
-                    <p className='text-[10px] text-bg-secondary font-semibold uppercase tracking-widest mb-1'>{category?.name}</p>
+                    <p className='text-[10px] text-bg-secondary font-semibold uppercase tracking-widest mb-1'>{blog.categoryId.name}</p>
                     <h2 className="text-xl font-semibold line-clamp-2 leading-snug mb-2">{blog.title}</h2>
                     <div className='tiptap text-xs line-clamp-3 leading-relaxed text-gray-700' dangerouslySetInnerHTML={{ __html: blog.content }} />
                 </div>
@@ -79,9 +79,9 @@ const BlogCard = ({ blog }) => {
                     <div className='flex  mt-3 w-full justify-between' >
                         <div className="flex items-center gap-2">
                             <div className="w-7 h-7 rounded-full overflow-hidden ring-1 ring-bg-btn">
-                                <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                                <img className='w-full h-full object-cover object-center' src={blog.userId.avatar ? blog.userId.avatar : "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"} />
                             </div>
-                            <p className='text-xs text-gray-400'>Author</p>
+                            <p className='text-xs text-gray-600'>{blog.userId.username}</p>
                         </div>
 
                          {/* ICONS */}

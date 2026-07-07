@@ -70,7 +70,7 @@ const Navbar = () => {
 
 
                         <div className=" rounded-full">
-                            <img src={currentUser?.image ? currentUser.image : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+                            <img className="w-full h-full object-cover object-center" src={currentUser?.avatar ? currentUser.avatar : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
                         </div>
                     </div>
                     <ul
