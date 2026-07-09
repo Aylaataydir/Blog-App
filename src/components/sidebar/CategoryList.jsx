@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useSearchParams } from 'react-router-dom'
 import { slugify } from '../../lib/slugify'
 import { li } from 'framer-motion/client'
+import useBlogCall from '../../hooks/useBlogCall'
 
 const CategoryList = () => {
 
     const { categories } = useSelector(state => state.blog)
     const [searchParams] = useSearchParams()
     const activeCategory = searchParams.get('category')
+    const { getDataByEndpoint } = useBlogCall()
+
+    useEffect(() => {
+        getDataByEndpoint("categories");
+    }, [])
 
     return (
         <div className='gap-4 mb-8 '>

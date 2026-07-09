@@ -26,6 +26,7 @@ const initialState = {
     searchedItems: null,
     editingBlog: null,
     blogAuthor: null,
+    profilePageUserData: null,
      // blogs: null,
 }
 
@@ -79,6 +80,7 @@ export const blogSlice = createSlice({
                 }
             }
         }),
+
         setEditingBlog: ((state, { payload }) => {
             state.editingBlog = payload
         }),

@@ -25,7 +25,7 @@ const BlogDetail = () => {
 
   const dispatch = useDispatch()
   const { getEndpointById, getDataByEndpoint, createComment, deleteComment } = useBlogCall()
-  const { blog, categories } = useSelector(state => state.blog)
+  const { blog } = useSelector(state => state.blog)
   const loadingStatus = useSelector(blogDetailStatus)
   const { currentUser } = useSelector(state => state.auth)
   const [comment, setComment] = useState("")
@@ -41,7 +41,6 @@ const BlogDetail = () => {
     ? [...blog.comments].reverse().slice(0, visibleCount)
     : []
 
-  const category = categories?.find(cat => cat._id === blog?.categoryId?._id)
 
   console.log(blog)
 
@@ -89,7 +88,6 @@ const BlogDetail = () => {
 
   useEffect(() => {
     getEndpointById("blogs", id, "blog")
-    getDataByEndpoint("categories");
   }, [id])
 
 
@@ -115,7 +113,7 @@ const BlogDetail = () => {
     <div className='grid grid-cols-4 gap-8 px-4 md:px-8 lg:px-10 py-10 max-w-360 mx-auto min-h-screen'>
       <div className='col-span-4 lg:col-span-3 flex flex-col gap-5  lg:pe-8 mx-auto '>
         <div>
-          <p className='text-bg-secondary text-xs font-medium tracking-widest uppercase mb-2 font-[Poppins]'>{category?.name}</p>
+          <p className='text-bg-secondary text-xs font-medium tracking-widest uppercase mb-2 font-[Poppins]'>{blog?.categoryId.name}</p>
           <h2 className=' text-xl md:text-3xl  font-semibold  leading-snug font-[Poppins]'>{blog?.title}</h2>
         </div>
         <div className='rounded-lg'>

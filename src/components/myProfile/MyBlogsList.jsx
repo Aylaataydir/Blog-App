@@ -3,13 +3,14 @@ import useBlogCall from '../../hooks/useBlogCall'
 import { useDispatch, useSelector } from 'react-redux'
 import SmallBlogCard from '../SmallBlogCard'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaPen } from 'react-icons/fa'
 import { setEditingBlog, userBlogsStatus } from '../../features/blogSlice'
-import { MdDelete } from 'react-icons/md'
 import DeleteModal from '../modals/DeleteModal'
 import SkeletonSmallCard from '../skeletons/SkeletonMyBlogList'
 import { div } from 'framer-motion/client'
 import SkeletonMyBlogList from '../skeletons/SkeletonMyBlogList'
+import ProfileBlogCard from './ProfileBlogCard'
+import { FaPen } from 'react-icons/fa'
+import { MdDelete } from 'react-icons/md'
 
 const MyBlogsList = () => {
 
@@ -69,32 +70,18 @@ const MyBlogsList = () => {
             {userBlogs && userBlogs.length > 0 ? (
                 <ul className="grid lg:grid-cols-1 gap-3">
                     {userBlogs.map(blog => (
-                        <li key={blog._id} className="flex items-center gap-3 bg-bg-primary/20 hover:bg-bg-primary/80 transition rounded-md px-3 py-2 border border-bg-secondary/10 relative group">
-                            <Link to={`/blog/${blog._id}`} className="flex items-center gap-3 w-full">
-                                <img
-                                    src={blog.image}
-                                    alt={blog.title}
-                                    className="w-12 h-12 object-cover rounded-md border border-gray-200 shadow-sm"
-                                />
-                                <div className="flex flex-col flex-1 min-w-0">
-                                    <span className="text-sm font-medium text-gray-800 line-clamp-2 hover:underline">
-                                        {blog.title}
-                                    </span>
-                                    <div className="flex gap-4 mt-1 text-xs text-gray-500">
-                                        <span>Views: <span className="font-semibold text-gray-700">{blog.countOfVisitors || 0}</span></span>
-                                        <span>Likes: <span className="font-semibold text-gray-700">{blog.likes.length || 0}</span></span>
-                                    </div>
-                                </div>
-                            </Link>
+                        <li key={blog?._id} className="flex items-center gap-3 bg-bg-primary/20 hover:bg-bg-primary/80 transition rounded-md px-3 py-2 border border-bg-secondary/10 relative group">
+                            <ProfileBlogCard key={blog._id} blog={blog} />
                             <div className="flex gap-2 ml-2">
                                 <button onClick={() => handleEditBlog(blog)} title="Edit" className='p-1.5 bg-white/90 text-gray-700 rounded-full hover:bg-blue-900 hover:text-white transition-colors cursor-pointer shadow-sm'>
                                     <FaPen size={12} />
                                 </button>
-                                <button onClick={() => { setBlogId(blog._id); document.getElementById('my_modal_5').showModal() }} title="Delete" className='p-1.5 bg-white/90 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-colors cursor-pointer shadow-sm'>
+                                <button onClick={() => { setBlogId(blog?._id); document.getElementById('my_modal_5').showModal() }} title="Delete" className='p-1.5 bg-white/90 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-colors cursor-pointer shadow-sm'>
                                     <MdDelete size={14} />
                                 </button>
                             </div>
                         </li>
+
                     ))}
                 </ul>
             ) : (

@@ -23,10 +23,10 @@ const useBlogCall = () => {
             const { data } = await axios.get(`${BASE_URL}${endpoint}/`, {
                 params: customParams
             })
-            console.log(data)
+            console.log(data.data)
             dispatch(fillEndpoints({ stateName, data: data.data }))
             console.log(stateName)
-            return data
+            return data.data
 
         } catch (error) {
             console.log(error)
@@ -34,8 +34,8 @@ const useBlogCall = () => {
     }
 
 
-    const getEndpointById = async (endpoint, id, stateName) => {
-
+    const getEndpointById = async (endpoint, id, stateName = "") => {
+console.log(stateName)
         try {
             dispatch(fetchStart());
             const data = await axios.get(`${BASE_URL}${endpoint}/${id}`, {
@@ -43,8 +43,9 @@ const useBlogCall = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log(data.data.data)
-            dispatch(fillEndpoints({ stateName, data: data.data.data }))
+            console.log(data.data)
+            if (stateName) dispatch(fillEndpoints({ stateName, data: data.data.data }))
+
 
         } catch (error) {
             console.log(error)

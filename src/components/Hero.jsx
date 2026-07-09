@@ -38,9 +38,8 @@ const Hero = () => {
 
         //! title
 
-        <div className='px-4 sm:px-5 md:px-10 lg:px-30 mx-auto'>
-            <div className="text-center mt-12 mb-4
-              md:mt-16 border-b border-b-black/30">
+        <div className=' px-4 sm:px-5 md:px-10 lg:px-30 mx-auto'>
+            <div className="text-center mt-12 mb-4 md:mt-16 border-b border-b-black/30 h-full">
                 <h1
                     className="text-4xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold italic text-gray-800 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)] "
                     style={{ fontFamily: 'var(--font-hero)', letterSpacing: '0.03em' }}
@@ -59,6 +58,7 @@ const Hero = () => {
                     spaceBetween={30}
                     effect={'fade'}
                     speed={2500}
+                    loop={true}
                     autoplay={{
                         delay: 3500,
                         disableOnInteraction: false,
@@ -73,7 +73,7 @@ const Hero = () => {
 
                     {mostRead?.slice(0, 3).map(blog => (
                         <SwiperSlide key={blog._id}>
-                            <div className="card card-side bg-bg-body flex flex-col md:flex-row gap-3 md:gap-5 mt-8 md:mt-16 mb-8 md:mb-14 items-center mx-auto ">
+                            <div className="card card-side h-full bg-bg-body flex flex-col md:flex-row gap-3 md:gap-5 mt-8 md:mt-10 mb-8 md:mb-14 items-center mx-auto min-h-112.5 md:min-h-100">
                                 <figure className='md:flex-1 relative w-full md:w-100 h-56 md:h-80 lg:h-90 mb-2 md:mb-0'>
                                     <img
                                         className='rounded-lg w-full h-full object-cover'

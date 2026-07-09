@@ -100,7 +100,7 @@ h2 {
   font-family: var(--font-poppins);
   font-weight: 400;
   color: white;
-  padding: .625rem 1.5rem;
+  padding: .4286rem .8571rem;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
   cursor: pointer;

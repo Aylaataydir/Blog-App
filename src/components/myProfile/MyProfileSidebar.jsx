@@ -11,7 +11,7 @@ const MyProfileSidebar = () => {
     const { currentUser } = useSelector(state => state.auth)
     const [imagePreview, setImagePreview] = useState("")
     const { userBlogs } = useSelector(state => state.blog)
-    const { getDataByEndpoint } = useBlogCall()
+    const { getDataByEndpoint, getEndpointById } = useBlogCall()
 
 
     // const myBlogs = (blogs ?? []).filter(blog => blog.userId === currentUser?._id)
@@ -21,6 +21,8 @@ const MyProfileSidebar = () => {
 
     useEffect(() => {
         getDataByEndpoint("blogs", { "sort[createdAt]": "desc", "filter[userId]": currentUser._id }, "userBlogs")
+        getEndpointById("users", currentUser?._id, "profilePageUserData")
+       
     }, [])
 
     const tabs = [

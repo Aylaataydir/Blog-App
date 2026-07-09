@@ -9,16 +9,18 @@ import { useEffect, useState } from 'react';
 import useBlogCall from '../hooks/useBlogCall';
 import { toast } from 'sonner';
 import { slugify } from '../lib/slugify';
+import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
 
 
 
 const BlogCard = ({ blog }) => {
 
     const dispatch = useDispatch()
-    const { categories, blogs } = useSelector(state => state.blog)
     const { currentUser } = useSelector(state => state.auth)
     const { updateLike, getDataByEndpoint } = useBlogCall()
     const [isLike, setIsLike] = useState()
+    const [isSave, setIsSave] = useState(true)
     const [copied, setCopied] = useState(false);
 
 
@@ -26,16 +28,23 @@ const BlogCard = ({ blog }) => {
 
     const navigate = useNavigate()
 
-    const category = categories?.find(cat => cat._id === blog.categoryId)
-
-    console.log(blogs)
-
     const toggleLike = async () => {
 
         if (!currentUser) {
             toast.error("Please log in to like this post.")
         } else {
             setIsLike(prev => !prev)
+            await updateLike(blog._id)
+            dispatch(toggleBlogListLike({ blogId: blog._id, userId: currentUser._id }))
+        }
+    }
+
+    const toggleSave = async () => {
+
+        if (!currentUser) {
+            toast.error("Please log in to save this post.")
+        } else {
+            setIsSave(prev => !prev)
             await updateLike(blog._id)
             dispatch(toggleBlogListLike({ blogId: blog._id, userId: currentUser._id }))
         }
@@ -53,17 +62,14 @@ const BlogCard = ({ blog }) => {
 
 
     useEffect(() => {
-
         setIsLike(blog?.likes.includes(currentUser?._id))
-
-
     }, [blog, currentUser])
 
 
 
     return (
         <div className="blog-card flex flex-col sm:flex-row gap-3 sm:gap-5 p-2 sm:p-4 mx-auto">
-            <figure className='relative w-full sm:w-66 h-48 mb-2 sm:mb-0'>
+            <figure className='relative sm:w-66 lg:w-76  h-51 mb-2 sm:mb-0'>
                 <p className='absolute bg-bg-primary/90 top-2 left-0 py-0.5 px-2 text-[10px] tracking-wide'>
                     {new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })}
                 </p>
@@ -84,7 +90,7 @@ const BlogCard = ({ blog }) => {
                             <p className='text-xs text-gray-600'>{blog.userId.username}</p>
                         </div>
 
-                         {/* ICONS */}
+                        {/* ICONS */}
 
                         <div className='flex gap-3 items-center pe-3 md:pe-0'>
                             <div className='flex items-center gap-1'>
@@ -98,6 +104,19 @@ const BlogCard = ({ blog }) => {
                                     <FaHeart className={`text-base transition-colors duration-300 ${isLike ? 'text-red-500' : 'text-gray-300 hover:text-gray-400'}`} />
                                 </motion.div>
                                 <p className='text-xs text-gray-400'>{blog.likes?.length}</p>
+                            </div>
+                            <div className='flex items-center gap-1'>
+                                <motion.div
+                                    whileTap={{ scale: 1.4 }}
+                                    whileHover={{ scale: 1.15 }}
+                                    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                                    onClick={toggleSave}
+                                    className='cursor-pointer'
+                                >
+                                    {isSave ? <FaBookmark className='text-base transition-colors duration-300 text-gray-600 hover:text-gray-600' /> : <FaRegBookmark className='text-base transition-colors duration-300 text-gray-300 hover:text-gray-400' />}
+
+                                </motion.div>
+    
                             </div>
                             <div className='flex items-center gap-1 relative'>
                                 <BiSolidShareAlt className='text-base opacity-30 hover:opacity-80 cursor-pointer transition-opacity' onClick={() => { navigator.clipboard.writeText(blogUrl); setCopied(true); setTimeout(() => setCopied(false), 2000); }} />
@@ -117,7 +136,7 @@ const BlogCard = ({ blog }) => {
 
 
                     </div>
-                    <Link onClick={(e) => { if (!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") } }} to={`/blog/${slug}-${blog._id}`} className="buttons md:w-38 md:ms-3 mt-5 md:mt-1 self-start md:self-auto">Read More</Link>
+                    <Link onClick={(e) => { if (!currentUser) { e.preventDefault(); toast.error("Please log in to read this post.") } }} to={`/blog/${slug}-${blog._id}`} className="buttons  md:w-31 md:ms-3 mt-5 md:mt-1 self-start md:self-auto">Read More</Link>
                 </div>
 
             </div>

@@ -5,15 +5,19 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import SkeletonMyBlogList from '../skeletons/SkeletonMyBlogList'
 import { userLikesStatus } from '../../features/blogSlice'
+import ProfileBlogCard from './ProfileBlogCard'
 
 const MyFavoritesList = () => {
 
     const { getDataByEndpoint } = useBlogCall()
-    const { userLikes } = useSelector((state) => state.blog)
+    const { userLikes, profilePageUserData } = useSelector((state) => state.blog)
     const { currentUser } = useSelector((state) => state.auth)
     const loadingStatus = useSelector(userLikesStatus)
 
-    console.log(userLikes)
+
+
+    const userLikedBlogs = profilePageUserData?.likedBlogs
+    console.log(userLikedBlogs)
 
     useEffect(() => {
         getDataByEndpoint("blogs", { "sort[createdAt]": "desc", "filter[likes]": currentUser._id }, "userLikes")
@@ -38,20 +42,11 @@ const MyFavoritesList = () => {
                 <h2 className='text-base font-semibold font-[Poppins]'>My Favorites</h2>
                 <p className='text-xs opacity-50 mt-1'>Blog posts you have liked</p>
             </div>
-            {userLikes && userLikes.length > 0 ? (
-                <ul className="grid  md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {userLikes.map(blog => (
-                        <li key={blog._id} className="flex items-center gap-3 bg-bg-primary/20 hover:bg-bg-primary/80 transition rounded-md px-3 py-2  border border-bg-secondary/10">
-                            <Link to={`/blog/${blog._id}`} className="flex items-center gap-3 w-full">
-                                <img
-                                    src={blog.image}
-                                    alt={blog.title}
-                                    className="w-12 h-12 object-cover rounded-md border border-gray-200 shadow-sm"
-                                />
-                                <span className="text-sm font-medium text-gray-800 line-clamp-2 hover:underline">
-                                    {blog.title}
-                                </span>
-                            </Link>
+            {userLikedBlogs && userLikedBlogs.length > 0 ? (
+                <ul className="grid lg:grid-cols-2 gap-3">
+                    {userLikedBlogs.map(blog => (
+                        <li key={blog?._id} className="flex items-center gap-3 bg-bg-primary/20 hover:bg-bg-primary/80 transition rounded-md px-3 py-2 border border-bg-secondary/10 relative group">
+                            <ProfileBlogCard key={blog._id} blog={blog} />
                         </li>
                     ))}
                 </ul>

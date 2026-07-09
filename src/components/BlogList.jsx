@@ -44,7 +44,7 @@ const BlogList = () => {
 
         const getData = async () => {
             const data = await getDataByEndpoint("blogs", params, "paginationBlogs");
-            if (data?.details?.totalRecords) setTotalCount(data.details.totalRecords);
+            if (data?.details?.count) setTotalCount(data.details.count);
         };
 
         getData();
@@ -58,7 +58,7 @@ const BlogList = () => {
     return (
 
         <Stack spacing={4} alignItems="center" className=' lg:pe-8 md:mb-6'>
-            <div className="w-full space-y-5 md:space-y-0">
+            <div className="w-full space-y-5 md:space-y-2">
                 {paginationStatus === "idle" || paginationStatus === "loading"
                     ? <SkeletonBlogList />
                     : <>

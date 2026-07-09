@@ -12,7 +12,6 @@ import MyProfile from "../pages/MyProfile";
 import MyBlogsList from "../components/myProfile/MyBlogsList";
 import MyReadingList from "../components/myProfile/MyReadingList";
 import MyFavoritesList from "../components/myProfile/MyFavoritesList";
-import ReceivedComments from "../components/myProfile/ReceivedComments";
 // import {NewBlog} from "../pages/NewBlog";
 
 
@@ -41,7 +40,6 @@ export const router = createBrowserRouter([
                             { path: "my-blogs", element: <MyBlogsList /> },
                             { path: "my-favorites", element: <MyFavoritesList /> },
                             { path: "my-reading-list", element: <MyReadingList /> },
-                            { path: "received-comments", element: <ReceivedComments /> },
                             { path: "add-new-blog", element: <NewBlog /> },
                             { path: "edit-blog", element: <NewBlog /> },
                         ]

@@ -5,16 +5,9 @@ import useBlogCall from '../hooks/useBlogCall'
 
 const SmallBlogCard = ({ blog }) => {
 
-    const { categories } = useSelector(state => state.blog)
     const { getDataByEndpoint } = useBlogCall()
 
-    const category = categories?.find(cat => cat._id === blog.categoryId)
-
-    useEffect(() => {
-        getDataByEndpoint("categories")
-    }, [])
-
-
+   
     return (
         <div
         className="cursor-pointer h-45 flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 w-45 sm:w-45 mx-auto mb-2">
