@@ -20,7 +20,7 @@ const BlogCard = ({ blog }) => {
     const { currentUser } = useSelector(state => state.auth)
     const { updateLike, getDataByEndpoint } = useBlogCall()
     const [isLike, setIsLike] = useState()
-    const [isSave, setIsSave] = useState(true)
+    const [isSave, setIsSave] = useState(false)
     const [copied, setCopied] = useState(false);
 
 
@@ -75,11 +75,11 @@ const BlogCard = ({ blog }) => {
                 </p>
                 <img className='rounded-lg w-full h-full object-cover' src={blog.image} alt="" />
             </figure>
-            <div className="flex flex-col flex-1 py-1 justify-between">
-                <div>
+            <div className="flex min-w-0 flex-col flex-1 py-1 justify-between">
+                <div className='overflow-hidden'>
                     <p className='text-[10px] text-bg-secondary font-semibold uppercase tracking-widest mb-1'>{blog.categoryId.name}</p>
                     <h2 className="text-xl font-semibold line-clamp-2 leading-snug mb-2">{blog.title}</h2>
-                    <div className='tiptap text-xs line-clamp-3 leading-relaxed text-gray-700' dangerouslySetInnerHTML={{ __html: blog.content }} />
+                    <div className='tiptap text-xs line-clamp-3 break-words leading-relaxed text-gray-700' dangerouslySetInnerHTML={{ __html: blog.content }} />
                 </div>
                 <div className='flex flex-col md:flex-row md:gap-5  items-center justify-between mt-3'>
                     <div className='flex  mt-3 w-full justify-between' >

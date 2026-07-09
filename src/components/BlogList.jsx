@@ -34,9 +34,9 @@ const BlogList = () => {
 
 
     useEffect(() => {
-        const params = { limit:LIMIT, page, "sort[createdAt]": "desc" };
+        const params = { limit: LIMIT, page, "sort[createdAt]": "desc" };
 
-       
+
 
         if (category) {
             params["filter[categoryId]"] = categoryId;
@@ -49,11 +49,10 @@ const BlogList = () => {
 
         getData();
 
-         console.log(paginationBlogs)
 
     }, [page, category]);
 
-
+    console.log(paginationBlogs)
 
     return (
 
