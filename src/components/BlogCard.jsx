@@ -4,7 +4,7 @@ import * as motion from "motion/react-client"
 import { BiSolidShareAlt } from "react-icons/bi";
 import { FaEye, FaHeart } from "react-icons/fa";
 import { BiSolidComment } from "react-icons/bi";
-import { toggleBlogListLike } from '../features/blogSlice';
+import { toggleBlogSave, toggleBlogLike } from '../features/blogSlice';
 import { useEffect, useState } from 'react';
 import useBlogCall from '../hooks/useBlogCall';
 import { toast } from 'sonner';
@@ -18,14 +18,13 @@ const BlogCard = ({ blog }) => {
 
     const dispatch = useDispatch()
     const { currentUser } = useSelector(state => state.auth)
-    const { updateLike, getDataByEndpoint } = useBlogCall()
+    const { updateLike, getDataByEndpoint, updateSaveBlog } = useBlogCall()
     const [isLike, setIsLike] = useState()
-    const [isSave, setIsSave] = useState(false)
+    const [isSave, setIsSave] = useState()
     const [copied, setCopied] = useState(false);
 
 
     const blogUrl = `${window.location.origin}/blog/${blog._id}`
-
     const navigate = useNavigate()
 
     const toggleLike = async () => {
@@ -35,7 +34,7 @@ const BlogCard = ({ blog }) => {
         } else {
             setIsLike(prev => !prev)
             await updateLike(blog._id)
-            dispatch(toggleBlogListLike({ blogId: blog._id, userId: currentUser._id }))
+            dispatch(toggleBlogLike({ blogId: blog._id, userId: currentUser._id }))
         }
     }
 
@@ -45,8 +44,8 @@ const BlogCard = ({ blog }) => {
             toast.error("Please log in to save this post.")
         } else {
             setIsSave(prev => !prev)
-            await updateLike(blog._id)
-            dispatch(toggleBlogListLike({ blogId: blog._id, userId: currentUser._id }))
+            await updateSaveBlog(blog._id)
+            dispatch(toggleBlogSave({ blogId: blog._id, userId: currentUser._id }))
         }
     }
 
@@ -63,6 +62,7 @@ const BlogCard = ({ blog }) => {
 
     useEffect(() => {
         setIsLike(blog?.likes.includes(currentUser?._id))
+        setIsSave(blog?.saves.includes(currentUser?._id))
     }, [blog, currentUser])
 
 

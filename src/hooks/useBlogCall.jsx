@@ -85,6 +85,19 @@ console.log(stateName)
         }
     }
 
+    const updateSaveBlog = async (blogId) => {
+        try {
+            const { data } = await axios.post(`${BASE_URL}blogs/${blogId}/saveBlog`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const createComment = async (comment) => {
 
@@ -233,7 +246,7 @@ console.log(stateName)
     }
 
 
-    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog, updateUserCredentials, updateBlog, deleteBlog, UploadCloudinary }
+    return { getDataByEndpoint, getEndpointById, getLikesById, updateLike, createComment, deleteComment, addBlog, updateUserCredentials, updateBlog, deleteBlog, UploadCloudinary, updateSaveBlog }
 }
 
 export default useBlogCall

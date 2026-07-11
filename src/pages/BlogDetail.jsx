@@ -80,7 +80,7 @@ const BlogDetail = () => {
 
 
   const toggleLike = async () => {
-    dispatch(toggleBlogLike(currentUser._id))
+    dispatch(toggleBlogLike({ blogId: blog?._id, userId: currentUser._id }))
     setIsLike(prev => !prev)
     await updateLike(id)
   }
@@ -92,11 +92,10 @@ const BlogDetail = () => {
 
 
   useEffect(() => {
-    if (blog) {
-      setIsLike(blog.likes.includes(currentUser._id))
-    } else {
-      setIsLike(false)
-    }
+
+    setIsLike(blog?.likes.includes(currentUser._id))
+
+
   }, [blog])
 
 

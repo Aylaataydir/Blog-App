@@ -1,7 +1,7 @@
 
 import { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import useAuthCall from '../hooks/useAuthCall'
 import useBlogCall from '../hooks/useBlogCall'
 import { clearSearch, toggleSearching } from '../features/blogSlice'
@@ -18,8 +18,11 @@ const Navbar = () => {
     const { getDataByEndpoint } = useBlogCall()
     const dispatch = useDispatch()
 
+    const location = useLocation()
+    const isHomePage = location.pathname === '/home'
+
     const timerRef = useRef(null) // inputa her tiklamada databaseden veri cekmesin diye kullaniyorum. komponent render olunca sifirlanmasin diye.
-// useRef in bir amaci da enderlar arasinda veri saklamak. eger direk timerref = null deseydim her renderda sifirlanicaki. bir ise yaramiycakti. usestate kullanmadim cünkü usestate kullansaydim timer id si her degistiginde component gereksiz renderlanicakti, cünkü ui da bir degisiklik yapmiyoruz. renderlanmadan sadece benim degerimi tutmasini istedigim icin useref kullandim.
+    // useRef in bir amaci da enderlar arasinda veri saklamak. eger direk timerref = null deseydim her renderda sifirlanicaki. bir ise yaramiycakti. usestate kullanmadim cünkü usestate kullansaydim timer id si her degistiginde component gereksiz renderlanicakti, cünkü ui da bir degisiklik yapmiyoruz. renderlanmadan sadece benim degerimi tutmasini istedigim icin useref kullandim.
 
     const handleLogOut = async (e) => {
         e.preventDefault()
@@ -40,7 +43,7 @@ const Navbar = () => {
                 }, "searchedItems")
                 console.log(data.data)
             } else {
-            dispatch(clearSearch())
+                dispatch(clearSearch())
             }
 
         }, 500)
@@ -51,8 +54,14 @@ const Navbar = () => {
     return (
         <div className="navbar justify-between shadow-sm px-5 bg-bg-btn">
         {/* search  */}
-            <div className="flex">
-                <input onChange={(e) => handleSearch(e.target.value)} type="text" spellCheck={false} placeholder="Search" className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center " />
+             <div className={`flex ${isHomePage ? '' : 'invisible'}`}>
+                <input 
+                    onChange={(e) => handleSearch(e.target.value)} 
+                    type="text" 
+                    spellCheck={false} 
+                    placeholder="Search" 
+                    className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center" 
+                />
             </div>
             <div className='hidden md:flex gap-10'>
                 <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/home">HOME</NavLink>

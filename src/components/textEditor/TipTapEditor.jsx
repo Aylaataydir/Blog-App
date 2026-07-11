@@ -1,14 +1,12 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Image from '@tiptap/extension-image'
-import ImageResize from 'tiptap-extension-resize-image'
 import Highlight from '@tiptap/extension-highlight'
 import Underline from '@tiptap/extension-underline'
 import {
   LuBold, LuItalic, LuUnderline, LuStrikethrough,
   LuHighlighter, LuHeading1, LuHeading2, LuHeading3,
   LuList, LuListOrdered, LuQuote, LuMinus,
-  LuImage, LuUndo2, LuRedo2, LuPilcrow, LuCode
+  LuUndo2, LuRedo2, LuCode
 } from 'react-icons/lu'
 import { useEffect } from 'react'
 
@@ -31,8 +29,6 @@ const TiptapEditor = ({ onChange, initialContent = "" }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Image,
-      ImageResize,
       Underline,
       Highlight.configure({ multicolor: true }),
     ],
@@ -42,13 +38,6 @@ const TiptapEditor = ({ onChange, initialContent = "" }) => {
     },
   })
 
-  const addImage = () => {
-    const url = window.prompt('Enter image URL:')
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run()
-    }
-  }
-
   useEffect(() => {
     if (editor && initialContent) {
       editor.commands.setContent(initialContent)
@@ -56,7 +45,7 @@ const TiptapEditor = ({ onChange, initialContent = "" }) => {
   }, [editor, initialContent])
 
 
-  
+
 
   if (!editor) return null
 
@@ -164,15 +153,6 @@ const TiptapEditor = ({ onChange, initialContent = "" }) => {
         <ToolbarDivider />
 
         <ToolbarButton
-          onClick={addImage}
-          title="Insert Image"
-        >
-          <LuImage size={17} />
-        </ToolbarButton>
-
-        <ToolbarDivider />
-
-        <ToolbarButton
           onClick={() => editor.chain().focus().undo().run()}
           title="Undo"
         >
@@ -186,7 +166,7 @@ const TiptapEditor = ({ onChange, initialContent = "" }) => {
         </ToolbarButton>
       </div>
 
-  
+
 
       <EditorContent editor={editor} className="editor-content" />
     </div>

@@ -10,31 +10,11 @@ import ProfileBlogCard from './ProfileBlogCard'
 const MyFavoritesList = () => {
 
     const { getDataByEndpoint } = useBlogCall()
-    const { userLikes, profilePageUserData } = useSelector((state) => state.blog)
+    const { profilePageUserData } = useSelector((state) => state.blog)
     const { currentUser } = useSelector((state) => state.auth)
-    const loadingStatus = useSelector(userLikesStatus)
-
-
 
     const userLikedBlogs = profilePageUserData?.likedBlogs
     console.log(userLikedBlogs)
-
-    useEffect(() => {
-        getDataByEndpoint("blogs", { "sort[createdAt]": "desc", "filter[likes]": currentUser._id }, "userLikes")
-    }, [])
-
-    // Yüklenme durumu için skeleton göster
-    if (loadingStatus === "idle" || loadingStatus === "loading") {
-        return (
-            <div className='flex flex-col'>
-                <div className='pb-2 mb-6 border-b border-b-bg-secondary/50'>
-                    <h2 className='text-base font-semibold font-[Poppins]'>My Favorites</h2>
-                    <p className='text-xs opacity-50 mt-1'>Blog posts you have liked</p>
-                </div>
-                <SkeletonMyBlogList count={3} />
-            </div>
-        )
-    }
 
     return (
         <div className='flex flex-col'>
