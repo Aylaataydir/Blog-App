@@ -82,7 +82,7 @@ const Navbar = () => {
                     </div>
                     : <Link
                         to="/login"
-                        className={`${isAuthPage ? 'invisible' : ''} bg-bg-secondary hover:bg-[#b8826a] py-1 px-3 rounded-sm text-base font-semibold text-white me-2 transition-all shadow-[0_2px_8px_rgba(203,153,126,0.35)] hover:shadow-[0_4px_12px_rgba(203,153,126,0.45)] inline-block`}
+                        className={`${isAuthPage ? 'invisible' : ''} bg-bg-secondary hover:bg-[#b8826a] py-1 px-3 rounded-sm text-base font-semibold text-white me-2 transition-all shadow-[0_2px_10px_rgba(0,0,0,0.18)] hover:shadow-[0_4px_14px_rgba(0,0,0,0.25)] inline-block`}
                     >
                         Login
                     </Link>}
