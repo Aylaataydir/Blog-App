@@ -41,7 +41,7 @@ const Hero = () => {
         <div className=' px-4 sm:px-5 md:px-10 lg:px-30 mx-auto'>
             <div className="text-center mt-12 mb-4 md:mt-16 border-b border-b-black/30 h-full">
                 <h1
-                    className="text-4xl sm:text-4xl lg:text-6xl font-semibold italic text-gray-800 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)] "
+                    className="text-5xl lg:text-6xl font-semibold italic text-gray-800 tracking-tight leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.04)] "
                     style={{ fontFamily: 'var(--font-hero)', letterSpacing: '0.03em' }}
                 >
                     The Daily Blog
