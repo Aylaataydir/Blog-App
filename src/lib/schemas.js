@@ -12,7 +12,7 @@ export const registerShema = z.object({
         .regex(/\d+/, "Must contain a digit")
         .regex(/[a-z]/, "Must contain a lowercase letter")
         .regex(/[A-Z]/, "Must contain an uppercase letter")
-        .regex(/[@$?!%&*]+/, "Must contain a special character (@$?!%&*)"),
+        .regex(/[@$?!.%&*]+/, "Must contain a special character (@$?!%&.*)"),
     email: z.email("Invalid email address"),
     firstName: z
         .string()
@@ -32,8 +32,33 @@ export const registerShema = z.object({
 export const updateProfileSchema = z.object({
     username: z.string().min(3, "Username must be at least 3 characters"),
     email: z.email("Invalid email address"),
-    avatar: z.string().url("Please enter a valid URL").or(z.literal("")),
+    avatar: z.string().url("Please enter a valid URL").or(z.literal(""))
 })
+
+
+
+export const changePasswordSchema = z
+    .object({
+        currentPassword: z
+            .string()
+            .min(6, 'Current password is required'),
+
+        newPassword: z
+            .string()
+            .min(8, 'Password must be at least 8 characters')
+            .max(64)
+            .regex(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/,
+                'Password must contain uppercase, lowercase, number and special character'
+            ),
+
+        confirmPassword: z.string().min(8),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+        message: 'Passwords do not match',
+        path: ['confirmPassword'],
+    });
+
 
 
 export const loginSchema = z.object({

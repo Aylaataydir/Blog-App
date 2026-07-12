@@ -14,6 +14,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
     //clodinary states
     const [selectedFileName, setSelectedFileName] = useState("")
     const [loading, setLoading] = useState(false)
+    const [showPasswordFields, setShowPasswordFields] = useState(false)
 
     const fileInputRef = useRef()
 
@@ -42,6 +43,12 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
             username: data.username,
             email: data.email,
             avatar: imagePreview || data.avatar || "",
+        }
+
+        const updatePassword = {
+            currentPassword: data.currentPassword,
+            newPassword: data.newPassword,
+            confirmPassword: data.confirmPassword,
         }
         const res = await updateUserCredentials(currentUser._id, updatedCredentials)
 
@@ -85,7 +92,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
 
     return (
         <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
-            <div className="modal-box bg-bg-primary p-0 rounded-lg max-w-lg overflow-hidden">
+            <div className="modal-box bg-bg-primary p-0 rounded-lg max-w-lg ">
                 <div className="px-6 pt-5 pb-3 border-b border-bg-btn-2">
                     <h3 className="font-semibold font-[Poppins] text-base text-gray-800">Update Profile</h3>
                     <p className="text-xs text-gray-400 mt-0.5">Edit your account details below</p>
@@ -137,7 +144,7 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
                                     : imagePreview || currentUser.avatar ?
                                         <>
                                             <span className="text-xs text-gray-500">Upload Profile Image</span>
-                                        
+
                                         </>
                                         : 'Choose a file'}
                         </div>
@@ -150,6 +157,53 @@ const UserUpdateModal = ({ currentUser, imagePreview, setImagePreview }) => {
                             className="hidden"
                         />
                     </div>
+
+                    {/* password change 
+
+                    <div className="pt-3 border-t border-bg-btn-2">
+                        <button
+                            type="button"
+                            onClick={() => setShowPasswordFields(prev => !prev)}
+                            className="text-xs font-medium font-[Poppins] text-bg-secondary hover:underline cursor-pointer flex items-center gap-1"
+                        >
+                            {showPasswordFields ? "− Cancel password change" : "+ Change Password"}
+                        </button>
+                    </div>
+
+                    {showPasswordFields && (
+                        <div className="flex flex-col gap-4 pt-1">
+                            <div className="flex flex-col gap-1">
+                                <label className="text-xs font-medium font-[Poppins] text-gray-500 tracking-wider">Current Password</label>
+                                <input
+                                    type="password"
+                                    {...register("currentPassword")}
+                                    className={`w-full px-3 py-2.5 text-sm rounded-md border bg-white outline-none focus:border-bg-secondary focus:shadow-[0_0_0_3px_rgba(203,153,126,0.12)] transition-all ${errors.currentPassword ? 'border-red-400' : 'border-bg-btn-2'}`}
+                                />
+                                {errors.currentPassword && <span className="text-red-400 text-xs">{errors.currentPassword.message}</span>}
+                            </div>
+
+                            <div className="flex flex-col gap-1">
+                                <label className="text-xs font-medium font-[Poppins] text-gray-500 tracking-wider">New Password</label>
+                                <input
+                                    type="password"
+                                    {...register("newPassword")}
+                                    className={`w-full px-3 py-2.5 text-sm rounded-md border bg-white outline-none focus:border-bg-secondary focus:shadow-[0_0_0_3px_rgba(203,153,126,0.12)] transition-all ${errors.newPassword ? 'border-red-400' : 'border-bg-btn-2'}`}
+                                />
+                                {errors.newPassword && <span className="text-red-400 text-xs">{errors.newPassword.message}</span>}
+                            </div>
+
+                            <div className="flex flex-col gap-1">
+                                <label className="text-xs font-medium font-[Poppins] text-gray-500 tracking-wider">Confirm Password</label>
+                                <input
+                                    type="password"
+                                    {...register("confirmPassword")}
+                                    className={`w-full px-3 py-2.5 text-sm rounded-md border bg-white outline-none focus:border-bg-secondary focus:shadow-[0_0_0_3px_rgba(203,153,126,0.12)] transition-all ${errors.confirmPassword ? 'border-red-400' : 'border-bg-btn-2'}`}
+                                />
+                                {errors.confirmPassword && <span className="text-red-400 text-xs">{errors.confirmPassword.message}</span>}
+                            </div>
+                        </div>
+                    )}
+ */}
 
                     <div className="flex items-center gap-2 justify-end pt-3 border-t border-bg-btn-2">
                         <button

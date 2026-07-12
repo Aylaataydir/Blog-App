@@ -142,7 +142,7 @@ const BlogDetail = () => {
           <div className="ring-offset-base-100 w-12 rounded-full ring-1 ring-amber-900 ">
             <img className='w-full h-full object-cover object-center' src={blog.userId.avatar ? blog.userId.avatar : "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"} />
           </div>
-          <p>{currentUser.username}</p>
+          <p>{blog?.userId.username}</p>
         </div>
 
 
