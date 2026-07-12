@@ -20,6 +20,8 @@ const Navbar = () => {
 
     const location = useLocation()
     const isHomePage = location.pathname === '/home'
+    const authPaths = ['/login', '/register']
+    const isAuthPage = authPaths.includes(location.pathname)
 
     const timerRef = useRef(null) // inputa her tiklamada databaseden veri cekmesin diye kullaniyorum. komponent render olunca sifirlanmasin diye.
     // useRef in bir amaci da enderlar arasinda veri saklamak. eger direk timerref = null deseydim her renderda sifirlanicaki. bir ise yaramiycakti. usestate kullanmadim cünkü usestate kullansaydim timer id si her degistiginde component gereksiz renderlanicakti, cünkü ui da bir degisiklik yapmiyoruz. renderlanmadan sadece benim degerimi tutmasini istedigim icin useref kullandim.
@@ -30,6 +32,10 @@ const Navbar = () => {
         await logOut()
         setIsPending(false)
     }
+
+    const closeDropdown = () => {
+    document.activeElement.blur()
+}
 
     const handleSearch = (query) => {
 
@@ -53,26 +59,28 @@ const Navbar = () => {
 
     return (
         <div className="navbar justify-between shadow-sm px-5 bg-bg-btn">
-        {/* search  */}
-             <div className={`flex ${isHomePage ? '' : 'invisible'}`}>
-                <input 
-                    onChange={(e) => handleSearch(e.target.value)} 
-                    type="text" 
-                    spellCheck={false} 
-                    placeholder="Search" 
-                    className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center" 
+            {/* search  */}
+            <div className={`flex ${isHomePage ? '' : 'invisible'}`}>
+                <input
+                    onChange={(e) => handleSearch(e.target.value)}
+                    type="text"
+                    spellCheck={false}
+                    placeholder="Search"
+                    className="bg-white border-0 py-1.5 px-3 text-xs w-40 rounded-2xl opacity-90 self-center"
                 />
             </div>
             <div className='hidden md:flex gap-10'>
-                <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/home">HOME</NavLink>
-                <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/about">ABOUT</NavLink>
-                <NavLink className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/contact">CONTACT</NavLink>
+                <NavLink onClick={closeDropdown} className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/home">HOME</NavLink>
+                <NavLink onClick={closeDropdown} className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/about">ABOUT</NavLink>
+                <NavLink onClick={closeDropdown} className={({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink'} to="/contact">CONTACT</NavLink>
             </div>
             <div className="flex gap-2 items-center">
-                {currentUser &&
+                {currentUser
+                    ?
                     <div className='text-base'>
                         <p>{currentUser.username}</p>
-                    </div>}
+                    </div>
+                    : <button className={`${isAuthPage ? 'invisible' : ''} bg-bg-secondary hover:bg-[#b8826a] py-1 px-3 rounded-sm text-base font-semibold text-white me-2 transition-colors inline-block`}><Link to="/login">Login</Link></button>}
 
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className=" flex w-11 btn btn-ghost btn-circle avatar">
@@ -85,17 +93,13 @@ const Navbar = () => {
                     <ul
                         tabIndex="-1"
                         className="menu text-center z-50 menu-sm dropdown-content bg-bg-body rounded-box  mt-1 w-45 md:w-42 p-2 shadow">
-                        {currentUser
-                            ? <>
-                                <li className='md:hidden'><NavLink className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/home">Home</NavLink></li>
-                                <li className='md:hidden'><NavLink className={`({ isActive }) => isActive ? 'navLink navLink--active'  : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary `} to="/about">About</NavLink></li>
-                                <li className='md:hidden'> <NavLink className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/contact">Contact</NavLink></li>
-                                <li><Link to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</Link></li>
-                                <li><Link className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</Link></li>
-                            </>
-                            : <>
-                                <li><Link className='py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/login">Login</Link></li>
-                                <li><Link className='py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' to="/register">Register</Link></li>
+                        <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/home">Home</NavLink></li>
+                        <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active'  : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary `} to="/about">About</NavLink></li>
+                        <li className='md:hidden'> <NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/contact">Contact</NavLink></li>
+                        {currentUser && 
+                        <>
+                                <li><NavLink onClick={closeDropdown} to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</NavLink></li>
+                                <li><NavLink onClick={closeDropdown} className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</NavLink></li>
                             </>
                         }
 
