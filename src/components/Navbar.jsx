@@ -34,8 +34,8 @@ const Navbar = () => {
     }
 
     const closeDropdown = () => {
-    document.activeElement.blur()
-}
+        document.activeElement.blur()
+    }
 
     const handleSearch = (query) => {
 
@@ -80,7 +80,12 @@ const Navbar = () => {
                     <div className='text-base'>
                         <p>{currentUser.username}</p>
                     </div>
-                    : <button className={`${isAuthPage ? 'invisible' : ''} bg-bg-secondary hover:bg-[#b8826a] py-1 px-3 rounded-sm text-base font-semibold text-white me-2 transition-colors inline-block`}><Link to="/login">Login</Link></button>}
+                    : <Link
+                        to="/login"
+                        className={`${isAuthPage ? 'invisible' : ''} bg-bg-secondary hover:bg-[#b8826a] py-1 px-3 rounded-sm text-base font-semibold text-white me-2 transition-all shadow-[0_2px_8px_rgba(203,153,126,0.35)] hover:shadow-[0_4px_12px_rgba(203,153,126,0.45)] inline-block`}
+                    >
+                        Login
+                    </Link>}
 
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className=" flex w-11 btn btn-ghost btn-circle avatar">
@@ -96,8 +101,8 @@ const Navbar = () => {
                         <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/home">Home</NavLink></li>
                         <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active'  : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary `} to="/about">About</NavLink></li>
                         <li className='md:hidden'> <NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/contact">Contact</NavLink></li>
-                        {currentUser && 
-                        <>
+                        {currentUser &&
+                            <>
                                 <li><NavLink onClick={closeDropdown} to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</NavLink></li>
                                 <li><NavLink onClick={closeDropdown} className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</NavLink></li>
                             </>
