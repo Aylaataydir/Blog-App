@@ -84,7 +84,7 @@ const Navbar = () => {
                         ? <Link
                             to="/home"
                             onClick={closeDropdown}
-                            className="nav-login-btn me-2 flex items-center gap-1"
+                            className="md:hidden nav-login-btn me-2 flex items-center gap-1"
                         >
                             <MdArrowBack /> Home
                         </Link>
