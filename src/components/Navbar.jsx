@@ -5,7 +5,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import useAuthCall from '../hooks/useAuthCall'
 import useBlogCall from '../hooks/useBlogCall'
 import { clearSearch, toggleSearching } from '../features/blogSlice'
-import { MdVerticalAlignBottom, MdArrowBack } from 'react-icons/md'
+import { MdVerticalAlignBottom, MdArrowBack, MdMenu } from 'react-icons/md'
 
 
 
@@ -94,6 +94,18 @@ const Navbar = () => {
                         >
                             Login
                         </Link>}
+                <div className="dropdown dropdown-end md:hidden">
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+                        <MdMenu size={22} className="text-white" />
+                    </div>
+                    <ul
+                        tabIndex="-1"
+                        className="menu text-center z-50 menu-sm dropdown-content bg-bg-body rounded-box mt-1 w-40 p-2 shadow">
+                        <li><NavLink onClick={closeDropdown} className={({ isActive }) => `py-3 font-semibold text-sm hover:bg-bg-primary ${isActive ? 'text-bg-secondary font-bold' : 'text-gray-700/80'}`} to="/home">Home</NavLink></li>
+                        <li><NavLink onClick={closeDropdown} className={({ isActive }) => `py-3 font-semibold text-sm hover:bg-bg-primary ${isActive ? 'text-bg-secondary font-bold' : 'text-gray-700/80'}`} to="/about">About</NavLink></li>
+                        <li><NavLink onClick={closeDropdown} className={({ isActive }) => `py-3 font-semibold text-sm hover:bg-bg-primary ${isActive ? 'text-bg-secondary font-bold' : 'text-gray-700/80'}`} to="/contact">Contact</NavLink></li>
+                    </ul>
+                </div>
 
                 {currentUser &&
                     <div className="dropdown dropdown-end">
@@ -107,9 +119,6 @@ const Navbar = () => {
                         <ul
                             tabIndex="-1"
                             className="menu text-center z-50 menu-sm dropdown-content bg-bg-body rounded-box  mt-1 w-45 md:w-42 p-2 shadow">
-                            <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/home">Home</NavLink></li>
-                            <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active'  : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary `} to="/about">About</NavLink></li>
-                            <li className='md:hidden'> <NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/contact">Contact</NavLink></li>
                             <li><NavLink onClick={closeDropdown} to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</NavLink></li>
                             <li><NavLink onClick={closeDropdown} className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</NavLink></li>
                         </ul>
