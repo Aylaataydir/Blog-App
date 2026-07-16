@@ -5,8 +5,8 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import useAuthCall from '../hooks/useAuthCall'
 import useBlogCall from '../hooks/useBlogCall'
 import { clearSearch, toggleSearching } from '../features/blogSlice'
-import { MdVerticalAlignBottom } from 'react-icons/md'
-import logo from "../../assets/logo.png"
+import { MdVerticalAlignBottom, MdArrowBack } from 'react-icons/md'
+
 
 
 const Navbar = () => {
@@ -80,12 +80,20 @@ const Navbar = () => {
                     <div className='text-base'>
                         <p>{currentUser.username}</p>
                     </div>
-                    : <Link
-                        to="/login"
-                        className={`${isAuthPage ? 'invisible' : ''} nav-login-btn me-2`}
-                    >
-                        Login
-                    </Link>}
+                    : isAuthPage
+                        ? <Link
+                            to="/home"
+                            onClick={closeDropdown}
+                            className="nav-login-btn me-2 flex items-center gap-1"
+                        >
+                            <MdArrowBack /> Home
+                        </Link>
+                        : <Link
+                            to="/login"
+                            className="nav-login-btn me-2"
+                        >
+                            Login
+                        </Link>}
 
                 {currentUser &&
                     <div className="dropdown dropdown-end">

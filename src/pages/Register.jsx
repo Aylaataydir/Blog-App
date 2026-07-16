@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { registerShema } from '../lib/schemas';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthCall from '../hooks/useAuthCall';
-import registerImage from "../../assets/login.jpg"
+import registerImage from "../../assets/login.webp"
 
 const Register = () => {
 

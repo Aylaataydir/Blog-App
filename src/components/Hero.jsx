@@ -1,7 +1,5 @@
 import { div } from 'motion/react-client'
-
 import { Link } from 'react-router-dom'
-import heroImg from "../../assets/hero.jpg"
 import React, { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';

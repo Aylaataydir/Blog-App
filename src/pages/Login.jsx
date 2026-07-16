@@ -4,7 +4,7 @@ import useAuthCall from '../hooks/useAuthCall';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { loginSchema } from '../lib/schemas';
-import loginImage from "../../assets/login.jpg"
+import loginImage from "../../assets/login.webp"
 
 const Login = () => {
 
