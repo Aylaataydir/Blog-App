@@ -12,6 +12,7 @@ import MyProfile from "../pages/MyProfile";
 import MyBlogsList from "../components/myProfile/MyBlogsList";
 import MyReadingList from "../components/myProfile/MyReadingList";
 import MyFavoritesList from "../components/myProfile/MyFavoritesList";
+import Error from "../pages/Error";
 // import {NewBlog} from "../pages/NewBlog";
 
 
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
-        // errorElement: <Error />,
+        errorElement: <Error />,
         children: [
             { index: true, element: <Navigate to="/home" replace /> }, // kullanici / ya gittiginde home yönlendiriliyor. replace yaziyoru cunku her geri yaptiginda bir da home a yönlen
             { path: "home", element: <Home /> },

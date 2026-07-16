@@ -53,10 +53,11 @@ const Hero = () => {
             {loadingStatus === "idle" || loadingStatus === "loading"
                 ? <SkeletonHero />
                 : <Swiper
+                    key={mostRead?.length}
                     spaceBetween={30}
                     effect={'fade'}
                     speed={2500}
-                    loop={true}
+                    rewind={true}
                     autoplay={{
                         delay: 3500,
                         disableOnInteraction: false,
