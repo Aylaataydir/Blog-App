@@ -82,34 +82,30 @@ const Navbar = () => {
                     </div>
                     : <Link
                         to="/login"
-                        className={`${isAuthPage ? 'invisible' : ''} bg-bg-secondary hover:bg-[#b8826a] py-1 px-3 rounded-sm text-base font-semibold text-white me-2 transition-all shadow-[0_2px_10px_rgba(0,0,0,0.18)] hover:shadow-[0_4px_14px_rgba(0,0,0,0.25)] inline-block`}
+                        className={`${isAuthPage ? 'invisible' : ''} nav-login-btn me-2`}
                     >
                         Login
                     </Link>}
 
-                <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className=" flex w-11 btn btn-ghost btn-circle avatar">
+                {currentUser &&
+                    <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className=" flex w-11 btn btn-ghost btn-circle avatar">
 
 
-                        <div className=" rounded-full">
-                            <img className="w-full h-full object-cover object-center" src={currentUser?.avatar ? currentUser.avatar : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+                            <div className=" rounded-full">
+                                <img className="w-full h-full object-cover object-center" src={currentUser?.avatar ? currentUser.avatar : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} />
+                            </div>
                         </div>
-                    </div>
-                    <ul
-                        tabIndex="-1"
-                        className="menu text-center z-50 menu-sm dropdown-content bg-bg-body rounded-box  mt-1 w-45 md:w-42 p-2 shadow">
-                        <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/home">Home</NavLink></li>
-                        <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active'  : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary `} to="/about">About</NavLink></li>
-                        <li className='md:hidden'> <NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/contact">Contact</NavLink></li>
-                        {currentUser &&
-                            <>
-                                <li><NavLink onClick={closeDropdown} to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</NavLink></li>
-                                <li><NavLink onClick={closeDropdown} className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</NavLink></li>
-                            </>
-                        }
-
-                    </ul>
-                </div>
+                        <ul
+                            tabIndex="-1"
+                            className="menu text-center z-50 menu-sm dropdown-content bg-bg-body rounded-box  mt-1 w-45 md:w-42 p-2 shadow">
+                            <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/home">Home</NavLink></li>
+                            <li className='md:hidden'><NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active'  : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary `} to="/about">About</NavLink></li>
+                            <li className='md:hidden'> <NavLink onClick={closeDropdown} className={`({ isActive }) => isActive ? 'navLink navLink--active' : 'navLink' py-3 md:py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary`} to="/contact">Contact</NavLink></li>
+                            <li><NavLink onClick={closeDropdown} to="my-profile/my-blogs" className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary'>My Profile</NavLink></li>
+                            <li><NavLink onClick={closeDropdown} className='py-2 font-semibold  text-gray-700/80 text-sm hover:bg-bg-primary' onClick={handleLogOut}>{isPending ? "Loging out..." : "Log out"}</NavLink></li>
+                        </ul>
+                    </div>}
             </div>
         </div>
     )

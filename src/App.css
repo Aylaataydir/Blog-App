@@ -116,6 +116,31 @@ h2 {
   background-color: var(--color-bg-secondary);
 }
 
+.nav-login-btn {
+  background-color: var(--color-bg-secondary);
+  border: none;
+  border-radius: .5rem;
+  font-size: 12px;
+  font-family: var(--font-poppins);
+  font-weight: 500;
+  color: white;
+  padding: .4286rem .8571rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.nav-login-btn:hover {
+  background-color: #b8826a;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+.nav-login-btn:active {
+  background-color: #b8826a;
+  transform: translateY(0);
+}
+
 /* Toast styles */
 .toast-success {
   background: #c6c692 !important;
