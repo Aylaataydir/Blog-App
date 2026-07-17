@@ -14,6 +14,12 @@ import { Tiptap } from '@tiptap/react'
 
 function App() {
 
+  if (import.meta.env.PROD) { 
+    console.log = () => { }
+    console.error = () => { }
+    console.warn = () => { }
+  }
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
